@@ -17,6 +17,8 @@
 #define MIN_YEAR 2022
 #define MAX_YEAR 2023
 
+/*  COMAND A:   */
+
 typedef struct airport
 {
     char id[MAX_C_ID];
@@ -25,20 +27,28 @@ typedef struct airport
 
 } Airport;
 
-void newAirport(Airport airportList[], int j)
+int j = 0;
+
+void newAirport(Airport airportList[])
 {
     int i = 0, counter = 0;
-    char c;
+    char id_aux[MAX_C_ID], country_aux[MAX_C_COUNTRY], city_aux[MAX_C_CITY];
 
-    scanf("%s", airportList[j].id);
-    scanf("%s", airportList[j].country);
+    scanf("%s", id_aux);
+    scanf("%s", country_aux);
+
+    /*
+    c = getchar();
     while ((c = getchar()) != '\n')
     {
-        airportList[j].city[i] = c;
+        city_aux[i] = c;
         i++;
     }
+    */
 
-    while (airportList[j].id[counter] != '\0')
+    scanf(" %[^\n]", city_aux);
+
+    while (id_aux[counter] != '\0')
     {
         counter++;
     }
@@ -49,22 +59,34 @@ void newAirport(Airport airportList[], int j)
         return;
     }
 
-    for (i = 0; airportList[i].id; i++)
+    for (i = 0; i < j; i++)
     {
-        if (airportList[j].id == airportList[i].id)
+        if (strcmp(id_aux, airportList[i].id) == 0)
         {
-            printf("duplicate airport");
+
+            printf("duplicate airport\n");
             return;
         }
     }
 
     if (j > MAX_AIRPORTS)
     {
-        printf("too many airports");
+        printf("too many airports\n");
+        return;
     }
 
+    strncpy(airportList[j].id, id_aux, MAX_C_ID);
+    strncpy(airportList[j].country, country_aux, MAX_C_COUNTRY);
+    strncpy(airportList[j].city, city_aux, MAX_C_CITY);
+
     printf("airport %s\n", airportList[j].id);
+    printf("%s\n", airportList[j].city);
+    j++;
 }
+
+Airport airportList[MAX_AIRPORTS];
+
+/*  COMAND B:   */
 
 typedef struct
 {
@@ -109,14 +131,23 @@ Date newDate(Date currentDate)
     return currentDate;
 }
 
+void printAirports(int j)
+{
+    int i = 0;
+
+    for (i = 0; i < j; i++)
+    {
+        printf("%s %s %s\n", airportList[i].id, airportList[i].country,
+               airportList[i].city);
+    }
+}
+
 int main()
 {
     char option;
-    int j = 0;
-    Airport airportList[MAX_AIRPORTS];
 
     Date currentDate = {1, 1, 2022};
-    printf("Enter an option: ");
+    printf("option: ");
     scanf("%c", &option);
 
     while (option != 'q')
@@ -124,11 +155,10 @@ int main()
         switch (option)
         {
         case 'a':
-            newAirport(airportList, j);
-            j++;
+            newAirport(airportList);
             break;
         case 'l':
-            printf("airportList()");
+            printAirports(j);
             break;
         case 'v':
             printf("newFlight / allFlights");
@@ -143,7 +173,8 @@ int main()
             currentDate = newDate(currentDate);
             break;
         }
-        printf("Enter an option: ");
+
+        printf("option: ");
         scanf("%c", &option);
     }
 
