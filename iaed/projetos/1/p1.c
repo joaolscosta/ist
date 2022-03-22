@@ -36,20 +36,15 @@ void newAirport(Airport airportList[])
 
     scanf("%s", id_aux);
     scanf("%s", country_aux);
-
-    /*
-    c = getchar();
-    while ((c = getchar()) != '\n')
-    {
-        city_aux[i] = c;
-        i++;
-    }
-    */
-
     scanf(" %[^\n]", city_aux);
 
     while (id_aux[counter] != '\0')
     {
+        if (id_aux[counter] < 'A' || id_aux[counter] > 'Z')
+        {
+            printf("invalid airport ID\n");
+            return;
+        }
         counter++;
     }
 
@@ -80,7 +75,6 @@ void newAirport(Airport airportList[])
     strncpy(airportList[j].city, city_aux, MAX_C_CITY);
 
     printf("airport %s\n", airportList[j].id);
-    printf("%s\n", airportList[j].city);
     j++;
 }
 
@@ -133,7 +127,7 @@ Date newDate(Date currentDate)
 
 void printAirports(int j)
 {
-    int i = 0;
+    int i;
 
     for (i = 0; i < j; i++)
     {
@@ -147,7 +141,6 @@ int main()
     char option;
 
     Date currentDate = {1, 1, 2022};
-    printf("option: ");
     scanf("%c", &option);
 
     while (option != 'q')
@@ -173,8 +166,6 @@ int main()
             currentDate = newDate(currentDate);
             break;
         }
-
-        printf("option: ");
         scanf("%c", &option);
     }
 

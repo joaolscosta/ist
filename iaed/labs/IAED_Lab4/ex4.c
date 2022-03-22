@@ -1,15 +1,21 @@
 #include <stdio.h>
+#include <string.h>
 
 #define MAX 80
 
 int main()
 {
-    char palavra;
-    char palavra_inv;
-    int cont;
+    char c, palavra[100], palavra_inv;
+    int i, j = 0, leng;
 
-    printf("Escreva uma palavra: ");
-    scanf("%c", palavra);
+    scanf("%s", palavra);
 
-        return 0;
+    leng = strlen(palavra);
+
+    for (i = leng - 1; i = 0; i--)
+    {
+        palavra_inv[j] = palavra[i];
+    }
+
+    return 0;
 }
