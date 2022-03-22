@@ -127,12 +127,51 @@ Date newDate(Date currentDate)
 
 void printAirports(int j)
 {
-    int i;
+    int i, k;
+    Airport aux;
+    Airport sortedAirports[MAX_AIRPORTS];
+    char c;
+    char airport_id[MAX_C_ID];
 
     for (i = 0; i < j; i++)
     {
-        printf("%s %s %s\n", airportList[i].id, airportList[i].country,
-               airportList[i].city);
+        sortedAirports[i] = airportList[i];
+    }
+
+    for (i = 0; i < j; ++i)
+    {
+        for (k = i + 1; k < j; ++k)
+        {
+            if (strcmp(sortedAirports[i].id, sortedAirports[k].id) > 0)
+            {
+                aux = sortedAirports[i];
+                sortedAirports[i] = sortedAirports[k];
+                sortedAirports[k] = aux;
+            }
+        }
+    }
+
+    c = getchar();
+    if (c == '\n')
+    {
+        for (i = 0; i < j; i++)
+        {
+            printf("%s %s %s\n", sortedAirports[i].id,
+                   sortedAirports[i].country, sortedAirports[i].city);
+        }
+    }
+    else
+    {
+        scanf("%s", airport_id);
+
+        for (i = 0; i < MAX_AIRPORTS; i++)
+        {
+            if (strcmp(airport_id, sortedAirports[i].id) == 0)
+            {
+                printf("%s %s %s\n", sortedAirports[i].id,
+                       sortedAirports[i].country, sortedAirports[i].city);
+            }
+        }
     }
 }
 
