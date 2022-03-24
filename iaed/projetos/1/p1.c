@@ -10,6 +10,7 @@
 #define MAX_C_CITY 50
 #define MAX_AIRPORTS 40
 #define MAX_FLIGHTS 30000
+#define MAX_C_CODE 4
 
 #define MIN_DAY 1
 #define MIN_MONTH 1
@@ -24,6 +25,7 @@ typedef struct airport
     char id[MAX_C_ID];
     char country[MAX_C_COUNTRY];
     char city[MAX_C_CITY];
+    int flights[MAX_FLIGHTS];
 
 } Airport;
 
@@ -80,7 +82,7 @@ void newAirport(Airport airportList[])
 
 Airport airportList[MAX_AIRPORTS];
 
-/*  COMAND B:   */
+/*  COMAND T:   */
 
 typedef struct
 {
@@ -93,13 +95,8 @@ typedef struct
 Date newDate(Date currentDate)
 {
     Date date;
-    char c1, c2;
 
-    scanf("%d", &date.day);
-    scanf("%c", &c1);
-    scanf("%d", &date.month);
-    scanf("%c", &c2);
-    scanf("%d", &date.year);
+    scanf("%d-%d-%d", &date.day, &date.month, &date.year);
 
     if (date.year > MAX_YEAR || date.year < MIN_YEAR)
     {
@@ -125,13 +122,14 @@ Date newDate(Date currentDate)
     return currentDate;
 }
 
+/*  COMAND L:   */
+
 void printAirports(int j)
 {
-    int i, k;
+    int i, k, id_counter = 0;
     Airport aux;
     Airport sortedAirports[MAX_AIRPORTS];
-    char c;
-    char airport_id[MAX_C_ID];
+    char airport_id[MAX_C_ID], c;
 
     for (i = 0; i < j; i++)
     {
@@ -162,17 +160,64 @@ void printAirports(int j)
     }
     else
     {
-        scanf("%s", airport_id);
 
-        for (i = 0; i < MAX_AIRPORTS; i++)
+        while (c != '\n')
         {
-            if (strcmp(airport_id, sortedAirports[i].id) == 0)
+            scanf("%s", airport_id);
+
+            for (i = 0; i < MAX_AIRPORTS; i++)
             {
-                printf("%s %s %s\n", sortedAirports[i].id,
-                       sortedAirports[i].country, sortedAirports[i].city);
+                if (strcmp(airport_id, sortedAirports[i].id) == 0)
+                {
+                    id_counter += 1;
+                    printf("%s %s %s\n", sortedAirports[i].id,
+                           sortedAirports[i].country, sortedAirports[i].city);
+                }
             }
+
+            if (id_counter == 0)
+            {
+                printf("%s", airport_id);
+                printf("no such airport ID\n");
+                return;
+            }
+
+            c = getchar();
         }
     }
+}
+
+/*  COMAND V:   */
+
+typedef struct time
+{
+    int hours;
+    int minutes;
+
+} Time;
+
+typedef struct flight
+{
+    char id[4];
+    char departAirportID[4];
+    char arrivAirportID[4];
+    Date departDate;
+    Time departHour;
+    Time duration;
+    int capacity;
+
+} Flight;
+
+Flight flightList[MAX_FLIGHTS];
+
+int f_counter = 0;
+void flightCode()
+{
+    scanf("%s", flightList[f_counter].id);
+    scanf("%s", flightList[f_counter].departAirportID);
+    scanf("%s", flightList[f_counter].arrivAirportID);
+
+    f_counter++;
 }
 
 int main()
