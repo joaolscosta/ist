@@ -101,25 +101,34 @@ Date newDate(Date currentDate)
     if (date.year > MAX_YEAR || date.year < MIN_YEAR)
     {
         printf("invalid date\n");
+        return currentDate;
     }
     else if (currentDate.year > date.year)
     {
         printf("invalid date\n");
+        return currentDate;
     }
     else if (currentDate.year == date.year && currentDate.month > date.month)
     {
         printf("invalid date\n");
+        return currentDate;
     }
     else if (currentDate.month == date.month && currentDate.day > date.day)
     {
         printf("invalid date\n");
+        return currentDate;
+    }
+    else if (date.day > 31 || date.day < 1 || date.month > 12 ||
+             date.month < 1)
+    {
+        printf("invalid date\n");
+        return currentDate;
     }
     else
     {
-        printf("%02d-%02d-%d", date.day, date.month, date.year);
+        printf("%02d-%02d-%d\n", date.day, date.month, date.year);
         return date;
     }
-    return currentDate;
 }
 
 /*  COMAND L:   */
