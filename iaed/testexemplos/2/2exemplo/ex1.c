@@ -6,13 +6,13 @@ void troca(char s[])
 
     while (i != '\0')
     {
-        if (s[i] >= 'a' && s[i] <= 'z')
+        if (s[i] >= 'a' && s[i] >= 'z')
         {
             s[i] = s[i] + 'A' - 'a';
         }
         i++;
     }
-    return s;
+    printf("%s", s);
 }
 
 int main()

@@ -17,3 +17,21 @@ double polyval(double pol[], int size, double x)
 
     return soma;
 }
+
+double polyvals(double pol[], int size, double x)
+{
+    int i, j;
+    int op;
+    int soma = 0;
+
+    for (i = 1; i <= size; i++)
+    {
+        op = pol[i];
+        for (j = 1; j <= i; j++)
+        {
+            op = op * x;
+        }
+        soma += op;
+    }
+    return soma;
+}

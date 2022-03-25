@@ -66,7 +66,7 @@ void newAirport(Airport airportList[])
         }
     }
 
-    if (j > MAX_AIRPORTS)
+    if (j >= MAX_AIRPORTS)
     {
         printf("too many airports\n");
         return;
@@ -126,7 +126,7 @@ Date newDate(Date currentDate)
 
 void printAirports(int j)
 {
-    int i, k, id_counter = 0;
+    int i, k, id_counter = 0, flights = 0;
     Airport aux;
     Airport sortedAirports[MAX_AIRPORTS];
     char airport_id[MAX_C_ID], c;
@@ -154,13 +154,12 @@ void printAirports(int j)
     {
         for (i = 0; i < j; i++)
         {
-            printf("%s %s %s\n", sortedAirports[i].id,
-                   sortedAirports[i].country, sortedAirports[i].city);
+            printf("%s %s %s %d\n", sortedAirports[i].id,
+                   sortedAirports[i].city, sortedAirports[i].country, flights);
         }
     }
     else
     {
-
         while (c != '\n')
         {
             scanf("%s", airport_id);
@@ -170,16 +169,17 @@ void printAirports(int j)
                 if (strcmp(airport_id, sortedAirports[i].id) == 0)
                 {
                     id_counter += 1;
-                    printf("%s %s %s\n", sortedAirports[i].id,
-                           sortedAirports[i].country, sortedAirports[i].city);
+
+                    printf("%s %s %s %d\n", sortedAirports[i].id,
+                           sortedAirports[i].city,
+                           sortedAirports[i].country, flights);
                 }
             }
 
             if (id_counter == 0)
             {
-                printf("%s", airport_id);
+                printf("%s: ", airport_id);
                 printf("no such airport ID\n");
-                return;
             }
 
             c = getchar();
