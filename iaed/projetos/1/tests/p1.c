@@ -1,3 +1,5 @@
+
+   
 /* gcc -Wall -Wextra -Werror -ansi -pedantic -o p1 p1.c */
 
 #include <stdio.h>
@@ -17,7 +19,7 @@
 #define MIN_YEAR 2022
 #define MAX_YEAR 2023
 
-#define MAX_C_CODE 7
+#define MAX_C_CODE 8
 
 /*  COMAND A:   */
 
@@ -93,6 +95,8 @@ typedef struct
 
 } Date;
 
+Date currentDate = {1, 1, 2022};
+
 Date newDate(Date currentDate)
 {
     Date date;
@@ -131,6 +135,7 @@ Date newDate(Date currentDate)
         return date;
     }
 }
+
 
 /*  COMAND L:   */
 
@@ -216,8 +221,8 @@ typedef struct time
 typedef struct flight
 {
     char code[MAX_C_CODE];
-    char departAirportID[4];
-    char arrivAirportID[4];
+    char departAirportID[MAX_C_ID];
+    char arrivAirportID[MAX_C_ID];
     Date departDate;
     Time departHour;
     Time duration;
@@ -225,26 +230,194 @@ typedef struct flight
 
 } Flight;
 
+
 Flight flightList[MAX_FLIGHTS];
 
 int flight_counter = 0;
 
 void flightCode()
 {
-    char code_aux[MAX_C_CODE], departID_aux[4];
+    char code_aux[MAX_C_CODE], departID_aux[MAX_C_ID], arrivID_aux[MAX_C_ID];
+    int capacity_aux, code_char = 0;
+    Date departDate_aux;
+    Time departHour_aux, duration_aux;
+    int id_check = 0, i;
+    char c;
+    
+    
 
-    scanf("%s", code_aux);
-    scanf("%s", flightList[flight_counter].departAirportID);
-    scanf("%s", flightList[flight_counter].arrivAirportID);
+    c = getchar();
+    if (c == '\n')
+    {
+        for(i = 0; i < flight_counter; i++)
+            {
+                printf("%s %s %s %02d-%02d-%d %02d:%02d\n", 
+                        flightList[i].code,
+                        flightList[i].departAirportID,
+                        flightList[i].arrivAirportID,
+                        flightList[i].departDate.day,
+                        flightList[i].departDate.month,
+                        flightList[i].departDate.year,
+                        flightList[i].departHour.hours,
+                        flightList[i].departHour.minutes);
+            }
+    }
+    else
+    {
+        scanf("%s", code_aux);
+        scanf("%s", departID_aux);
+        scanf("%s", arrivID_aux);
+        scanf("%d-%d-%d", &departDate_aux.day, &departDate_aux.month, 
+                                            &departDate_aux.year);
+        scanf("%d:%d", &departHour_aux.hours, &departHour_aux.minutes);
+        scanf("%d:%d", &duration_aux.hours, &duration_aux.minutes);
+        scanf("%d", &capacity_aux);
+        /* Verificar se tem as duas primeiras letras maiusculas */
+        code_char = 0;
+        while (code_char < 2)
+        {
+            if (code_aux[code_char] < 'A' || code_aux[code_char] > 'Z')
+            {
+                printf("invalid flight code\n");
+                return;
+            }
+            code_char++;
+        }
+        if (code_aux[2] < '1' || code_aux[2] > '9')
+        {
+            printf("invalid flight code\n");
+            return;
+        }
+        /* Verificar o resto dos digitos depois do primeiro diferente de zero 
+        */
+        code_char = 3;
+        while (code_aux[code_char] != '\0')
+        {
+            if (code_aux[code_char] < '0' || code_aux[code_char] > '9')
+            {
+                printf("invalid flight code\n");
+                return;
+            }
+            code_char++;
+        }
 
-    flight_counter++;
+
+        if (departDate_aux.year > 2023 || departDate_aux.year < 2022)
+        {
+            printf("invalid date\n");
+            return;
+        }
+        if (currentDate.year > departDate_aux.year)
+        {
+            printf("invalid date\n");
+            return;
+        }
+        if (currentDate.year == departDate_aux.year && 
+            currentDate.month > departDate_aux.month)
+        {
+            printf("invalid date\n");
+            return;
+        }
+        if (currentDate.year == departDate_aux.year &&
+            currentDate.month == departDate_aux.month && 
+            currentDate.day > departDate_aux.day)
+        {
+            printf("invalid date\n");
+            return;
+        }
+        
+
+        /* Verificar se nao existe voos repetidos */
+        for (i = 0; i < flight_counter; i++)
+        {
+            if (strcmp(code_aux, flightList[i].code) == 0)
+            {
+                if (departDate_aux.day == flightList[i].departDate.day
+                && departDate_aux.month == flightList[i].departDate.month
+                && departDate_aux.year == flightList[i].departDate.year)
+                {
+                    printf("flight already exists\n");
+                    return;
+                }
+            }
+        }
+
+        /* Os dois próximos ciclos é para verificar se nao existem os id's de
+            partida e chegada 
+            v AC12 ABC DEF 10-1-2022 09:10 01:10 40*/
+        
+        id_check = 0;
+        for (i = 0; i < airport_counter; i++)
+        {
+        
+            if (strcmp(departID_aux, airportList[i].id) == 0)
+            {
+                id_check = 1;
+            }
+        }
+        if(id_check == 0)
+        {
+            printf("%s: no such airport ID\n", departID_aux);
+            return;
+        }
+        id_check = 0;
+        for (i = 0; i < airport_counter; i++)
+        {
+
+            if (strcmp(arrivID_aux, airportList[i].id) == 0)
+            {
+                id_check = 1;
+            }
+        }
+        if(id_check == 0)
+        {
+            printf("%s: no such airport ID\n", arrivID_aux);
+            return;
+        }
+
+
+        if (flight_counter > MAX_FLIGHTS)
+        {
+            printf("too many flights\n");
+            return;
+        }
+
+        if (duration_aux.hours > 12 || (duration_aux.hours == 12 &&
+                                     duration_aux.minutes > 0))
+        {
+            printf("invalid duration\n");
+            return;
+        }
+
+        if (capacity_aux > 100 || capacity_aux < 10)
+        {
+            printf("invalid capacity\n");
+            return;
+        }
+
+        strncpy(flightList[flight_counter].code, code_aux, MAX_C_CODE);
+        strncpy(flightList[flight_counter].departAirportID, 
+                                            departID_aux, MAX_C_ID);
+        strncpy(flightList[flight_counter].arrivAirportID, arrivID_aux,
+                                                                     MAX_C_ID);
+        
+        flightList[flight_counter].departDate.day = departDate_aux.day;
+        flightList[flight_counter].departDate.month = departDate_aux.month;
+        flightList[flight_counter].departDate.year = departDate_aux.year;
+        flightList[flight_counter].departHour.hours = departHour_aux.hours;
+        flightList[flight_counter].departHour.minutes = departHour_aux.minutes;
+        flightList[flight_counter].duration.hours = duration_aux.hours;
+        flightList[flight_counter].duration.minutes = duration_aux.minutes;
+        flightList[flight_counter].capacity = capacity_aux;
+
+        flight_counter++;
+    }
 }
 
 int main()
 {
     char option;
-
-    Date currentDate = {1, 1, 2022};
+    
     scanf("%c", &option);
 
     while (option != 'q')
@@ -258,7 +431,7 @@ int main()
             printAirports(airport_counter);
             break;
         case 'v':
-            printf("newFlight / allFlights");
+            flightCode(flight_counter);
             break;
         case 'p':
             printf("airportDepartures");
