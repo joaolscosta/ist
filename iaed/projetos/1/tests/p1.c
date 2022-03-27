@@ -442,6 +442,7 @@ void departList()
 
     int i, j, check = 0;
     int day_aux, month_aux, year_aux, hour_aux, minutes_aux;
+    char code_aux[MAX_C_CODE], departid_aux[MAX_C_ID];
 
     scanf("%s", id_aux);
 
@@ -477,6 +478,8 @@ void departList()
                 year_aux = departList_aux[i].departDate.year;
                 hour_aux = departList_aux[i].departHour.hours;
                 minutes_aux = departList_aux[i].departHour.minutes;
+                strcpy(departid_aux, departList_aux[i].departAirportID);
+                strcpy(code_aux, departList_aux[i].code);
 
                 departList_aux[i].departDate.day =
                     departList_aux[j].departDate.day;
@@ -488,14 +491,31 @@ void departList()
                     departList_aux[j].departHour.hours;
                 departList_aux[i].departHour.minutes =
                     departList_aux[j].departHour.minutes;
+                strcpy(departList_aux[i].departAirportID,
+                       departList_aux[j].departAirportID);
+                strcpy(departList_aux[i].code,
+                       departList_aux[j].code);
 
                 departList_aux[j].departDate.day = day_aux;
                 departList_aux[j].departDate.month = month_aux;
                 departList_aux[j].departDate.year = year_aux;
                 departList_aux[j].departHour.hours = hour_aux;
                 departList_aux[j].departHour.minutes = minutes_aux;
+                strcpy(departList_aux[j].departAirportID, departid_aux);
+                strcpy(departList_aux[j].code, code_aux);
             }
         }
+    }
+
+    for (i = 0; i < depart_counter; i++)
+    {
+        printf("%s %s %02d-%02d-%02d %d:%d", departList_aux[i].code,
+               departList_aux[i].departAirportID,
+               departList_aux[i].departDate.day,
+               departList_aux[i].departDate.month,
+               departList_aux[i].departDate.year,
+               departList_aux[i].departHour.hours,
+               departList_aux[i].departHour.minutes);
     }
 }
 
