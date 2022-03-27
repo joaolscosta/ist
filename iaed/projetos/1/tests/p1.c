@@ -453,15 +453,13 @@ void departList()
             strcpy(departList_aux[depart_counter].code, flightList[i].code);
             strcpy(departList_aux[depart_counter].departAirportID,
                    flightList[i].departAirportID);
-            strcpy(departList_aux[depart_counter].departDate.day,
-                   flightList[i].departDate.day);
-            strcpy(departList_aux[depart_counter].departDate.month,
-                   flightList[i].departDate.month);
-            strcpy(departList_aux[depart_counter].departDate.year,
-                   flightList[i].departDate.year);
+
+            departList_aux[depart_counter].departDate.day = flightList[i].departDate.day;
+            departList_aux[depart_counter].departDate.month = flightList[i].departDate.month;
+            departList_aux[depart_counter].departDate.year = flightList[i].departDate.year;
         }
     }
-    if (check = 0)
+    if (check == 0)
     {
         printf("no such airport ID");
         return;
