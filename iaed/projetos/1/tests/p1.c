@@ -414,7 +414,9 @@ void flightCode()
         {
             if (strcmp(code_aux, flightList[i].code) == 0)
             {
-                if (departDate_aux.day == flightList[i].departDate.day && departDate_aux.month == flightList[i].departDate.month && departDate_aux.year == flightList[i].departDate.year)
+                if (departDate_aux.day == flightList[i].departDate.day &&
+                    departDate_aux.month == flightList[i].departDate.month &&
+                    departDate_aux.year == flightList[i].departDate.year)
                 {
                     printf("flight already exists\n");
                     return;
@@ -664,13 +666,80 @@ int arriv_counter = 0;
 
 Flight arrivList_aux[MAX_FLIGHTS];
 
+void arrivList_sort()
+{
+    int i, j;
+    Flight aux;
+
+    for (i = 0; i < arriv_counter; ++i)
+    {
+        for (j = i + 1; j < arriv_counter; ++j)
+        {
+            if (arrivList_aux[j].departDate.year <
+                arrivList_aux[i].departDate.year)
+            {
+                aux = arrivList_aux[i];
+                arrivList_aux[i] = arrivList_aux[j];
+                arrivList_aux[j] = aux;
+            }
+            if (arrivList_aux[j].departDate.year ==
+                    arrivList_aux[i].departDate.year &&
+                arrivList_aux[j].departDate.month <
+                    arrivList_aux[i].departDate.month)
+            {
+                aux = arrivList_aux[i];
+                arrivList_aux[i] = arrivList_aux[j];
+                arrivList_aux[j] = aux;
+            }
+            if (arrivList_aux[j].departDate.year ==
+                    arrivList_aux[i].departDate.year &&
+                arrivList_aux[j].departDate.month ==
+                    arrivList_aux[i].departDate.month &&
+                arrivList_aux[j].departDate.day <
+                    arrivList_aux[i].departDate.day)
+            {
+                aux = arrivList_aux[i];
+                arrivList_aux[i] = arrivList_aux[j];
+                arrivList_aux[j] = aux;
+            }
+            if (arrivList_aux[j].departDate.year ==
+                    arrivList_aux[i].departDate.year &&
+                arrivList_aux[j].departDate.month ==
+                    arrivList_aux[i].departDate.month &&
+                arrivList_aux[j].departDate.day ==
+                    arrivList_aux[i].departDate.day &&
+                arrivList_aux[j].departHour.hours <
+                    arrivList_aux[i].departHour.hours)
+            {
+                aux = arrivList_aux[i];
+                arrivList_aux[i] = arrivList_aux[j];
+                arrivList_aux[j] = aux;
+            }
+            if (arrivList_aux[j].departDate.year ==
+                    arrivList_aux[i].departDate.year &&
+                arrivList_aux[j].departDate.month ==
+                    arrivList_aux[i].departDate.month &&
+                arrivList_aux[j].departDate.day ==
+                    arrivList_aux[i].departDate.day &&
+                arrivList_aux[j].departHour.hours ==
+                    arrivList_aux[i].departHour.hours &&
+                arrivList_aux[j].departHour.minutes <
+                    arrivList_aux[i].departHour.minutes)
+            {
+                aux = arrivList_aux[i];
+                arrivList_aux[i] = arrivList_aux[j];
+                arrivList_aux[j] = aux;
+            }
+        }
+    }
+}
+
 void arrivList()
 {
     char arrivid_aux[MAX_C_ID];
     int i, check = 0, aux;
-    Flight arrivDate[MAX_FLIGHTS];
     int temp_day;
-    int month;
+    int day, month, year;
 
     scanf("%s", arrivid_aux);
 
@@ -681,26 +750,53 @@ void arrivList()
             check = 1;
             arrivList_aux[arriv_counter] = flightList[i];
 
+            arrivList_sort();
+
             arrivList_aux[arriv_counter].departHour.minutes +=
                 arrivList_aux[arriv_counter].duration.minutes;
 
             aux = arrivList_aux[arriv_counter].departHour.minutes / 60;
 
             arrivList_aux[arriv_counter].departHour.hours +=
-                arrivList_aux[arriv_counter].duration.hours;
+                arrivList_aux[arriv_counter].duration.hours + aux;
 
             arrivList_aux[arriv_counter].departHour.minutes =
                 arrivList_aux[arriv_counter].departHour.minutes - (aux * 60);
 
             temp_day = arrivList_aux[arriv_counter].departHour.hours / 24;
 
-            if (arrivList_aux[arriv_counter].departDate.month == 2 && arrivList_aux[arriv_counter].departDate.day == 28)
+            if (arrivList_aux[arriv_counter].departDate.month == 2 &&
+                arrivList_aux[arriv_counter].departDate.day == 28)
             {
                 arrivList_aux[arriv_counter].departDate.month += 1;
                 arrivList_aux[arriv_counter].departDate.day = 1;
             }
+
             month = arrivList_aux[arriv_counter].departDate.month;
-            if (month == 1 || month == 3 ||)
+            day = arrivList_aux[arriv_counter].departDate.day;
+            if ((month == 1 || month == 3 || month == 5 || month == 7 ||
+                 month == 8 || month == 10) &&
+                day == 31)
+            {
+                month++;
+                arrivList_aux[arriv_counter].departDate.day = 1;
+            }
+            if ((month == 2 || month == 4 || month == 6 || month == 9 ||
+                 month == 11) &&
+                day == 30)
+            {
+                month++;
+                arrivList_aux[arriv_counter].departDate.day = 1;
+            }
+            year = arrivList_aux[arriv_counter].departDate.year;
+            if ((month = 12) && day == 31)
+            {
+                year++;
+                month++;
+                day = 1;
+            }
+
+            arrivList_aux[arriv_counter].departHour.hours -= 24 * temp_day;
         }
         if (check == 0)
         {
@@ -713,13 +809,13 @@ void arrivList()
 
     for (i = 0; i < arriv_counter; i++)
     {
-        printf("%s %s %02d-%02d-%02d %02d:%02d\n", departList_aux[i].code,
-               departList_aux[i].departAirportID,
-               departList_aux[i].departDate.day,
-               departList_aux[i].departDate.month,
-               departList_aux[i].departDate.year,
-               departList_aux[i].departHour.hours,
-               departList_aux[i].departHour.minutes);
+        printf("%s %s %02d-%02d-%02d %02d:%02d\n", arrivList_aux[i].code,
+               arrivList_aux[i].departAirportID,
+               arrivList_aux[i].departDate.day,
+               arrivList_aux[i].departDate.month,
+               arrivList_aux[i].departDate.year,
+               arrivList_aux[i].departHour.hours,
+               arrivList_aux[i].departHour.minutes);
     }
 }
 
@@ -751,6 +847,7 @@ int main()
             departList();
             break;
         case 'c':
+            arrivList();
             break;
         case 't':
             currentDate = newDate(currentDate);
