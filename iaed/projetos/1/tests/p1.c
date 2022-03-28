@@ -1,9 +1,24 @@
 /* gcc -Wall -Wextra -Werror -ansi -pedantic -o p1 p1.c */
 
+/*
+By: João Luis Saraiva Costa ist1102078
+
+Este progama pretende a construção de um sistema de gestão de aeroportos com
+funcionalidades de definição de aeroportos e voos assim como a sua consulta.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+
+/*
+Estas primeiras cinco constantes correspondem aos limites de cada variável da
+constituição de um aeroporto
+
+As próximas cinco contantes definem o que ao longo do correr do sistema são
+os limites das datas introdizas tanto ao sistema como aos voos.
+*/
 
 #define MAX_C_ID 4
 #define MAX_C_COUNTRY 31
@@ -17,9 +32,18 @@
 #define MIN_YEAR 2022
 #define MAX_YEAR 2023
 
+/* Limite de caracteres que um código de voo pode conter */
 #define MAX_C_CODE 8
 
 /*  COMAND A:   */
+
+/*
+Estrutura que permite ao longo do sistema alterar os parâmetros de um
+aeroporto para que este possa ser adicionado ou considerado inválido se algum
+parâmetro não corresponder ao pedido.
+Contém o ID, o país e cidade de origem e também o número de voos que esse
+aeroporto contém.
+*/
 
 typedef struct airport
 {
@@ -29,6 +53,14 @@ typedef struct airport
     int flights;
 
 } Airport;
+
+/*
+A função newAirport() é a função que permite adicionar um aeroporto ao sistema.
+Após ser chamada na main() não recebe quaisquer parâmetros e para além das
+variáveis declaradas na função recorre também ao contador airport_counter
+que vai preencher os vetores num vetor global airportList[] que é onde vão
+ser preenchidos e armazenados os aeportos criados se não forem inválidos.
+*/
 
 int airport_counter = 0;
 
@@ -41,6 +73,10 @@ void newAirport(Airport airportList[])
     scanf("%s", country_aux);
     scanf(" %[^\n]", city_aux);
 
+    /*  O pŕoximo ciclo while a condição seguinte verificam se o ID do
+    aeroporto apenas contém letras maiúsculas e se apenas contém no máximo
+    três caracteres.
+    */
     while (id_aux[counter] != '\0')
     {
         if (id_aux[counter] < 'A' || id_aux[counter] > 'Z')
@@ -51,18 +87,21 @@ void newAirport(Airport airportList[])
         counter++;
     }
 
-    if (airport_counter >= MAX_AIRPORTS)
-    {
-        printf("too many airports\n");
-        return;
-    }
-
     if (counter > MAX_C_ID)
     {
         printf("invalid airport ID\n");
         return;
     }
 
+    /* Verifica se ultrapassa o limite de aeroportos permitidos */
+    if (airport_counter >= MAX_AIRPORTS)
+    {
+        printf("too many airports\n");
+        return;
+    }
+
+    /* Verifica se o ID introduzido corresponde a algum aeroporto já armazenado
+no vetor de aeroportos */
     for (i = 0; i < airport_counter; i++)
     {
         if (strcmp(id_aux, airportList[i].id) == 0)
@@ -73,6 +112,11 @@ void newAirport(Airport airportList[])
         }
     }
 
+    /* Este é o passo de cópia das variáveis auxiliares para as variáveis
+    dentro de cada posição do vetor pois até agora fizemos uma série de
+    validações que se desse erro em alguma não poderia ser adicionado o
+    aeroporto ao sistema então após validar que todos os parâmetros estão
+    corretos é que podemos afirmar que o aeroporto é válido */
     strncpy(airportList[airport_counter].id, id_aux, MAX_C_ID);
     strncpy(airportList[airport_counter].country, country_aux, MAX_C_COUNTRY);
     strncpy(airportList[airport_counter].city, city_aux, MAX_C_CITY);
@@ -85,6 +129,8 @@ Airport airportList[MAX_AIRPORTS];
 
 /*  COMAND T:   */
 
+/* Este comando é o que vai definir a hora do sistema.
+Recorre também a uma estrutura que vai ser o método de manipulação da data. */
 typedef struct
 {
     int day;
@@ -95,12 +141,20 @@ typedef struct
 
 Date currentDate = {1, 1, 2022};
 
+/* Função newDate() recebe a data atual do sistema e após uma série de
+condições se a data for válida retorna a nova data atual correspondendo ao
+comando pretendido por t.
+*/
 Date newDate(Date currentDate)
 {
     Date date;
 
     scanf("%d-%d-%d", &date.day, &date.month, &date.year);
 
+    /* Após ler o dia, mês e ano introduzidos pelo utilizador verifica se
+    o ano é maior ou menor doque o tempo permitido e faz uma série de
+    verificações para analisar se a nova data não é numa data no passado em
+    relação à data atual.*/
     if (date.year > MAX_YEAR || date.year < MIN_YEAR)
     {
         printf("invalid date\n");
@@ -148,6 +202,11 @@ Date newDate(Date currentDate)
 
 /*  COMAND L:   */
 
+/* Função printAirports() é a função que vai permitir dar ocorrer os comandos
+pretendidos em l e recebe o parâmtro airport_counter que vai servir de contador
+para que o vetor da lista de aeroportos seja apresentado.
+ */
+
 void printAirports(int airport_counter)
 {
     int i, k, flights = 0;
@@ -156,6 +215,15 @@ void printAirports(int airport_counter)
     char airport_id[MAX_C_ID], c;
     int check = 0, index = 0;
 
+    /* Tal como na função para o comando 'a' esta também recorre a variáveis
+    auxiliares para que possa primeiro ser validado o conteúdo introduzido após
+    ou não ao l. */
+
+    /* Como de qualquer das formas em que o utilizador apenas introduza o
+    comando 'l' ou posteriormente introduza quais os aeroportos que quer
+    filtrar a função começa por colocar todo o conteúdo dentro do vetor global
+    de aeroportos dentro de outro vetor que vai ser ordenado por
+    ordem alfabética ou de identificador de comando */
     for (i = 0; i < airport_counter; i++)
     {
         sortedAirports[i] = airportList[i];
@@ -174,6 +242,14 @@ void printAirports(int airport_counter)
         }
     }
 
+    /* Após o vetor de aeroportos estar ordenado está presente uma condição
+    para verificar se está presente apenas o l ou se estão posteriormente
+    apenas os aeroportos que queremos listar. Para isso verificamos se o
+    caracter logo a seguir ao l é um \n e aí o que acontece é que lista
+    todos os aeroportos. Se não acontecer isso é porque estão discriminados
+    à frente os aeroportos pretendidos e enquanto o caracter não for um \n
+    vai ler todos os caracteres e confirmar se os ID's introduzidos
+    correspondem a algum dos ID's presentes no vetor de aeroportos.*/
     c = getchar();
     if (c == '\n')
     {
@@ -195,7 +271,7 @@ void printAirports(int airport_counter)
 
                 if (strcmp(airport_id, sortedAirports[i].id) == 0)
                 {
-                    check = 1;
+                    check = 1; /* id correspondido */
                     index = i;
                 }
             }
@@ -220,6 +296,13 @@ void printAirports(int airport_counter)
 
 /*  COMAND V:   */
 
+/* Para o comando v temos duas hipóteses: Ou é apenas introduzido o v é listado
+todos os voos criados ou então é criado um novo voo.
+Para que possamos introduzir e manipular os valores e texto de um voo
+recorre-se a duas estruturas que correpondem ao tempo e ao voo que por sua
+vez vai conter também outras structs do tipo data e tempo.
+*/
+
 typedef struct time
 {
     int hours;
@@ -243,7 +326,15 @@ Flight flightList[MAX_FLIGHTS];
 
 int flight_counter = 0;
 
-void flightCode()   
+/* A função flightCode() é a função que permite criar ou listar os voos
+previamente criados. Mais uma vez usamos variáveis auxiliares semelhantes às
+presentes nas estruturas para primeiro verificar se o conteúdo é válido e
+também verificamos como já foi explicado acima no início do comando L se temos
+presente apenas o v introduzido pelo utilizador ou também conteúdo posterior ao
+comando que indica a criação de um voo.
+*/
+
+void flightCode()
 {
     char code_aux[MAX_C_CODE], departID_aux[MAX_C_ID], arrivID_aux[MAX_C_ID];
     int capacity_aux, code_char = 0;
@@ -252,6 +343,14 @@ void flightCode()
     int id_check = 0, i;
     char c;
 
+    /* Se o próximo caracter após o l for \n percorre o vetor flightList[] que
+    é aqui que são armazenados todos os voos criados e imprime os seus valores.
+
+    Se não acontecer analisa o código de voo, o ID do aeroporto de sáida e
+    chegada, a data, a hora, a duração e a capacidade que leva. Após isto
+    executa todas as condições necessárias à validação se é um voo permitido
+    e se acontecer adiciona à lista de voos.
+    */
     c = getchar();
     if (c == '\n')
     {
@@ -278,7 +377,10 @@ void flightCode()
         scanf("%d:%d", &departHour_aux.hours, &departHour_aux.minutes);
         scanf("%d:%d", &duration_aux.hours, &duration_aux.minutes);
         scanf("%d", &capacity_aux);
-        /* Verificar se tem as duas primeiras letras maiusculas */
+
+        /* Verificar se tem as duas primeiras letras maiusculas:
+        Começa por analisar os dois primeiros caracteres se são maiúsculas
+        e se após isso está um número entre 1 e 9999.*/
         code_char = 0;
         while (code_char < 2)
         {
@@ -312,9 +414,7 @@ void flightCode()
         {
             if (strcmp(code_aux, flightList[i].code) == 0)
             {
-                if (departDate_aux.day == flightList[i].departDate.day
-                 && departDate_aux.month == flightList[i].departDate.month
-                  && departDate_aux.year == flightList[i].departDate.year)
+                if (departDate_aux.day == flightList[i].departDate.day && departDate_aux.month == flightList[i].departDate.month && departDate_aux.year == flightList[i].departDate.year)
                 {
                     printf("flight already exists\n");
                     return;
@@ -322,6 +422,8 @@ void flightCode()
             }
         }
 
+        /* Os dois próximos ciclos verificam se tanto o ID do aeroporto de
+        saída como o de chegada existem no vetor de aeroportos.*/
         id_check = 0;
         for (i = 0; i < airport_counter; i++)
         {
@@ -351,6 +453,7 @@ void flightCode()
             return;
         }
 
+        /* Verifica se excede o número máximo de voos permitidos */
         if (flight_counter > MAX_FLIGHTS)
         {
             printf("too many flights\n");
@@ -394,6 +497,7 @@ void flightCode()
             return;
         }
 
+        /* Verifica se a duração do voo ultrapassa as 12 horas máximas */
         if (duration_aux.hours > 12 || (duration_aux.hours == 12 &&
                                         duration_aux.minutes > 0))
         {
@@ -401,6 +505,8 @@ void flightCode()
             return;
         }
 
+        /* Verifica se a capacidade do voo está entre os limites
+        estabelecidos*/
         if (capacity_aux > 100 || capacity_aux < 10)
         {
             printf("invalid capacity\n");
@@ -428,9 +534,16 @@ void flightCode()
 
 /*  COMAND P:   */
 
+/* A próxima função departList[] é a que corresponde ao comando p e este lista
+todos os voos com a partida de um dado aeroporto.
+*/
+
 int depart_counter = 0;
 
 Flight departList_aux[MAX_FLIGHTS];
+
+/* Esta é um função auxiliar da departList[] que ordena o vetor dos voos pela
+ordem de data partida */
 
 void departList_sort()
 {
@@ -439,65 +552,73 @@ void departList_sort()
 
     for (i = 0; i < depart_counter; ++i)
     {
-       for (j = i + 1; j < depart_counter; ++j)
-       {
-            if (departList_aux[j].departDate.year < departList_aux[i].departDate.year)
+        for (j = i + 1; j < depart_counter; ++j)
+        {
+            if (departList_aux[j].departDate.year <
+                departList_aux[i].departDate.year)
             {
                 aux = departList_aux[i];
                 departList_aux[i] = departList_aux[j];
                 departList_aux[j] = aux;
             }
-            if (departList_aux[j].departDate.year == 
-                departList_aux[i].departDate.year &&
+            if (departList_aux[j].departDate.year ==
+                    departList_aux[i].departDate.year &&
                 departList_aux[j].departDate.month <
-                departList_aux[i].departDate.month)
+                    departList_aux[i].departDate.month)
             {
                 aux = departList_aux[i];
                 departList_aux[i] = departList_aux[j];
                 departList_aux[j] = aux;
             }
-            if (departList_aux[j].departDate.year == 
-                departList_aux[i].departDate.year &&
+            if (departList_aux[j].departDate.year ==
+                    departList_aux[i].departDate.year &&
                 departList_aux[j].departDate.month ==
-                departList_aux[i].departDate.month &&
+                    departList_aux[i].departDate.month &&
                 departList_aux[j].departDate.day <
-                departList_aux[i].departDate.day)
+                    departList_aux[i].departDate.day)
             {
                 aux = departList_aux[i];
                 departList_aux[i] = departList_aux[j];
                 departList_aux[j] = aux;
             }
-            if (departList_aux[j].departDate.year == 
-                departList_aux[i].departDate.year &&
+            if (departList_aux[j].departDate.year ==
+                    departList_aux[i].departDate.year &&
                 departList_aux[j].departDate.month ==
-                departList_aux[i].departDate.month &&
+                    departList_aux[i].departDate.month &&
                 departList_aux[j].departDate.day ==
-                departList_aux[i].departDate.day &&
+                    departList_aux[i].departDate.day &&
                 departList_aux[j].departHour.hours <
-                departList_aux[i].departHour.hours)
+                    departList_aux[i].departHour.hours)
             {
                 aux = departList_aux[i];
                 departList_aux[i] = departList_aux[j];
                 departList_aux[j] = aux;
             }
-            if (departList_aux[j].departDate.year == 
-                departList_aux[i].departDate.year &&
+            if (departList_aux[j].departDate.year ==
+                    departList_aux[i].departDate.year &&
                 departList_aux[j].departDate.month ==
-                departList_aux[i].departDate.month &&
+                    departList_aux[i].departDate.month &&
                 departList_aux[j].departDate.day ==
-                departList_aux[i].departDate.day &&
+                    departList_aux[i].departDate.day &&
                 departList_aux[j].departHour.hours ==
-                departList_aux[i].departHour.hours     &&
+                    departList_aux[i].departHour.hours &&
                 departList_aux[j].departHour.minutes <
-                departList_aux[i].departHour.minutes)
+                    departList_aux[i].departHour.minutes)
             {
                 aux = departList_aux[i];
                 departList_aux[i] = departList_aux[j];
                 departList_aux[j] = aux;
             }
-       }
+        }
     }
 }
+
+/* Esta departList() não recebe quaisquer parâmetros e para listar os voos
+com base em um ID de um aeroporto o que faz é verificar na lista de voos
+quais deles correspondem e adicionar ao vetor global departList_aux[]
+o conteúdo desse voo a que corresponde o ID.
+Após isso ordena o vetor com auxílio da função auxiliar acima e apresenta
+o pretendido.*/
 
 void departList()
 {
@@ -517,12 +638,12 @@ void departList()
 
         if (check == 0)
         {
-        printf("%s: no such airport ID\n", departid_aux );
-        return;
+            printf("%s: no such airport ID\n", departid_aux);
+            return;
         }
         depart_counter++;
     }
-    
+
     departList_sort();
 
     for (i = 1; i < depart_counter; i++)
@@ -533,7 +654,7 @@ void departList()
                departList_aux[i].departDate.month,
                departList_aux[i].departDate.year,
                departList_aux[i].departHour.hours,
-               departList_aux[i].departHour.minutes);   
+               departList_aux[i].departHour.minutes);
     }
 }
 
@@ -560,19 +681,19 @@ void arrivList()
             check = 1;
             arrivList_aux[arriv_counter] = flightList[i];
 
-            arrivList_aux[arriv_counter].departHour.minutes += 
+            arrivList_aux[arriv_counter].departHour.minutes +=
                 arrivList_aux[arriv_counter].duration.minutes;
-            
+
             aux = arrivList_aux[arriv_counter].departHour.minutes / 60;
-            
+
             arrivList_aux[arriv_counter].departHour.hours +=
              arrivList_aux[arriv_counter].duration.hours;
-            
+
             arrivList_aux[arriv_counter].departHour.minutes =
                 arrivList_aux[arriv_counter].departHour.minutes - (aux * 60);
-            
+
             temp_day = arrivList_aux[arriv_counter].departHour.hours / 24;
-            
+
             if (arrivList_aux[arriv_counter].departDate.month == 2
             && arrivList_aux[arriv_counter].departDate.day == 28)
             {
@@ -606,8 +727,12 @@ void arrivList()
 }
 
 */
- 
 
+/* Função main() que lê um caracter que correponde ao comando pretendido pelo
+utilizador e enquanto for diferente de q (termina o programa) pede
+repetidamente após introduzir o comando e conteúdo desejado qual o próximo
+comando que o utilizador pretende realizar.
+*/
 int main()
 {
     char option;
