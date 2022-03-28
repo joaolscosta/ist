@@ -659,7 +659,7 @@ void departList()
 }
 
 /*  COMAND C:   */
-/*
+
 int arriv_counter = 0;
 
 Flight arrivList_aux[MAX_FLIGHTS];
@@ -687,27 +687,25 @@ void arrivList()
             aux = arrivList_aux[arriv_counter].departHour.minutes / 60;
 
             arrivList_aux[arriv_counter].departHour.hours +=
-             arrivList_aux[arriv_counter].duration.hours;
+                arrivList_aux[arriv_counter].duration.hours;
 
             arrivList_aux[arriv_counter].departHour.minutes =
                 arrivList_aux[arriv_counter].departHour.minutes - (aux * 60);
 
             temp_day = arrivList_aux[arriv_counter].departHour.hours / 24;
 
-            if (arrivList_aux[arriv_counter].departDate.month == 2
-            && arrivList_aux[arriv_counter].departDate.day == 28)
+            if (arrivList_aux[arriv_counter].departDate.month == 2 && arrivList_aux[arriv_counter].departDate.day == 28)
             {
                 arrivList_aux[arriv_counter].departDate.month += 1;
                 arrivList_aux[arriv_counter].departDate.day = 1;
             }
             month = arrivList_aux[arriv_counter].departDate.month;
             if (month == 1 || month == 3 ||)
-
         }
         if (check == 0)
         {
-        printf("%s: no such airport ID\n", arrivid_aux );
-        return;
+            printf("%s: no such airport ID\n", arrivid_aux);
+            return;
         }
 
         arriv_counter++;
@@ -723,10 +721,7 @@ void arrivList()
                departList_aux[i].departHour.hours,
                departList_aux[i].departHour.minutes);
     }
-
 }
-
-*/
 
 /* Função main() que lê um caracter que correponde ao comando pretendido pelo
 utilizador e enquanto for diferente de q (termina o programa) pede
