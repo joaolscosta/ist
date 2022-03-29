@@ -188,7 +188,7 @@ Date newDate(Date currentDate)
         return currentDate;
     }
     else if (date.year == currentDate.year + 1 &&
-             date.month == currentDate.month && date.day > currentDate.day)
+             date.month == currentDate.month && date.day >= currentDate.day)
     {
         printf("invalid date\n");
         return currentDate;
@@ -515,11 +515,10 @@ void flightCode()
             return;
         }
 
-        strncpy(flightList[flight_counter].code, code_aux, MAX_C_CODE);
-        strncpy(flightList[flight_counter].departAirportID,
-                departID_aux, MAX_C_ID);
-        strncpy(flightList[flight_counter].arrivAirportID, arrivID_aux,
-                MAX_C_ID);
+        strcpy(flightList[flight_counter].code, code_aux);
+        strcpy(flightList[flight_counter].departAirportID,
+               departID_aux);
+        strcpy(flightList[flight_counter].arrivAirportID, arrivID_aux);
 
         flightList[flight_counter].departDate.day = departDate_aux.day;
         flightList[flight_counter].departDate.month = departDate_aux.month;
@@ -633,22 +632,27 @@ void departList()
     {
         if (strcmp(departid_aux, flightList[i].departAirportID) == 0)
         {
-            check = 1;
-
             departList_aux[depart_counter] = flightList[i];
+            depart_counter++;
         }
+    }
 
-        if (check == 0)
+    for (i = 0; i < airport_counter; i++)
+    {
+        if (strcmp(departid_aux, airportList[i].id) == 0)
         {
-            printf("%s: no such airport ID\n", departid_aux);
-            return;
+            check = 1;
         }
-        depart_counter++;
+    }
+    if (check == 0)
+    {
+        printf("%s: no such airport ID\n", departid_aux);
+        return;
     }
 
     departList_sort();
 
-    for (i = 1; i < depart_counter; i++)
+    for (i = 0; i < depart_counter; i++)
     {
         printf("%s %s %02d-%02d-%02d %02d:%02d\n", departList_aux[i].code,
                departList_aux[i].arrivAirportID,
@@ -662,11 +666,9 @@ void departList()
 
 /*  COMAND C:   */
 
-int arriv_counter = 0;
-
 Flight arrivList_aux[MAX_FLIGHTS];
 
-void arrivList_sort()
+void arrivList_sort(Flight arrivList_aux[], int arriv_counter)
 {
     int i, j;
     Flight aux;
@@ -682,49 +684,49 @@ void arrivList_sort()
                 arrivList_aux[i] = arrivList_aux[j];
                 arrivList_aux[j] = aux;
             }
-            if (arrivList_aux[j].departDate.year ==
-                    arrivList_aux[i].departDate.year &&
-                arrivList_aux[j].departDate.month <
-                    arrivList_aux[i].departDate.month)
+            else if (arrivList_aux[j].departDate.year ==
+                         arrivList_aux[i].departDate.year &&
+                     arrivList_aux[j].departDate.month <
+                         arrivList_aux[i].departDate.month)
             {
                 aux = arrivList_aux[i];
                 arrivList_aux[i] = arrivList_aux[j];
                 arrivList_aux[j] = aux;
             }
-            if (arrivList_aux[j].departDate.year ==
-                    arrivList_aux[i].departDate.year &&
-                arrivList_aux[j].departDate.month ==
-                    arrivList_aux[i].departDate.month &&
-                arrivList_aux[j].departDate.day <
-                    arrivList_aux[i].departDate.day)
+            else if (arrivList_aux[j].departDate.year ==
+                         arrivList_aux[i].departDate.year &&
+                     arrivList_aux[j].departDate.month ==
+                         arrivList_aux[i].departDate.month &&
+                     arrivList_aux[j].departDate.day <
+                         arrivList_aux[i].departDate.day)
             {
                 aux = arrivList_aux[i];
                 arrivList_aux[i] = arrivList_aux[j];
                 arrivList_aux[j] = aux;
             }
-            if (arrivList_aux[j].departDate.year ==
-                    arrivList_aux[i].departDate.year &&
-                arrivList_aux[j].departDate.month ==
-                    arrivList_aux[i].departDate.month &&
-                arrivList_aux[j].departDate.day ==
-                    arrivList_aux[i].departDate.day &&
-                arrivList_aux[j].departHour.hours <
-                    arrivList_aux[i].departHour.hours)
+            else if (arrivList_aux[j].departDate.year ==
+                         arrivList_aux[i].departDate.year &&
+                     arrivList_aux[j].departDate.month ==
+                         arrivList_aux[i].departDate.month &&
+                     arrivList_aux[j].departDate.day ==
+                         arrivList_aux[i].departDate.day &&
+                     arrivList_aux[j].departHour.hours <
+                         arrivList_aux[i].departHour.hours)
             {
                 aux = arrivList_aux[i];
                 arrivList_aux[i] = arrivList_aux[j];
                 arrivList_aux[j] = aux;
             }
-            if (arrivList_aux[j].departDate.year ==
-                    arrivList_aux[i].departDate.year &&
-                arrivList_aux[j].departDate.month ==
-                    arrivList_aux[i].departDate.month &&
-                arrivList_aux[j].departDate.day ==
-                    arrivList_aux[i].departDate.day &&
-                arrivList_aux[j].departHour.hours ==
-                    arrivList_aux[i].departHour.hours &&
-                arrivList_aux[j].departHour.minutes <
-                    arrivList_aux[i].departHour.minutes)
+            else if (arrivList_aux[j].departDate.year ==
+                         arrivList_aux[i].departDate.year &&
+                     arrivList_aux[j].departDate.month ==
+                         arrivList_aux[i].departDate.month &&
+                     arrivList_aux[j].departDate.day ==
+                         arrivList_aux[i].departDate.day &&
+                     arrivList_aux[j].departHour.hours ==
+                         arrivList_aux[i].departHour.hours &&
+                     arrivList_aux[j].departHour.minutes <
+                         arrivList_aux[i].departHour.minutes)
             {
                 aux = arrivList_aux[i];
                 arrivList_aux[i] = arrivList_aux[j];
@@ -740,17 +742,28 @@ void arrivList()
     int i, check = 0, aux;
     int temp_day;
     int day, month, year;
+    int arriv_counter;
 
     scanf("%s", arrivid_aux);
+    arriv_counter = 0;
+    for (i = 0; i < airport_counter; i++)
+    {
+        if (strcmp(arrivid_aux, airportList[i].id) == 0)
+        {
+            check = 1;
+        }
+    }
+    if (check == 0)
+    {
+        printf("%s: no such airport ID\n", arrivid_aux);
+        return;
+    }
 
     for (i = 0; i < flight_counter; i++)
     {
         if (strcmp(arrivid_aux, flightList[i].arrivAirportID) == 0)
         {
-            check = 1;
             arrivList_aux[arriv_counter] = flightList[i];
-
-            arrivList_sort();
 
             arrivList_aux[arriv_counter].departHour.minutes +=
                 arrivList_aux[arriv_counter].duration.minutes;
@@ -764,48 +777,47 @@ void arrivList()
                 arrivList_aux[arriv_counter].departHour.minutes - (aux * 60);
 
             temp_day = arrivList_aux[arriv_counter].departHour.hours / 24;
+            arrivList_aux[arriv_counter].departDate.day += temp_day;
 
-            if (arrivList_aux[arriv_counter].departDate.month == 2 &&
-                arrivList_aux[arriv_counter].departDate.day == 28)
-            {
-                arrivList_aux[arriv_counter].departDate.month += 1;
-                arrivList_aux[arriv_counter].departDate.day = 1;
-            }
-
+            year = arrivList_aux[arriv_counter].departDate.year;
             month = arrivList_aux[arriv_counter].departDate.month;
             day = arrivList_aux[arriv_counter].departDate.day;
-            if ((month == 1 || month == 3 || month == 5 || month == 7 ||
-                 month == 8 || month == 10) &&
-                day == 31)
+
+            if (arrivList_aux[arriv_counter].departDate.month == 2 &&
+                arrivList_aux[arriv_counter].departDate.day > 28)
             {
                 month++;
-                arrivList_aux[arriv_counter].departDate.day = 1;
+                arrivList_aux[arriv_counter].departDate.day -= 28;
             }
-            if ((month == 2 || month == 4 || month == 6 || month == 9 ||
-                 month == 11) &&
-                day == 30)
+            else if ((month == 1 || month == 3 || month == 5 || month == 7 ||
+                      month == 8 || month == 10) &&
+                     day > 31)
             {
                 month++;
-                arrivList_aux[arriv_counter].departDate.day = 1;
+                arrivList_aux[arriv_counter].departDate.day -= 31;
             }
-            year = arrivList_aux[arriv_counter].departDate.year;
-            if ((month = 12) && day == 31)
+            else if ((month == 4 || month == 6 || month == 9 ||
+                      month == 11) &&
+                     day > 30)
+            {
+                month++;
+                arrivList_aux[arriv_counter].departDate.day -= 30;
+            }
+            else if ((month == 12) && day > 31)
             {
                 year++;
-                month++;
-                day = 1;
+                month = 1;
+                arrivList_aux[arriv_counter].departDate.day -= 31;
             }
 
             arrivList_aux[arriv_counter].departHour.hours -= 24 * temp_day;
+            arrivList_aux[arriv_counter].departDate.month = month;
+            arrivList_aux[arriv_counter].departDate.year = year;
+            arriv_counter++;
         }
-        if (check == 0)
-        {
-            printf("%s: no such airport ID\n", arrivid_aux);
-            return;
-        }
-
-        arriv_counter++;
     }
+
+    arrivList_sort(arrivList_aux, arriv_counter);
 
     for (i = 0; i < arriv_counter; i++)
     {
