@@ -1,6 +1,7 @@
 /*
-By: João Luis Saraiva Costa ist1102078  IAED  2022
-
+File: p1_JoaoCosta_102078.c
+Author: João Luis Saraiva Costa ist1102078  IAED  2022
+Description:
 Este progama pretende a construção de um sistema de gestão de aeroportos com
 funcionalidades de definição de aeroportos e voos assim como a sua consulta.
 */
