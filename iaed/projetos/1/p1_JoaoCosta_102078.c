@@ -1,7 +1,5 @@
-/* gcc -Wall -Wextra -Werror -ansi -pedantic -o p1 p1.c */
-
 /*
-By: João Luis Saraiva Costa ist1102078
+By: João Luis Saraiva Costa ist1102078  IAED  2022
 
 Este progama pretende a construção de um sistema de gestão de aeroportos com
 funcionalidades de definição de aeroportos e voos assim como a sua consulta.
