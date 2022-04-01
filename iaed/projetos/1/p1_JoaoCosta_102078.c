@@ -17,14 +17,13 @@ Estas primeiras cinco constantes correspondem aos limites de cada variável da
 constituição de um aeroporto
 
 As próximas cinco contantes definem o que ao longo do correr do sistema são
-os limites das datas introdizas tanto ao sistema como aos voos.
+os limites das datas introduzidas tanto ao sistema como aos voos.
 */
 
 #define MAX_C_ID 4
 #define MAX_C_COUNTRY 31
 #define MAX_C_CITY 51
 #define MAX_AIRPORTS 40
-#define MAX_FLIGHTS 30000
 
 #define MIN_DAY 1
 #define MIN_MONTH 1
@@ -34,11 +33,12 @@ os limites das datas introdizas tanto ao sistema como aos voos.
 
 /* Limite de caracteres que um código de voo pode conter */
 #define MAX_C_CODE 8
+#define MAX_FLIGHTS 30000
 
 /*  COMAND A:   */
 
 /*
-Estrutura que permite ao longo do sistema alterar os parâmetros de um
+Estrutura abaixo permite no decorrer do sistema alterar os parâmetros de um
 aeroporto para que este possa ser adicionado ou considerado inválido se algum
 parâmetro não corresponder ao pedido.
 Contém o ID, o país e cidade de origem e também o número de voos que esse
@@ -57,9 +57,10 @@ typedef struct airport
 /*
 A função newAirport() é a função que permite adicionar um aeroporto ao sistema.
 Após ser chamada na main() não recebe quaisquer parâmetros e para além das
-variáveis declaradas na função recorre também ao contador airport_counter
-que vai preencher os vetores num vetor global airportList[] que é onde vão
-ser preenchidos e armazenados os aeportos criados se não forem inválidos.
+variáveis declaradas na função recorre também ao contador global
+airport_counter que vai preencher os vetores num vetor global airportList[]
+onde são preenchidos e armazenados os aeportos criados se não forem
+inválidos.
 */
 
 int airport_counter = 0;
@@ -67,6 +68,12 @@ int airport_counter = 0;
 void newAirport(Airport airportList[])
 {
     int i = 0, counter = 0;
+    /* Apesar de ter sido criado uma struct já com as variáveis necessárias
+    estas variáveis auxiliares declaradas abaixo são também do tipo Airport
+    e são necessárias pois as variáveis lidas que são introduzidas pelo
+    utilizador podem não ser válidas então antes de se armazenar o conteúdo
+    passa por uma série de testes.
+    */
     char id_aux[MAX_C_ID], country_aux[MAX_C_COUNTRY], city_aux[MAX_C_CITY];
 
     scanf("%s", id_aux);
@@ -130,7 +137,8 @@ Airport airportList[MAX_AIRPORTS];
 /*  COMAND T:   */
 
 /* Este comando é o que vai definir a hora do sistema.
-Recorre também a uma estrutura que vai ser o método de manipulação da data. */
+Recorre também a uma estrutura que vai ser o método de manipulação da data.
+Tem como variáveis o dia, mês e ano . */
 typedef struct
 {
     int day;
@@ -139,6 +147,7 @@ typedef struct
 
 } Date;
 
+/* Definido aqui a data inicial do sistema */
 Date currentDate = {1, 1, 2022};
 
 /* Função newDate() recebe a data atual do sistema e após uma série de
@@ -160,6 +169,8 @@ Date newDate(Date currentDate)
         printf("invalid date\n");
         return currentDate;
     }
+    /* Próximas condições verificam se a data introdizida não é anterior à
+    data atual do sistema */
     else if (currentDate.year > date.year)
     {
         printf("invalid date\n");
@@ -181,6 +192,8 @@ Date newDate(Date currentDate)
         printf("invalid date\n");
         return currentDate;
     }
+    /* As próximas condições verificam se a data introduzida não é 1 ano ou
+    mais após a data atual */
     else if (date.year == currentDate.year + 1 &&
              date.month > currentDate.month)
     {
@@ -193,6 +206,7 @@ Date newDate(Date currentDate)
         printf("invalid date\n");
         return currentDate;
     }
+    /* Retorna a nova data se passar em todas as condições anteriores. */
     else
     {
         printf("%02d-%02d-%d\n", date.day, date.month, date.year);
@@ -202,9 +216,14 @@ Date newDate(Date currentDate)
 
 /*  COMAND L:   */
 
+/* Comando que lista os aeroportos */
+
 /* Função printAirports() é a função que vai permitir dar ocorrer os comandos
 pretendidos em l e recebe o parâmtro airport_counter que vai servir de contador
 para que o vetor da lista de aeroportos seja apresentado.
+Podem ser todos os aeroportos listados se apenas ocorrer o comando l ou então
+os resptivos aeroportos que se indicarem à frente deste.
+
  */
 
 void printAirports(int airport_counter)
@@ -296,6 +315,8 @@ void printAirports(int airport_counter)
 
 /*  COMAND V:   */
 
+/* Adiciona um voo ou lista todos os voos */
+
 /* Para o comando v temos duas hipóteses: Ou é apenas introduzido o v é listado
 todos os voos criados ou então é criado um novo voo.
 Para que possamos introduzir e manipular os valores e texto de um voo
@@ -310,6 +331,9 @@ typedef struct time
 
 } Time;
 
+/* depart = departure
+   arriv = arrival */
+
 typedef struct flight
 {
     char code[MAX_C_CODE];
@@ -322,8 +346,10 @@ typedef struct flight
 
 } Flight;
 
+/* Vetor global onde são armazenados os voos */
 Flight flightList[MAX_FLIGHTS];
 
+/* Contador de voos global */
 int flight_counter = 0;
 
 /* A função flightCode() é a função que permite criar ou listar os voos
@@ -440,13 +466,13 @@ void flightCode()
             printf("%s: no such airport ID\n", departID_aux);
             return;
         }
-        id_check = 0;
+        id_check = 0; /* identificador do id */
         for (i = 0; i < airport_counter; i++)
         {
 
             if (strcmp(arrivID_aux, airportList[i].id) == 0)
             {
-                id_check = 1;
+                id_check = 1; /* id correspondido */
             }
         }
         if (id_check == 0)
@@ -515,6 +541,8 @@ void flightCode()
             return;
         }
 
+        /* Copia cada parâmetro das variáveis auxiliares lidas se estas
+        corresponderem às regras impostas para o vetor global de voos */
         strcpy(flightList[flight_counter].code, code_aux);
         strcpy(flightList[flight_counter].departAirportID,
                departID_aux);
@@ -535,12 +563,16 @@ void flightCode()
 
 /*  COMAND P:   */
 
+/* Lista os voos com partida de um aeroporto */
+
 /* A próxima função departList[] é a que corresponde ao comando p e este lista
 todos os voos com a partida de um dado aeroporto.
 */
 
+/* Contaodr de voos com partida de um aeroporto */
 int depart_counter = 0;
 
+/* Vetor global de voos com partida de um aeroporto */
 Flight departList_aux[MAX_FLIGHTS];
 
 /* Esta é um função auxiliar da departList[] que ordena o vetor dos voos pela
@@ -551,6 +583,7 @@ void departList_sort()
     int i, j;
     Flight aux;
 
+    /* Usada a técnica de Bubble Sort para odenar os voos criados pela data */
     for (i = 0; i < depart_counter; ++i)
     {
         for (j = i + 1; j < depart_counter; ++j)
@@ -628,6 +661,8 @@ void departList()
     depart_counter = 0;
     scanf("%s", departid_aux);
 
+    /* Verifica que ID's da lista de voos correspondem ao ID inserido e
+    armazena numa lista auxiliar esses voos */
     for (i = 0; i < flight_counter; i++)
     {
         if (strcmp(departid_aux, flightList[i].departAirportID) == 0)
@@ -650,6 +685,7 @@ void departList()
         return;
     }
 
+    /* Função auxiliar para ordenar os voos pela data de partida */
     departList_sort();
 
     for (i = 0; i < depart_counter; i++)
@@ -666,6 +702,9 @@ void departList()
 
 /*  COMAND C:   */
 
+/* Lista os voos com chegada a um aeroporto */
+
+/* Vetor global para armazenar os voos com chegada a um aeroporto */
 Flight arrivList_aux[MAX_FLIGHTS];
 
 void arrivList_sort(Flight arrivList_aux[], int arriv_counter)
@@ -673,6 +712,7 @@ void arrivList_sort(Flight arrivList_aux[], int arriv_counter)
     int i, j;
     Flight aux;
 
+    /* Técnica de Bubble Sort para orndenar o vetor por data */
     for (i = 0; i < arriv_counter; ++i)
     {
         for (j = i + 1; j < arriv_counter; ++j)
@@ -759,23 +799,29 @@ void arrivList()
         return;
     }
 
+    /* Algoritmo para calcular a data e hora de chegada */
     for (i = 0; i < flight_counter; i++)
     {
         if (strcmp(arrivid_aux, flightList[i].arrivAirportID) == 0)
         {
             arrivList_aux[arriv_counter] = flightList[i];
 
+            /* Soma a duração em minutos aos minutos do voo */
             arrivList_aux[arriv_counter].departHour.minutes +=
                 arrivList_aux[arriv_counter].duration.minutes;
 
+            /* Armazena o resultado em horas dos minutos do voo */
             aux = arrivList_aux[arriv_counter].departHour.minutes / 60;
 
+            /* Soma as duração em horas mais o resultado anterior armazenado
+            às horas do voo */
             arrivList_aux[arriv_counter].departHour.hours +=
                 arrivList_aux[arriv_counter].duration.hours + aux;
 
             arrivList_aux[arriv_counter].departHour.minutes =
                 arrivList_aux[arriv_counter].departHour.minutes - (aux * 60);
 
+            /* Calcula os dias através das horas */
             temp_day = arrivList_aux[arriv_counter].departHour.hours / 24;
             arrivList_aux[arriv_counter].departDate.day += temp_day;
 
@@ -783,12 +829,16 @@ void arrivList()
             month = arrivList_aux[arriv_counter].departDate.month;
             day = arrivList_aux[arriv_counter].departDate.day;
 
+            /* Verifica se o mês for fevereiro e dia 28 passa para o
+            primeiro dia de março */
             if (arrivList_aux[arriv_counter].departDate.month == 2 &&
                 arrivList_aux[arriv_counter].departDate.day > 28)
             {
                 month++;
                 arrivList_aux[arriv_counter].departDate.day -= 28;
             }
+            /* Se chegar ao último dia de cada mês cujo dia é 31 passa
+            para o primeiro dia do próximo mês. */
             else if ((month == 1 || month == 3 || month == 5 || month == 7 ||
                       month == 8 || month == 10) &&
                      day > 31)
@@ -796,6 +846,8 @@ void arrivList()
                 month++;
                 arrivList_aux[arriv_counter].departDate.day -= 31;
             }
+            /*  Se chegar ao último dia de cada mês cujo dia é 30 passa
+            para o primeiro dia do próximo mês. */
             else if ((month == 4 || month == 6 || month == 9 ||
                       month == 11) &&
                      day > 30)
@@ -803,6 +855,8 @@ void arrivList()
                 month++;
                 arrivList_aux[arriv_counter].departDate.day -= 30;
             }
+            /* Se chegar ao dia 31 de dezembro aumenta o ano e passa para
+            o mês 1 dia 1. */
             else if ((month == 12) && day > 31)
             {
                 year++;
@@ -817,6 +871,7 @@ void arrivList()
         }
     }
 
+    /* Ordena a lista de voos de chegada pela data */
     arrivList_sort(arrivList_aux, arriv_counter);
 
     for (i = 0; i < arriv_counter; i++)
