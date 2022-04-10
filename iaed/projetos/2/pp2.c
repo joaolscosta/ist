@@ -891,32 +891,69 @@ void arrivList()
 
 typedef struct 
 {
-    char code[MAX_C_CODE];
-    Date reserve_date;
     char *reserve_code;
     int passengers_numb;
+    Date date;
+    char code[MAX_C_CODE];
+    Reserves *next;
 
 } Reserves;
 
-void reserveList()
+Reserves *head = NULL;
+
+
+void add_to_list(Reserves *reserv_aux)
+{
+    Reserves *find_null = head;
+
+    if(head == NULL)
+    {
+        head = reserv_aux;
+    }
+    else
+    {
+        while(find_null != NULL)
+        {
+            find_null = find_null->next;
+        }
+        find_null = reserv_aux;
+    }
+
+}
+
+
+void reserves()
 {
     char code_aux[MAX_C_CODE], c;
-    char reservCode[MAX_C_INSTRUCTION], *reservChar, word;
+    char reservCode[MAX_C_INSTRUCTION], word;
 
     Date date_aux;
 
     int passengersNumber, reservSize = 0;
     int char_counter = 0, number_counter = 0, i;
 
+    int code_check = 0;
+
+    Reserves *reserv_aux;
 
     scanf("%s", code_aux);
     scanf("%02d-%02d-%04d", &date_aux.day, &date_aux.month, &date_aux.year);
 
-
-
     c = getchar();
     if (c == '\n')
     {
+        for(i = 0; i < flight_counter; i++)
+        {
+            if(strcmp(flightList[i].code, code_aux) == 0)
+            {
+                code_check = 1;
+            }
+        }
+        if(code_check == 0)
+        {
+            printf("%s: flight does not exist", code_aux);
+        }
+
         printf("billie\n");
     }
     else
@@ -931,8 +968,6 @@ void reserveList()
             i++;
         }
         i = 0;
-
-        reservChar = malloc(sizeof(char) * reservSize);
 
         if(reservSize < 10)
         {
@@ -966,13 +1001,30 @@ void reserveList()
             printf("invalid reservation code");
         }
 
+        for(i = 0; i < flight_counter; i++)
+        {
+            if(strcmp(flightList[i].code, code_aux) == 0)
+            {
+                code_check = 1;
+            }
+        }
+        if(code_check == 0)
+        {
+            printf("%s: flight does not exist", code_aux);
+        }
 
 
 
-
-        free(reservChar);
+        reserv_aux->reserve_code = reservCode;
+        strcpy(reserv_aux->code, code_aux);
+        reserv_aux->date.day = date_aux.day;
+        reserv_aux->date.month = date_aux.month;
+        reserv_aux->date.year = date_aux.year;
+        reserv_aux->next = NULL;
+        reserv_aux->passengers_numb = passengersNumber;
+        
+        add_to_list(reserv_aux);
     }
-    
 }
 
 /* Função main() que lê um caracter que correponde ao comando pretendido pelo
@@ -1009,7 +1061,7 @@ int main()
             currentDate = newDate(currentDate);
             break;
         case 'r':
-            reserveList();
+            reserves();
             break;
         case 'e':
             printf("eee\n");
