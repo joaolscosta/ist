@@ -889,11 +889,11 @@ void arrivList()
 
 /*  COMAND R:   */
 
-typedef struct 
+typedef struct
 {
     char code[MAX_C_CODE];
     Date reserve_date;
-    char *reserve_code;
+    char reserve_code[MAX_C_INSTRUCTION];
     int passengers_numb;
 
 } Reserves;
@@ -901,18 +901,15 @@ typedef struct
 void reserveList()
 {
     char code_aux[MAX_C_CODE], c;
-    char reservCode[MAX_C_INSTRUCTION], *reservChar, word;
+    char reservCode[MAX_C_INSTRUCTION], word;
 
     Date date_aux;
 
     int passengersNumber, reservSize = 0;
     int char_counter = 0, number_counter = 0, i;
 
-
     scanf("%s", code_aux);
     scanf("%02d-%02d-%04d", &date_aux.day, &date_aux.month, &date_aux.year);
-
-
 
     c = getchar();
     if (c == '\n')
@@ -925,54 +922,44 @@ void reserveList()
         scanf("%d", &passengersNumber);
 
         i = 0;
-        while(reservCode[i] != '\0')
+        while (reservCode[i] != '\0')
         {
             reservSize += 1;
             i++;
         }
         i = 0;
 
-        reservChar = malloc(sizeof(char) * reservSize);
-
-        if(reservSize < 10)
+        if (reservSize < 10)
         {
             printf("invalid reservation code\n");
             return;
         }
 
-        for(i = 0; i < reservSize; i++)
+        for (i = 0; i < reservSize; i++)
         {
             word = reservCode[i];
-            
-            if((word > 'Z' && word < 'A') || (word > '9' && word < '0'))
+
+            if ((word > 'Z' && word < 'A') || (word > '9' && word < '0'))
             {
                 printf("invalid reservation code\n");
                 return;
             }
 
-            if(word > '0' || word < '9')
+            if (word > '0' || word < '9')
             {
                 number_counter += 1;
             }
-            if(word > 'A' || word < 'Z')
+            if (word > 'A' || word < 'Z')
             {
                 char_counter += 1;
             }
-            
         }
 
-        if(char_counter == 0 || number_counter == 0)
+        if (char_counter == 0 || number_counter == 0)
         {
             printf("invalid reservation code");
         }
-
-
-
-
-
-        free(reservChar);
     }
-    
 }
 
 /* Função main() que lê um caracter que correponde ao comando pretendido pelo
