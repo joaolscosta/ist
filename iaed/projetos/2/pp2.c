@@ -889,38 +889,35 @@ void arrivList()
 
 /*  COMAND R:   */
 
-typedef struct 
+typedef struct reserves
 {
     char *reserve_code;
     int passengers_numb;
     Date date;
     char code[MAX_C_CODE];
-    Reserves *next;
+    struct reserves *next;
 
 } Reserves;
 
 Reserves *head = NULL;
 
-
 void add_to_list(Reserves *reserv_aux)
 {
     Reserves *find_null = head;
 
-    if(head == NULL)
+    if (head == NULL)
     {
         head = reserv_aux;
     }
     else
     {
-        while(find_null != NULL)
+        while (find_null != NULL)
         {
             find_null = find_null->next;
         }
         find_null = reserv_aux;
     }
-
 }
-
 
 void reserves()
 {
@@ -942,19 +939,18 @@ void reserves()
     c = getchar();
     if (c == '\n')
     {
-        for(i = 0; i < flight_counter; i++)
+        for (i = 0; i < flight_counter; i++)
         {
-            if(strcmp(flightList[i].code, code_aux) == 0)
+            if (strcmp(flightList[i].code, code_aux) == 0)
             {
                 code_check = 1;
             }
         }
-        if(code_check == 0)
+        if (code_check == 0)
         {
-            printf("%s: flight does not exist", code_aux);
+            printf("%s: flight does not exist\n", code_aux);
+            return;
         }
-
-        printf("billie\n");
     }
     else
     {
@@ -962,67 +958,64 @@ void reserves()
         scanf("%d", &passengersNumber);
 
         i = 0;
-        while(reservCode[i] != '\0')
+        while (reservCode[i] != '\0')
         {
             reservSize += 1;
             i++;
         }
         i = 0;
 
-        if(reservSize < 10)
+        if (reservSize < 10)
         {
             printf("invalid reservation code\n");
             return;
         }
 
-        for(i = 0; i < reservSize; i++)
+        for (i = 0; i < reservSize; i++)
         {
             word = reservCode[i];
-            
-            if((word > 'Z' && word < 'A') || (word > '9' && word < '0'))
+
+            if ((word > 'Z' && word < 'A') || (word > '9' && word < '0'))
             {
                 printf("invalid reservation code\n");
                 return;
             }
 
-            if(word > '0' || word < '9')
+            if (word > '0' || word < '9')
             {
                 number_counter += 1;
             }
-            if(word > 'A' || word < 'Z')
+            if (word > 'A' || word < 'Z')
             {
                 char_counter += 1;
             }
-            
         }
 
-        if(char_counter == 0 || number_counter == 0)
+        if (char_counter == 0 || number_counter == 0)
         {
-            printf("invalid reservation code");
+            printf("invalid reservation code\n");
+            return;
         }
 
-        for(i = 0; i < flight_counter; i++)
+        for (i = 0; i < flight_counter; i++)
         {
-            if(strcmp(flightList[i].code, code_aux) == 0)
+            if (strcmp(flightList[i].code, code_aux) == 0)
             {
                 code_check = 1;
             }
         }
-        if(code_check == 0)
+        if (code_check == 0)
         {
-            printf("%s: flight does not exist", code_aux);
+            printf("%s: flight does not exist\n", code_aux);
+            return;
         }
-
-
 
         reserv_aux->reserve_code = reservCode;
         strcpy(reserv_aux->code, code_aux);
-        reserv_aux->date.day = date_aux.day;
-        reserv_aux->date.month = date_aux.month;
-        reserv_aux->date.year = date_aux.year;
+        reserv_aux->date = date_aux;
         reserv_aux->next = NULL;
         reserv_aux->passengers_numb = passengersNumber;
-        
+
         add_to_list(reserv_aux);
     }
 }
