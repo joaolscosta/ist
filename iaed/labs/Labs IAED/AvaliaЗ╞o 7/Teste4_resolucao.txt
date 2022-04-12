@@ -1,0 +1,52 @@
+I
+
+int checkDivisors(Node *head, int n)
+{
+    Node *x;
+    for (x = head; x != NULL; x = x->next)
+    {
+        if (n % x->value != 0)
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+----------------------------------------------------------------------
+
+II
+
+Node *removeKElement(Node *head, int k)
+{
+    Node *x, *aux;
+    int count = 1;
+
+    if (head == NULL)
+    {
+        return NULL;
+    }
+
+    // 2 OPCOES: node a remover é a head OU está algures no meio/fim/ nao existe.
+    // quando é a head:
+    if (k == 1)
+    {
+        x = head;
+        head = x->next;
+        free(x);
+        return head;
+    }
+    // quando é algures no meio/fim
+    for (x = head; x->next != NULL; x = x->next)
+    {
+        if (count + 1 == k)
+        {
+            aux = x->next;
+            x->next = aux->next;
+            free(aux);
+            return head;
+        }
+    }
+    // Se lista tiver menos de k elementos
+    return head;
+}

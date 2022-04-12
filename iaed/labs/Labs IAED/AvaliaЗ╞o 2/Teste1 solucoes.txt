@@ -1,0 +1,74 @@
+I
+
+#include <stdio.h>
+
+int contaUnicos(int v[], int size)
+{
+    int i, j, dif = 0, equal;
+    for (i = 0; i < size; i++)
+    {
+        equal = 0;
+        for (j = 0; j < size; j++)
+        {
+            if (i != j)
+            {
+                if (v[i] == v[j])
+                {
+                    equal++;
+                    break;
+                }
+            }
+        }
+        if (equal == 0)
+        {
+            dif++;
+        }
+    }
+    return dif;
+}
+
+int main()
+{
+    int v[8] = {3, 6, 4, 6, 6, 4, 5, 8};
+    printf("%d", contaUnicos(v, 8));
+    return 0;
+}
+
+------------------------------------------------------
+
+II
+
+#include <stdio.h>
+
+int digitosrepetidos(char s1[], char s2[])
+{
+    int res = 0, i, j, v[10] = {0};
+    for (i = 0; s1[i] != '\0'; i++)
+    {
+        if (s1[i] >= '0' && s1[i] <= '9')
+        {
+            for (j = 0; s2[j] != '\0'; j++)
+            {
+                if (s1[i] == s2[j])
+                {
+                    v[s1[i] - '0']++;
+                }
+            }
+        }
+    }
+    for (i = 0; i < 10; i++)
+    {
+        if (v[i] > 0)
+        {
+            res++;
+        }
+    }
+    return res;
+}
+
+int main()
+{
+    char s1[] = "IST-21: a projectar o futuro desde 1911.", s2[] = "LEIC: desde 1989.";
+    printf("%d", digitosrepetidos(s1, s2));
+    return 0;
+}

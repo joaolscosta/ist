@@ -1,0 +1,54 @@
+I
+
+Node *searchFirst(Node *head, int val)
+{
+    Node *x;
+
+    for (x = head; x != NULL; x = x->next)
+    {
+        if (x->value == val)
+        {
+            return x;
+        }
+    }
+    return NULL;
+}
+
+------------------------------------------------------------------------
+
+II
+
+(se lista está ordenada de forma não-decrescente então está ordenada
+de forma crescente e há duas hipoteses -> elemento a adicionar é algures 
+no meio ou no fim), sem esquecer claro da hipotese da lista ser nula 
+
+Node *insertSorted(Node *head, int val)
+{
+    Node *x, *new;
+
+    new = (Node *)malloc(sizeof(Node));
+    new->value = val;
+
+    if (head == NULL) // para a eventualidade da lista dada ser nula
+    {
+        new->next = NULL;
+        head = new;
+        return head;
+    }
+
+    for (x = head; x->next != NULL; x = x->next)
+    {
+        if (x->next->value > val) //se elemento a seguir a x é maior que val então colocar new entre x e x->next
+        {
+            new->next = x->next;
+            x->next = new;
+            return head;
+        }
+    }
+
+    //elemento a adicionar é maior que todos os elementos da lista, logo colocamos ele no fim
+    new->next = NULL;
+    x->next = new;
+
+    return head;
+}

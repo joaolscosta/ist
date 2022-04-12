@@ -1,0 +1,57 @@
+I
+
+#define MAXNOME 31
+#define MAXCODIGO 3
+#define MAXFREGUESIAS 100
+#define MAXCONCELHOS 30
+
+typedef struct
+{
+    char nome[MAXNOME];
+    char codigo[MAXCODIGO];
+    int eleitores;
+    int votantes;
+} Freguesia;
+
+typedef struct
+{
+    char nome[MAXNOME];
+    char codigo[MAXCODIGO];
+    Freguesia freguesias[MAXFREGUESIAS];
+    int n_freguesias;
+} Concelho;
+
+typedef struct
+{
+    char nome[MAXNOME];
+    char codigo[MAXCODIGO];
+    Concelho concelhos[MAXCONCELHOS];
+    int n_concelhos;
+} Distrito;
+
+-----------------------------------------------
+
+II
+
+float maiorAbstencao(Distrito d[], int n)
+{
+    int i, j, k, max, num_eleitores, num_votantes;
+    for (i = 0; i < n; i++)
+    {
+        num_votantes = 0;
+        num_eleitores = 0;
+        for (j = 0; j < d[i].n_concelhos; j++)
+        {
+            for (k = 0; k < d[i].concelhos[j].n_freguesias; k++)
+            {
+                num_votantes += d[i].concelhos[j].freguesias[k].votantes;
+                num_eleitores += d[i].concelhos[j].freguesias[k].eleitores;
+            }
+        }
+        if ((num_votantes / num_eleitores) > max)
+        {
+            max = (num_votantes / num_eleitores);
+        }
+    }
+    return max;
+}

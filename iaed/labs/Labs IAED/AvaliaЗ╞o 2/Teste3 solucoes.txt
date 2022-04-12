@@ -1,0 +1,59 @@
+I
+
+#include <stdio.h>
+
+int numMoedas(float v[], int size, float amount)
+{
+    int i = 0, res = 0;
+    while (amount != 0 && i < size)
+    {
+        if (v[i] <= amount)
+        {
+            res++;
+            amount -= v[i];
+            i = -1;
+        }
+        i++;
+    }
+    return res;
+}
+
+int main()
+{
+    float v[8] = {2, 1, 0.5, 0.2, 0.1, 0.05, 0.02, 0.01};
+    printf("%d", numMoedas(v, 8, 0.47));
+    return 0;
+}
+
+----------------------------------------------------------
+
+II
+
+#include <stdio.h>
+
+int digitosRepetidos(char s1[])
+{
+    int res = 0, i, v[10] = {0};
+    for (i = 0; s1[i] != '\0'; i++)
+    {
+        if (s1[i] >= '0' && s1[i] <= '9')
+        {
+            v[s1[i] - '0']++;
+        }
+    }
+    for (i = 0; i < 10; i++)
+    {
+        if (v[i] > 1)
+        {
+            res++;
+        }
+    }
+    return res;
+}
+
+int main()
+{
+    char s1[] = "IAED a melhor UC desde 1991 ate 2021.";
+    printf("%d", digitosRepetidos(s1));
+    return 0;
+}

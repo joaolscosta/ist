@@ -1,0 +1,30 @@
+I)
+Node* searchFirst(Node* head, int val){
+    Node* aux = head;
+
+    while (aux != NULL){
+        if (aux -> value == val)
+            return aux;
+        aux = aux -> next;
+    }
+    return NULL;
+}
+
+II)
+Node* insertedSorted(Node* head, int val){
+    Node* new = (Node*) malloc(sizeof(Node));
+
+    new -> value = val;
+    if (head == NULL){
+        new -> next = NULL;
+        head = new;
+    }
+    else {
+        Node* aux = head;
+        while (aux -> value <= val){
+            aux = aux -> next;
+        }
+        new -> next = aux;
+    }
+    return head;
+}

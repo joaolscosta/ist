@@ -1,0 +1,21 @@
+I
+
+BubbleSort (variante que coloca menor na esquerda)
+
+a={34,67,36,23,10,78,2,31,32,50}
+
+apos 1a iteracao: a={2,34,67,36,23,10,78,31,32,50}
+apos 2a iteracao: a={2,10,34,67,36,23,31,78,32,50}
+apos 3a iteracao: a={2,10,23,34,67,36,31,32,78,50}
+
+------------------------------------------
+
+II
+
+Seja n = numero caracteres da string
+
+For loop itera n vezes (dentro dele são feitas operaçoes logicas e aritmeticas, tudo isto em O(1))
+
+No final itera n vezes (para calcular strlen), faz a soma com sum em O(1) e é retornado a soma.
+
+pior caso: O(n)+O(n) = O(n)

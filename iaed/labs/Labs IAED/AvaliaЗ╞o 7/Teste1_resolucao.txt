@@ -1,0 +1,41 @@
+I
+
+Node *searchKElement(Node *head, int k)
+{
+    Node *x;
+    int count = 1;
+
+    if (head == NULL)
+    {
+        return head;
+    }
+
+    for (x = head; x != NULL; x = x->next)
+    {
+        if (count > k)
+        {
+            return NULL;
+        }
+        else if (count == k)
+        {
+            return x;
+        }
+        count++;
+    }
+    return NULL;
+}
+
+---------------------------------------------------------------------
+
+II
+
+Node *removeFirst(Node *head, int val)
+{
+    Node *x;
+
+    x = head;
+    head = x->next;
+    free(x);
+
+    return head;
+}

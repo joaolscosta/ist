@@ -1,0 +1,53 @@
+1.
+
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_PALAVRA 1000
+
+int main()
+{
+    char frase[MAX_PALAVRA], *idx;
+    int i, len;
+    scanf("%s", frase);
+    len = strlen(frase);
+    idx = frase;
+    for (i = 0; i < len; i++)
+    {
+        printf("%s\n", idx + i);
+    }
+    return 0;
+}
+
+----------------------------------------
+
+2.
+
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_PALAVRA 1000
+#define MAX_NUM_PALAVRAS 10000
+
+char line[MAX_NUM_PALAVRAS * MAX_PALAVRA];
+
+void reversePrint(const char *str)
+{
+    if (str)
+    {
+        reversePrint(strtok(NULL, " "));
+        printf("%s\n", str);
+    }
+}
+
+int main()
+{
+    scanf("%[^\n]", line);
+    reversePrint(strtok(line, " "));
+    return 0;
+}
+
+----------------------------------------
+
+
+

@@ -1,0 +1,53 @@
+I 
+
+#define MAXVEICULOS 200
+#define MAXMATRICULA 7
+
+typedef struct
+{
+    int hora;
+    int minuto;
+    int segundo;
+
+} Hora;
+
+typedef struct
+{
+    int ano;
+    int mes;
+    int dia;
+
+} Data;
+
+typedef struct
+{
+    char matricula[MAXMATRICULA];
+    Data data;
+    Hora hora;
+
+} VeiculoEstacionado;
+
+typedef struct
+{
+    int n_veiculos;
+    VeiculoEstacionado veiculos[MAXVEICULOS];
+
+} ParqueEstacionamento;
+
+--------------------------------------------------
+
+II
+
+float pagar(VeiculoEstacionado v, Data d, Hora h)
+{
+    int segundos;
+    if (d.ano == v.data.ano && d.mes == v.data.mes && d.dia == v.data.dia)
+    {
+        segundos = ((h.hora - v.hora.hora) * 3600 + (h.minuto - v.hora.minuto) * 60 + (h.segundo - v.hora.segundo));
+        return (segundos / 3600 * 0.8);
+    }
+    else
+    {
+        return 50;
+    }
+}

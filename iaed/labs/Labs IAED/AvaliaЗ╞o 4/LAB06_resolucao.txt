@@ -1,0 +1,24 @@
+I
+
+SelectionSort:
+
+a={12,45,4,67,23,62,48,49,7,18}
+apos 1a iteracao: a={4,45,12,67,23,62,48,49,7,18}
+apos 2a iteracao: a={4,7,12,67,23,62,48,49,45,18}
+apos 3a iteracao: a={4,7,12,67,23,62,48,49,45,18} (fica igual pois 12 já está na posicao correta)
+apos 4a iteracao: a={4,7,12,18,23,62,48,49,45,67}
+
+------------------------------------
+
+II
+
+Há 2 hipoteses para pior caso:
+
+1) Ciclo for exterior é percorrido n vezes se a comparação 
+a[i]==m for sempre falsa em todas as iterações = O(n)
+
+2) Ciclo for exterior é percorrido entre 1 e n vezes e numa delas
+é interrompido quando a comparação a[i]==m é verdadeira e nesse caso
+o ciclo for interior é percorrido n-i-1 vezes = O(n)
+
+Logo pior caso = O(n)

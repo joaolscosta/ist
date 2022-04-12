@@ -1,0 +1,71 @@
+1
+
+BubbleSort:
+
+a={20,11,16,8,21,12,10,14,17,6}
+apos 1a iteracao: a={11,16,8,20,12,10,14,17,6,21}
+apos 2a iteracao: a={11,8,16,12,10,14,17,6,20,21}
+
+2
+
+SelectionSort:
+
+a={20,11,16,8,21,12,10,14,17,6}
+apos 1a iteracao: a={6,11,16,8,21,12,10,14,17,20}
+apos 2a iteracao: a={6,8,16,11,21,12,10,14,17,20}
+apos 3a iteracao: a={6,8,10,11,21,12,16,14,17,20}
+
+3
+
+SelectionSort:
+
+a={20,11,16,8,21,12,10,14,17,6}
+apos 1a iteracao: a={20,11,16,8,6,12,10,14,17,21}
+apos 2a iteracao: a={17,11,16,8,6,12,10,14,20,21}
+apos 3a iteracao: a={14,11,16,8,6,12,10,17,20,21}
+
+4
+
+InsertionSort:
+
+a={20,11,16,8,21,12,10,14,17,6}
+apos 1a iteracao: a={11,20,16,8,21,12,10,14,17,6}
+apos 2a iteracao: a={11,16,20,8,21,12,10,14,17,6}
+apos 3a iteracao: a={8,11,16,20,21,12,10,14,17,6}
+
+5
+
+BubbleSort:
+
+melhor caso O(n) -> quando vetor ja esta todo ordenado
+
+6
+
+Binary Search:
+
+melhor caso: O(1) -> elemento a procurar está no index do meio
+pior caso: O(logn) -> elemento a procurar está no index das pontas ou quando elemento não existe
+
+7
+
+pior caso: O(n) (O(n/2) fica O(n) pois constantes nao interessam)
+é apertado pois, no melhor caso e pior caso, a funcao percorre sempre metade dos elementos
+
+8
+
+O(mlogn), pois ciclo interior for é percorrido m vezes e ciclo while exterior
+é percorrido logn vezes (pois dividimos i por 2 em cada iteraçao do while)
+
+9
+
+O(n^2), pois ciclo while é percorrido na pior das hipoteses n*n= n^2 vezes
+(a conta n*n é feita em O(1), não interessa)
+
+10
+
+melhor caso: O(1) quando n%m==0 ou seja m é divisor de n 
+pior caso: O(n) (O(n/2) fica O(n) pois constantes nao interessam)
+
+Não é apertado pois melhor caso != pior caso
+
+

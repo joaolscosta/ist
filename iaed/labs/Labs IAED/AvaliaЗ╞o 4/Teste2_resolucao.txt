@@ -1,0 +1,30 @@
+I
+
+SelectionSort (variante que vai da esquerda para direita e coloca o maximo mais a direita possivel)
+
+a = {48,49,4,67,23,62,12,45,7,18}
+
+apos 1a iteracao: a={48,49,4,67,23,62,12,45,7,18}
+apos 2a iteracao: a={48,49,4,18,23,62,12,45,7,67}
+apos 3a iteracao: a={48,49,4,18,23,7,12,45,62,67}
+apos 4a iteracao: a={48,45,4,18,23,7,12,49,62,67}
+
+------------------------------------
+
+II 
+
+Pior caso:
+
+A funcao copia os caracteres da string s e coloca-os na string r.
+No inicio a string r começa vazia.
+O ciclo for exterior é percorrido n vezes e em cada vez é adicionado o caracter da string s
+no ultimo espaço da string r, ou seja em cada iteração é preciso percorrer a string r até ao seu final
+Como o tamanho da string r é sempre igual a i no inicio do ciclo for, concluimos que o ciclo while irá
+sempre ocorrer i vezes em cada iteração do ciclo for exterior.
+
+Logo no ciclo for exterior são feitas n iterações e em cada uma delas, no ciclo while são feitas n-i iterações.
+
+Resposta: O(n^2)
+
+(Nota: aqui complexidade temporal nunca depende de m, mas sim de n, pois m é inicializado 
+a 0 e no final da funcao m=n)

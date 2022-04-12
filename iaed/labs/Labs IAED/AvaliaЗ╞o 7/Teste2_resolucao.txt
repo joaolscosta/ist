@@ -1,0 +1,54 @@
+I
+
+Node *searchMax(Node *head)
+{
+    Node *x, *res;
+    int max;
+
+    if (head == NULL)
+    {
+        return NULL;
+    }
+
+    max = head->value;
+    res = head;
+
+    for (x = head; x != NULL; x = x->next)
+    {
+        if (x->value > max)
+        {
+            max = x->value;
+            res = x;
+        }
+    }
+    return res;
+}
+
+---------------------------------------------------------------------
+
+II
+
+Node *duplicate(Node *head)
+{
+    Node *x, *new_head, *new;
+
+    if (head == NULL)
+    {
+        return NULL;
+    }
+
+    new_head = (Node *)malloc(sizeof(Node));
+    new_head->value = head->value;
+    new = new_head;
+
+    for (x = head->next; x != NULL; x = x->next)
+    {
+        new->next = (Node *)malloc(sizeof(Node));
+        new = new->next;
+        new->value = x->value;
+    }
+
+    new->next = NULL;
+
+    return new_head;
+}

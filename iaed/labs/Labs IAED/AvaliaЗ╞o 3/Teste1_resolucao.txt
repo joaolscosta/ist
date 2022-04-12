@@ -1,0 +1,64 @@
+I
+
+#define MAX_ID 7
+#define MAX_NOME 101
+#define MAX_CODIGO 14
+#define MAX_AREAS_DIF 10
+#define MAX_PRODUTOS 5000
+
+typedef struct
+{
+    float x;
+    float y;
+} Ponto;
+
+typedef struct
+{
+    char id[MAX_ID];
+    Ponto p1;
+    Ponto p2;
+
+} Area;
+
+typedef struct
+{
+    char nome[MAX_NOME];
+    char codigo[MAX_CODIGO];
+    float preco_cliente;
+    float preco_fornecedor;
+    int quantidade_stock;
+    Area area;
+} Produto;
+
+typedef struct
+{
+    Area areas[MAX_AREAS_DIF];
+    Produto produtos[MAX_PRODUTOS];
+} Supermercado;
+
+---------------------------------------
+
+II
+
+int maiorArea(Area a[], int numAreas)
+{
+    int i, res;
+    float max = 0.0;
+    for (i = 0; i < numAreas; i++)
+    {
+        float cur = 0.0;
+        cur = (a[i].p1.x - a[i].p2.x) * (a[i].p1.y - a[i].p2.y);
+        if (cur < 0)
+        {
+            cur *= -1;
+        }
+        if (cur > max)
+        {
+            max = cur;
+            res = i;
+        }
+    }
+    return i;
+}
+
+

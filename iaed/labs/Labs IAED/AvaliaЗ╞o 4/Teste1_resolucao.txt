@@ -1,0 +1,20 @@
+I
+
+BubbleSort (versao que começa na esquerda e coloca o maximo na direita)
+
+a={12,45,4,67,23,62,48,49,7,18}
+
+apos 1a iteracao: a={12,4,45,23,62,48,49,7,18,67}
+apos 2a iteracao: a={4,12,23,45,48,49,7,18,62,67}
+apos 3a iteracao: a={4,12,23,45,48,7,18,49,62,67}
+
+------------------------------------
+
+II (exercicio com a mesma logica do II do teste-tipo 1)
+
+Pior caso:
+
+Ciclo for exterior é percorrido n vezes e por cada uma delas,
+o ciclo for interior é percorrido n-i vezes.
+
+Logo pior caso = O(n^2) 

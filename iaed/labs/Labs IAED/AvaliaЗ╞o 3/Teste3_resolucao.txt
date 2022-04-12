@@ -1,0 +1,47 @@
+I
+
+#define MAXDESCRICAO 51
+#define MAXNOME 51
+#define MAXITEMS 100
+
+typedef struct
+{
+    char descricao[MAXDESCRICAO];
+    float preco;
+} ItemMenu;
+
+typedef struct
+{
+    int id;
+    int max_capacidade;
+    char nome[MAXNOME];
+} Mesa;
+
+typedef struct
+{
+    Mesa mesa;
+    ItemMenu items[MAXITEMS];
+    int quantidades[MAXITEMS];
+    int num_items;
+} Pedido;
+
+-----------------------------------------------
+
+II
+
+int pedidoMaisCaro(Pedido p[], int n)
+{
+    int i, j, max = 0, res;
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < p[i].num_items; j++)
+        {
+            if (p[i].items[j].preco * p[i].quantidades[j] > max)
+            {
+                max = (p[i].items[j].preco * p[i].quantidades[j]);
+                res = i;
+            }
+        }
+    }
+    return res;
+}

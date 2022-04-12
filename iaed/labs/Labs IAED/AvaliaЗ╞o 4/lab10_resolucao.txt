@@ -1,0 +1,27 @@
+I
+
+NOTA: só iremos ordenar elementos entre o index 1 e 8
+
+BubbleSort (variante que itera da esquerda para direita e ordena de forma crescente)
+
+a={23,(46,21,42,12,24,6,15,18),16}
+
+apos 1a iteracao: a={23,(21,42,12,24,6,15,18,46),16}
+apos 2a iteracao: a={23,(21,12,24,6,15,18,42,46),16}
+apos 3a iteracao: a={23,(12,21,6,15,18,24,42,46),16}
+
+Resposta: a={23,12,21,6,15,18,24,42,46,16}
+
+-------------------------------------
+
+II
+
+Pior caso:
+
+Ciclo while exterior irá iterar logm vezes (cada iteração divide m em 2 e pára quando m=0) e em
+cada iteração, o ciclo for interior itera n vezes (operações logicas e aritmeticas dentro do ciclo for
+sao feitas em O(1)).
+
+Logo, O(logm * n)=O(nlogm)
+
+

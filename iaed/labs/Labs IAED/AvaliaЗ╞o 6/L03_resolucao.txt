@@ -1,0 +1,81 @@
+I
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main()
+{
+    char *str, *ptr, input[] = "Introducao_aos_Algoritmos_e_Estruturas_de_Dados";
+    int i = 0;
+
+    str = (char *)malloc((strlen(input) + 1) * sizeof(char));
+
+    ptr = input;
+    while ((*ptr) != '\0')
+    {
+        if ((*ptr) >= 'A' && (*ptr) <= 'Z')
+        {
+            str[i] = (*ptr);
+            i++;
+        }
+        ptr++;
+    }
+    str[i] = '\0';
+    printf("%s", str);
+    return 0;
+}
+
+// Funcao le o uma string como input do utilizador e guarda-a no vetor de caracteres 'input'. 
+Depois alocamos um vetor em memoria com o tamanho da string 'input'+1 que é o '\0', graças à funcao malloc 
+e apontamos o ponteiro str para o inicio desse vetor. Apontamos o ponteiro ptr para o inicio do vetor 'input'. 
+Fazemos um ciclo while (termina quando o valor para o qual o ponteiro ptr aponta é o final da string 'input' e
+ dentro dele verificamos se o caracter para o qual ptr aponta é uma letra maiuscula, se for entao colocamos esse 
+valor na posicao i do vetor alocado dinamicamente pelo malloc e incrementamos i. No final do ciclo while movemos 
+uma posicao para a frente no vetor input. No final, no vetor alocado dinamicamente pelo malloc só estarão os 
+caracteres maiusculos da string do input, ou seja neste caso o output é 'IAED').
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+II
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct
+{
+    unsigned lin, col;
+    double val;
+} Entry;
+
+double *getValuesLine(Entry *mat, int n, int line)
+{
+    int i, count = 0, j = 0;
+    double *values;
+
+    for (i = 0; i < n; i++)
+    {
+        if (mat[i].lin == line)
+        {
+            count++;
+        }
+    }
+
+    values = (double *)malloc(count * sizeof(double));
+
+    for (i = 0; i < n; i++)
+    {
+        if (mat[i].lin == line)
+        {
+            values[j] = mat[i].val;
+            j++;
+        }
+    }
+    return values;
+}
+
+int main()
+{
+    return 0;
+}

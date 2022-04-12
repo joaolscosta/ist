@@ -1,0 +1,62 @@
+I
+
+Node *searchMin(Node *head)
+{
+    Node *x, *res;
+    int min;
+
+    if (head == NULL)
+    {
+        return NULL;
+    }
+
+    min = head->value;
+    res = head;
+
+    for (x = head; x != NULL; x = x->next)
+    {
+        if (x->value < min)
+        {
+            min = x->value;
+            res = x;
+        }
+    }
+    return res;
+}
+
+---------------------------------------------------------------------
+
+II
+
+Node *removeFirstOccurrence(Node *head, int val)
+{
+    Node *x, *aux;
+
+    if (head == NULL)
+    {
+        return NULL;
+    }
+
+    // 2 OPCOES: node a remover é a head OU está algures no meio/fim/ nao existe.
+    // quando é a head:
+    if (head->value == val)
+    {
+        x = head;
+        head = x->next;
+        free(x);
+        return head;
+    }
+    // quando é algures no meio/fim
+    for (x = head; x->next != NULL; x = x->next)
+    {
+        if (x->next->value == val)
+        {
+            aux = x->next;
+            x->next = aux->next;
+            free(aux);
+            return head;
+        }
+    }
+    // quando node com valor 'val' nao existe e chegamos ao final
+    return head;
+}

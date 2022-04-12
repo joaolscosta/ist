@@ -1,0 +1,9 @@
+I
+
+int numReprovacoes(Arvore *t)
+  if ( t == NULL)
+    return 0;
+  else if(t -> insc -> nota < 10)
+    return numReprovacoes(t->esquerda) + numReprovacoes(t->direita) + 1;
+  else
+    return numReprovacoes(t->esquerda) + numReprovacoes(t->direita);

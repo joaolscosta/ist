@@ -1,0 +1,43 @@
+I
+
+#define MAXCODIGO 11
+#define MAXNOME 101
+
+typedef struct
+{
+    int dia;
+    int mes;
+    int ano;
+} Data;
+
+typedef struct
+{
+    char codigo[MAXCODIGO];
+    char nome[MAXNOME];
+    int responsavel;
+} Disciplina;
+
+typedef struct
+{
+    int numero_aluno;
+    char nome[MAXNOME];
+    int id;
+    Data data;
+} Aluno;
+
+--------------------------------------
+
+II
+
+int contaAlunosData(Aluno alunos[], int n, Data d)
+{
+    int i, res = 0;
+    for (i = 0; i < n; i++)
+    {
+        if (alunos[i].data.ano <= d.ano && alunos[i].data.mes <= d.mes && alunos[i].data.dia < d.dia)
+        {
+            res++;
+        }
+    }
+    return res;
+}

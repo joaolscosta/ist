@@ -1,0 +1,86 @@
+I
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int i, digits, n, aux;
+    char *str, *ptr;
+
+    scanf("%d", &n);
+    aux = n;
+    digits = 1;
+    while (aux > 10)
+    {
+        aux = aux / 10;
+        digits++;
+    }
+
+    str = (char *)malloc((digits + 1) * sizeof(char));
+    ptr = str;
+    for (i = 0; i < digits; i++)
+    {
+        *ptr = '0' + (n % 10);
+        n = n / 10;
+        ptr++;
+    }
+    *ptr = '\0';
+    printf("%s\n", str);
+
+    return 0;
+}
+
+/* 
+Output do programa:
+97531
+
+Descricao do programa:
+Pedimos input do utilizador, que será um inteiro, colocamos esse valor do inteiro 
+numa variavel aux para nao modificar o valor original do n.
+Vamos dividindo aux por 10 até este ser 0 e em cada divisao incrementamos digits,
+ou seja digits será o numero de digitos de n.
+Alocamos um vetor de caracteres com tamanho dos digitos+1 ('\0') com malloc 
+e colocamos o ponteiro str a pontar para o inicio desse vetor.
+colocamos ptr a apontar para o str, e ficamos com um ponteiro a apontar para um 
+ponteiro a apontar para a primeira posicao do vetor.
+No ciclo for iremos fazer um numero de iteraçoes iguais ao numero de digitos de n: em cada 
+iteracao colocamos o valor do vetor a '0' + o resto da divisao de n por 10 e posteriormente 
+dividir o n por 10 para aceder ao proximo digito e daí por diante, ou seja, vamos invertendo 
+o numero n, dado como input. No final colocamos '\0' no final da string invertida e damos 
+print da string final, ou seja o output é o numero invertido dado como input.
+
+*/
+
+---------------------------------------------------------------------------------------------------------------------------
+
+II
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct
+{
+    int numAluno;
+    int nota;
+} Inscricao;
+
+int *histograma(Inscricao *insc, int n)
+{
+    int *notas;
+    int i;
+
+    notas = (int *)calloc(21, sizeof(int));
+
+    for (i = 0; i < n; i++)
+    {
+        notas[insc[i].nota]++;
+    }
+
+    return notas;
+}
+
+int main()
+{
+    return 0;
+}

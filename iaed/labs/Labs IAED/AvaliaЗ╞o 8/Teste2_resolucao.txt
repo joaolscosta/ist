@@ -1,0 +1,30 @@
+I
+
+void removeUltimo(DLista *lst)
+{
+    Ligacao *x;
+    x=lst->ultimo;
+    lst->ultimo = x->anterior;
+    lst->ultimo->proximo = NULL;
+    free(x->text);
+    free(x);
+}
+
+Análise Pior caso:
+
+O(n) -> ter de percorrer a doubly linked list toda, n = tamanho da doubly linked list
+
+-----------------------------------------------------
+
+II
+
+Indice   | 0  | 1  | 2 | 3  | 4  | 5   | 6  | 7  | 8  | 
+Elementos| 18 | 27 | 22| X  | 4  | 13  | 14 | 25 | 17 | 
+
+Faria k mod M, neste caso k mod 9 e o resultado dessa operação daria-me o index
+da tabela onde poderá estar o k. Se ele não se encontrar nessa posicao entao
+incrementar o index até descobrir k. Se por acaso chegarmos ao fim da lista e ainda não
+o tivermos encontrado, recomeçar do index 0 (se o resultado de k mod 9 !=0, porque nesse
+caso a nossa procura acabaria do index 8).até chegarmos à posicao onde iniciámos a busca.
+Se quando regressarmos à posicao onde iniciámos a busca e ainda não tivermos encontrado k,
+concluimos que ele não está na tablea.

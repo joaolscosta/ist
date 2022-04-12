@@ -1,0 +1,60 @@
+I
+
+#include <stdio.h>
+
+int diffEq(int v[], int size)
+{
+    int i, res = 0;
+
+    for (i = 0; i < size - 2; i++)
+    {
+        if (v[i + 1] - v[i] == v[i + 2])
+        {
+            res++;
+        }
+    }
+
+    return res;
+}
+
+int main()
+{
+    int v[8] = {1, 3, 2, 5, 11, 6, -5, 13};
+    printf("%d", diffEq(v, 8));
+    return 0;
+}
+
+---------------------------------------------------
+
+II
+
+#include <stdio.h>
+
+int minusculasDesaparecidas(char s[])
+{
+    int i, res = 0, v[130] = {0};
+
+    for (i = 0; s[i] != '\0'; i++)
+    {
+        if (s[i] >= 'a' && s[i] <= 'z')
+        {
+            v[(int)s[i]]++;
+        }
+    }
+    for (i = (int)'a'; i <= (int)'z'; i++)
+    {
+        if (v[i] == 0)
+        {
+            res++;
+        }
+    }
+
+    return res;
+}
+
+int main()
+{
+    char s[] = "LEIC e IST: juntos desde 1989.";
+    printf("%d", minusculasDesaparecidas(s));
+    return 0;
+}

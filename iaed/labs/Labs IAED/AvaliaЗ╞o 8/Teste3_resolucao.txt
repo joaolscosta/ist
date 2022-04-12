@@ -1,0 +1,38 @@
+I
+
+DLista *novaLista(char *s)
+{
+    DLista *new_list;
+    Ligacao *new_node;
+    char *new_string = (char *)malloc(sizeof(char) * (strlen(s) + 1));
+    strcpy(new_string, s);
+    new_node->text = new_string;
+    new_node->proximo = NULL;
+    new_node->anterior = NULL;
+    new_list->primeiro = new_node;
+    new_list->ultimo = new_node;
+    return new_list;
+}
+
+Análise Pior caso:
+
+O(n) -> (n=numero de caracteres da string s)
+no strcpy temos de copiar a string 's' ou seja temos de iterar por todos
+os seus caracters.
+
+-----------------------------------------------------
+
+II
+
+Após remoção do elemento com chave 14:
+
+Indice   | 0  | 1  | 2 | 3  | 4  | 5   | 6  | 7  | 8  |   
+Elementos| 18 | 27 | 22| X  | 4  | 13  | X  | 25 | 17 |
+
+
+Para inserir o elemento com chave k, na tabela, temos de fazer k mod M, ou seja
+neste caso k mod 9, o resultado dessa operação dá-nos o index da tabela onde devemos
+inserir k. No caso desse index estar ocupado, então incrementamos o index até achas uma posicao
+livre. No caso de chegarmos ao fim da tabela e tiverem todas as posicoes ocupadas, reiniciar
+no index 0, ou seja no inicio da tabela até voltar ao index original de entrada, se mesmo assim
+tiverem todas ocupadas então não é possivel inserir o elemento k na tabela.
