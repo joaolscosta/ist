@@ -910,7 +910,7 @@ void add_reserve(Node *reserve)
     {
         head = reserve;
     }
-    else if(strcmp(reserve->reserve_code, head->reserve_code) < 0)
+    else if (strcmp(reserve->reserve_code, head->reserve_code) < 0)
     {
         reserve->next = head;
         head = reserve;
@@ -920,13 +920,13 @@ void add_reserve(Node *reserve)
         reserv_aux = head;
         while (reserv_aux != NULL)
         {
-            if(strcmp(reserve->reserve_code, reserv_aux->reserve_code) < 0)
+            if (strcmp(reserve->reserve_code, reserv_aux->reserve_code) < 0)
             {
                 temp->next = reserve;
                 reserve->next = reserv_aux;
                 break;
             }
-            else if(reserv_aux->next == NULL)
+            else if (reserv_aux->next == NULL)
             {
                 reserv_aux->next = reserve;
                 break;
@@ -934,7 +934,6 @@ void add_reserve(Node *reserve)
             temp = reserv_aux;
             reserv_aux = reserv_aux->next;
         }
-
     }
 }
 
@@ -990,15 +989,15 @@ int reserveCheck(char reserve[MAX_C_INSTRUCTION])
     int check = 0;
 
     reserv_aux = head;
-    while(reserv_aux != NULL)
+    while (reserv_aux != NULL)
     {
-        if(strcmp(reserve, reserv_aux->reserve_code) == 0)
+        if (strcmp(reserve, reserv_aux->reserve_code) == 0)
         {
             check = 1;
         }
         reserv_aux = reserv_aux->next;
     }
-    
+
     return check;
 }
 
@@ -1008,10 +1007,10 @@ void reserves()
     char reservCode[MAX_C_INSTRUCTION];
     Date date_aux;
     int passengersNumber, reservSize = 0, i;
-    
+
     int capacity = 0;
     int code_check = 0, date_check = 0, reserve_check = 0;
-    
+
     Node *reserve;
     Node *aux;
     char *reserve_code;
@@ -1019,17 +1018,16 @@ void reserves()
     scanf("%s", code_aux);
     scanf("%02d-%02d-%04d", &date_aux.day, &date_aux.month, &date_aux.year);
 
-
     c = getchar();
     if (c == '\n')
     {
         aux = head;
-        while(aux != NULL)
+        while (aux != NULL)
         {
-            if(strcmp(code_aux, aux->code) == 0 &&
-                 date_aux.day == aux->date.day &&
-                 date_aux.month == aux->date.month &&
-                 date_aux.year == aux->date.year)
+            if (strcmp(code_aux, aux->code) == 0 &&
+                date_aux.day == aux->date.day &&
+                date_aux.month == aux->date.month &&
+                date_aux.year == aux->date.year)
             {
                 printf("%s %d\n", aux->reserve_code, aux->passengers_numb);
             }
@@ -1063,7 +1061,7 @@ void reserves()
                 printf("invalid reservation code\n");
                 return;
             }
-            if(word < 'z' && word > 'a')
+            if (word < 'z' && word > 'a')
             {
                 printf("invalid reservation code\n");
                 return;
@@ -1085,23 +1083,23 @@ void reserves()
 
         reserve_check = reserveCheck(reservCode);
 
-        if(reserve_check == 1)
+        if (reserve_check == 1)
         {
             printf("%s: flight reservation already used\n", reservCode);
             return;
         }
 
-        for(i = 0; i < flight_counter; i++)
+        for (i = 0; i < flight_counter; i++)
         {
-            if(strcmp(code_aux, flightList[i].code) == 0 &&
+            if (strcmp(code_aux, flightList[i].code) == 0 &&
                 date_aux.day == flightList[i].departDate.day &&
                 date_aux.month == flightList[i].departDate.month &&
                 date_aux.year == flightList[i].departDate.year)
             {
                 capacity = flightList[i].capacity;
-                if(passengersNumber > 0)
+                if (passengersNumber > 0)
                 {
-                    if((capacity -= passengersNumber) >= 0)
+                    if ((capacity -= passengersNumber) >= 0)
                     {
                         flightList[i].capacity -= passengersNumber;
                     }
@@ -1116,13 +1114,13 @@ void reserves()
 
         date_check = checkDate(date_aux);
 
-        if(date_check == 1)
+        if (date_check == 1)
         {
             printf("invalid date\n");
             return;
         }
 
-        if(passengersNumber < 0)
+        if (passengersNumber < 1)
         {
             printf("invalid passenger number\n");
             return;
@@ -1131,12 +1129,12 @@ void reserves()
         reserve_code = malloc(sizeof(char) * (reservSize + 1));
         reserve = malloc(sizeof(Node));
 
-        if(reserve_code == NULL)
+        if (reserve_code == NULL)
         {
             printf("No memory\n");
             exit(0);
         }
-        if(reserve == NULL)
+        if (reserve == NULL)
         {
             printf("No memory\n");
             exit(0);
@@ -1154,8 +1152,7 @@ void reserves()
 
 /*  COMAND E:   */
 
-
-void delete()
+void delete ()
 {
     char code[MAX_C_INSTRUCTION];
     Node *reserve_aux;
@@ -1164,31 +1161,30 @@ void delete()
     scanf("%s", code);
 
     code_size = strlen(code);
-    
-    if(code_size < 10)
+
+    if (code_size < 10)
     {
-        if(flight_counter == 0)
+        if (flight_counter == 0)
         {
             printf("not found\n");
             return;
         }
 
-        for(i = 0; i < flight_counter; i++)
+        for (i = 0; i < flight_counter; i++)
         {
-            if(strcmp(code, flightList[i].code) == 0)
+            if (strcmp(code, flightList[i].code) == 0)
             {
                 code_check = 1;
-                for(j = i; j < flight_counter; j++)
+                for (j = i; j < flight_counter; j++)
                 {
                     flightList[j] = flightList[j + 1];
                 }
                 flight_counter--;
                 i--;
             }
-            
         }
 
-        if(code_check == 0)
+        if (code_check == 0)
         {
             printf("not found\n");
             return;
@@ -1196,14 +1192,13 @@ void delete()
     }
     else
     {
-        if(head == NULL)
+        if (head == NULL)
         {
             printf("not found\n");
             return;
         }
-    
 
-        if(strcmp(code, head->reserve_code) == 0)
+        if (strcmp(code, head->reserve_code) == 0)
         {
             reserve_aux = head;
             head = head->next;
@@ -1213,9 +1208,9 @@ void delete()
 
         reserve_aux = head;
 
-        while(reserve_aux != NULL)
+        while (reserve_aux != NULL)
         {
-            if(strcmp(code, reserve_aux->reserve_code) == 0)
+            if (strcmp(code, reserve_aux->reserve_code) == 0)
             {
                 free(reserve_aux->reserve_code);
                 free(reserve_aux);
@@ -1224,15 +1219,12 @@ void delete()
             reserve_aux = reserve_aux->next;
         }
 
-        if(code_check == 0)
+        if (code_check == 0)
         {
             printf("not found\n");
             return;
         }
-
-
     }
-
 }
 
 /* Função main() que lê um caracter que correponde ao comando pretendido pelo
@@ -1273,7 +1265,7 @@ int main()
             reserves();
             break;
         case 'e':
-            delete();
+            delete ();
             break;
         }
         scanf("%c", &option);
@@ -1281,7 +1273,7 @@ int main()
 
     if (option == 'q')
     {
-        while(head != NULL)
+        while (head != NULL)
         {
             aux = head;
             head = head->next;
@@ -1292,5 +1284,5 @@ int main()
     return 0;
 }
 
-/* gcc -Wall -Wextra -Werror -ansi -pedantic -o ola pp2.c 
-*/
+/* gcc -Wall -Wextra -Werror -ansi -pedantic -o ola pp2.c
+ */
