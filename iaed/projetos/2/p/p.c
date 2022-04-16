@@ -1061,7 +1061,7 @@ void reserves()
                 printf("invalid reservation code\n");
                 return;
             }
-            if (word < 'z' && word > 'a')
+            if (word <= 'z' && word >= 'a')
             {
                 printf("invalid reservation code\n");
                 return;
@@ -1176,6 +1176,19 @@ void delete ()
             if (strcmp(code, flightList[i].code) == 0)
             {
                 code_check = 1;
+                reserve_aux = head;
+                while (reserve_aux != NULL)
+                {
+
+                    if (strcmp(code, reserve_aux->reserve_code) == 0)
+                    {
+                        free(reserve_aux->reserve_code);
+                        free(reserve_aux);
+                        code_check = 1;
+                    }
+                    reserve_aux = reserve_aux->next;
+                }
+
                 for (j = i; j < flight_counter; j++)
                 {
                     flightList[j] = flightList[j + 1];
@@ -1209,7 +1222,7 @@ void delete ()
             {
                 if (strcmp(code, flightList[i].code) == 0)
                 {
-                    flightList[i].capacity -= passengersNumb;
+                    flightList[i].capacity += passengersNumb;
                 }
             }
 
@@ -1231,7 +1244,7 @@ void delete ()
                 {
                     if (strcmp(code, flightList[i].code) == 0)
                     {
-                        flightList[i].capacity -= passengersNumb;
+                        flightList[i].capacity += passengersNumb;
                     }
                 }
 
@@ -1307,5 +1320,4 @@ int main()
     return 0;
 }
 
-/* gcc -Wall -Wextra -Werror -ansi -pedantic -o ola p.c
- */
+/* gcc -Wall -Wextra -Werror -ansi -pedantic -o ola p.c */
