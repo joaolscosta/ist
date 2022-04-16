@@ -1157,7 +1157,6 @@ void delete ()
     char code[MAX_C_INSTRUCTION];
     Node *reserve_aux;
     int i, j, code_size, code_check = 0;
-    int passengersNumb;
 
     scanf("%s", code);
 
@@ -1201,18 +1200,9 @@ void delete ()
 
         if (strcmp(code, head->reserve_code) == 0)
         {
+
             reserve_aux = head;
             head = head->next;
-            passengersNumb = reserve_aux->passengers_numb;
-
-            for (i = 0; i < flight_counter; i++)
-            {
-                if (strcmp(code, flightList[i].code) == 0)
-                {
-                    flightList[i].capacity -= passengersNumb;
-                }
-            }
-
             free(reserve_aux->reserve_code);
             free(reserve_aux);
             return;
@@ -1222,19 +1212,8 @@ void delete ()
 
         while (reserve_aux != NULL)
         {
-
             if (strcmp(code, reserve_aux->reserve_code) == 0)
             {
-                passengersNumb = reserve_aux->passengers_numb;
-
-                for (i = 0; i < flight_counter; i++)
-                {
-                    if (strcmp(code, flightList[i].code) == 0)
-                    {
-                        flightList[i].capacity -= passengersNumb;
-                    }
-                }
-
                 free(reserve_aux->reserve_code);
                 free(reserve_aux);
                 code_check = 1;
@@ -1307,5 +1286,5 @@ int main()
     return 0;
 }
 
-/* gcc -Wall -Wextra -Werror -ansi -pedantic -o ola p.c
+/* gcc -Wall -Wextra -Werror -ansi -pedantic -o ola pp2.c
  */
