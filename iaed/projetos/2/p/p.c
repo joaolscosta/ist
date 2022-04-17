@@ -1320,4 +1320,4 @@ int main()
     return 0;
 }
 
-/* gcc -Wall -Wextra -Werror -ansi -pedantic -o ola p.c */
+/* gcc -Wall -Wextra -Werror -ansi -pedantic -o p p.c */
