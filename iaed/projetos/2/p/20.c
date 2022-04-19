@@ -344,6 +344,7 @@ typedef struct flight
     Time departHour;
     Time duration;
     int capacity;
+    int ocupation;
 
 } Flight;
 
@@ -557,6 +558,7 @@ void flightCode()
         flightList[flight_counter].duration.hours = duration_aux.hours;
         flightList[flight_counter].duration.minutes = duration_aux.minutes;
         flightList[flight_counter].capacity = capacity_aux;
+        flightList[flight_counter].ocupation = 0;
 
         flight_counter++;
     }
@@ -889,6 +891,17 @@ void arrivList()
 
 /*  COMAND R:   */
 
+/* Cria uma reserva ou lista as reservesas consoante o código introduzido e
+data introduzidos. */
+
+/*  Estrutura que permite manipular os valores da reserva criada.
+Contém variáveis como o código de reserva que é um código que contém apenas
+limite inferior de caracteres então vamos alocar apenas o espaço de memória
+necessário à sua alocação tal como o número de reservas que não tem limites.
+Inclui também o número de passageiros, a data da reserva, o código do voo
+e uma variável do tipo desta struct chamada (*next) que vai permitir que
+possamos percorrer as reservas criadas. */
+
 typedef struct reserves
 {
     char *reserve_code;
@@ -898,26 +911,55 @@ typedef struct reserves
     struct reserves *next;
 } Node;
 
+/* Esta é a variável global que nunca vai perder a primeira reserva criada
+com função de ser sempre a cabeça por onde temos que começar a percorrer
+essa lista */
 Node *head = NULL;
 
+/* Primeira das três funções auxiliares que vai ser a que adiciona a reserva
+que for identificada na função abaixo declarada reserves() à linked list.
+Recebe como argumento a reserva do tipo Node (struct) */
 void add_reserve(Node *reserve)
 {
+    Node *reserv_aux = NULL;
 
-    Node *reserv_aux;
-    Node *temp;
+    /* Variável que permite não perdermos a ordem das reservas */
+    Node *temp = NULL;
 
+    /* Existem três condições de armazenamento das reservas: */
+
+    /* Se a cabeça da lista for logo vazia a reserva a criar fica armazenada
+    logo no inicio da lista. */
     if (head == NULL)
     {
         head = reserve;
     }
+    /* Nesta condição dá-se que se o código de reserva inserido for menor
+    alfabeticamente insere no lugar da cabeça e o lugar da cabeça passa
+    para a próxima posição. */
     else if (strcmp(reserve->reserve_code, head->reserve_code) < 0)
     {
         reserve->next = head;
         head = reserve;
     }
+    else if (head->next == NULL)
+    {
+        head->next = reserve;
+    }
     else
     {
-        reserv_aux = head;
+        /* Para terminar a última condição verifica desde já que que existem
+        reservas armazenadas e então é criada uma lista de reservas
+        auxiliar que temos que igualar à lista original para que não percamos
+        a lista original.
+
+        Enquanto o valor da reserva não for NULL (quer dizer que enquanto não
+        for um espaço vazio), verifica se o a primeira letra do código de
+        reserva da reserva a que estamos a adicionar é menor alfabeticamente
+        para inserir no lugar da reserva em questão e passá-la para a
+        próxima posição. */
+        temp = head;
+        reserv_aux = head->next;
         while (reserv_aux != NULL)
         {
             if (strcmp(reserve->reserve_code, reserv_aux->reserve_code) < 0)
@@ -926,6 +968,8 @@ void add_reserve(Node *reserve)
                 reserve->next = reserv_aux;
                 break;
             }
+            /* Se chegar à última posição da linked list adiciona a reserva
+            nessa posição e passa o final da lista para a próxima posição */
             else if (reserv_aux->next == NULL)
             {
                 reserv_aux->next = reserve;
@@ -937,6 +981,9 @@ void add_reserve(Node *reserve)
     }
 }
 
+/* Segunda função auxiliar que verifica se a data da reserva é válida.
+Recebe a data e retorna um inteiro 1 se a data não for válida e 0 se for
+uma data válida. */
 int checkDate(Date date)
 {
     int check = 0;
@@ -983,9 +1030,12 @@ int checkDate(Date date)
     return check;
 }
 
+/* Terceira e última função auxiliar que verifica se já existe algum código
+de reserva armazenado. Recebe o código de reserva e retorna um inteiro 1 se
+já existir um código igual e 0 se não existir nenhum que correponda. */
 int reserveCheck(char reserve[MAX_C_INSTRUCTION])
 {
-    Node *reserv_aux;
+    Node *reserv_aux = NULL;
     int check = 0;
 
     reserv_aux = head;
@@ -1001,6 +1051,11 @@ int reserveCheck(char reserve[MAX_C_INSTRUCTION])
     return check;
 }
 
+/* Função que permite o processo de armazenamento de uma nova reserva ou lista
+as reservas consoante o código de vôo e a data inserida.
+São criadas variáveis auxiliares com o mesmo objetivo das variáveis declaradas
+na struct anteriormente e são então usadas pois não podem ser inseridos
+valores e caracteres de maneira incorreta. */
 void reserves()
 {
     char code_aux[MAX_C_CODE], c, word;
@@ -1011,16 +1066,47 @@ void reserves()
     int capacity = 0;
     int code_check = 0, date_check = 0, reserve_check = 0;
 
-    Node *reserve;
-    Node *aux;
-    char *reserve_code;
+    Node *reserve = NULL;
+    Node *aux = NULL;
+    char *reserve_code = NULL;
 
+    /* São lidos o código de vôo e datas primeiramente pois ainda não temos
+    a indicação se é para adicionar uma reserva ou listar.  */
     scanf("%s", code_aux);
     scanf("%02d-%02d-%04d", &date_aux.day, &date_aux.month, &date_aux.year);
 
+    /* Se o próximo caracter logo a seguir à data introduzida for um \n então
+    quer dizer que não se introduz mais nenhuma informação e é para listar
+    as reservas conforme o código e datas introduzidos.
+    Se o próximo caracter não for \n quer dizer que existe mais conteúdo para
+    ler correspondentes ao código de reserva e o número de passageiros.*/
     c = getchar();
     if (c == '\n')
     {
+        /* aux é uma variável declarda do tipo Node (struct) que tal como a
+        variável diz vai servir de lista auxiliar para que não percamos a
+        cabeça da nossa linked list e possamos percorrer e listar todas as
+        reservas pretendidas. */
+
+        /* Algoritmo que verifica se existe um vôo correspodente com o código
+       de vôo inserido. Se não existem nenhum que correponda emite o erro. */
+
+        for (i = 0; i < flight_counter; i++)
+        {
+            if (strcmp(flightList[i].code, code_aux) == 0 &&
+                date_aux.day == flightList[i].departDate.day &&
+                date_aux.month == flightList[i].departDate.month &&
+                date_aux.year == flightList[i].departDate.year)
+            {
+                code_check = 1;
+            }
+        }
+        if (code_check == 0)
+        {
+            printf("%s: flight does not exist\n", code_aux);
+            return;
+        }
+
         aux = head;
         while (aux != NULL)
         {
@@ -1039,6 +1125,8 @@ void reserves()
         scanf("%s", reservCode);
         scanf("%d", &passengersNumber);
 
+        /* Algoritmo para armazenar na variável reservSize o tamanho do
+        código de reserva */
         i = 0;
         while (reservCode[i] != '\0')
         {
@@ -1046,31 +1134,33 @@ void reserves()
             i++;
         }
 
+        /* Verifica se o código de reserva tem pelo menos 10 caracteres */
         if (reservSize < 10)
         {
             printf("invalid reservation code\n");
             return;
         }
 
+        /* Verifica se são apenas letras maiúsculas do alfabeto ou dígitos */
         for (i = 0; i < reservSize; i++)
         {
             word = reservCode[i];
 
-            if ((word > 'Z' && word < 'A') || (word > '9' && word < '0'))
-            {
-                printf("invalid reservation code\n");
-                return;
-            }
-            if (word <= 'z' && word >= 'a')
+            if ((word > '9' && word < 'A') || word > 'Z' || word < '0')
             {
                 printf("invalid reservation code\n");
                 return;
             }
         }
 
+        /* Algoritmo que verifica se existe um vôo correspodente com o código
+        de vôo inserido. Se não existem nenhum que correponda emite o erro. */
         for (i = 0; i < flight_counter; i++)
         {
-            if (strcmp(flightList[i].code, code_aux) == 0)
+            if (strcmp(flightList[i].code, code_aux) == 0 &&
+                (flightList[i].departDate.day == date_aux.day) &&
+                (flightList[i].departDate.month == date_aux.month) &&
+                (flightList[i].departDate.year == date_aux.year))
             {
                 code_check = 1;
             }
@@ -1081,6 +1171,8 @@ void reserves()
             return;
         }
 
+        /* Chama a função auxiliar que verifica se o código de reserva é
+        válido */
         reserve_check = reserveCheck(reservCode);
 
         if (reserve_check == 1)
@@ -1089,29 +1181,35 @@ void reserves()
             return;
         }
 
+        /* Ciclo que verifica qual é o vôo correspodente ao código e data
+        introduzidos e para verificarmos se existe capacidade sufeciente para
+        armazenar os passageiros permitidos retiramos à capacidade o número
+        de passageiros e vemos se o mesmo ainda é superior a zero.
+        Se for menor que zero quer dizer que excedeu a capadidade limite do
+        vôo. */
         for (i = 0; i < flight_counter; i++)
         {
+
             if (strcmp(code_aux, flightList[i].code) == 0 &&
                 date_aux.day == flightList[i].departDate.day &&
                 date_aux.month == flightList[i].departDate.month &&
                 date_aux.year == flightList[i].departDate.year)
             {
                 capacity = flightList[i].capacity;
-                if (passengersNumber > 0)
+                if ((flightList[i].ocupation + passengersNumber) > capacity)
                 {
-                    if ((capacity -= passengersNumber) >= 0)
-                    {
-                        flightList[i].capacity -= passengersNumber;
-                    }
-                    else
-                    {
-                        printf("too many reservations\n");
-                        return;
-                    }
+                    printf("too many reservations\n");
+                    return;
+                }
+                else
+                {
+                    flightList[i].ocupation += passengersNumber;
                 }
             }
         }
 
+        /* Verifica-se aqui através da função auxiliar se a data introduzida
+        é válida. */
         date_check = checkDate(date_aux);
 
         if (date_check == 1)
@@ -1126,18 +1224,40 @@ void reserves()
             return;
         }
 
+        /* É aqui que é armazenado o espaço necessário para o código de reserva
+        e para a reserva em si. */
         reserve_code = malloc(sizeof(char) * (reservSize + 1));
         reserve = malloc(sizeof(Node));
 
+        /* As próximas duas condições verificam se não é possível armazenar
+        mais espaço. Se isso acontecer termina de imediato o programa. */
         if (reserve_code == NULL)
         {
+            free(reserve_code);
+            free(reserve);
             printf("No memory\n");
-            exit(0);
+            while (head != NULL)
+            {
+                aux = head;
+                head = head->next;
+                free(aux->reserve_code);
+                free(aux);
+            }
+            exit(1);
         }
         if (reserve == NULL)
         {
             printf("No memory\n");
-            exit(0);
+            free(reserve_code);
+            free(reserve);
+            while (head != NULL)
+            {
+                aux = head;
+                head = head->next;
+                free(aux->reserve_code);
+                free(aux);
+            }
+            exit(1);
         }
 
         strcpy(reserve_code, reservCode);
@@ -1146,25 +1266,44 @@ void reserves()
         reserve->passengers_numb = passengersNumber;
         reserve->reserve_code = reserve_code;
 
+        reserve->next = NULL;
         add_reserve(reserve);
     }
 }
 
 /*  COMAND E:   */
 
+/* Função encarregue de apagar a reserva com o código tanto de vôo como
+de reserva lido. */
+
+void delete_flights(int i)
+{
+    int j;
+    /* Retira-se da lista o vôo */
+    for (j = i; j < flight_counter; j++)
+    {
+        flightList[j] = flightList[j + 1];
+    }
+    flight_counter--;
+}
+
 void delete ()
 {
     char code[MAX_C_INSTRUCTION];
-    Node *reserve_aux;
-    int i, j, code_size, code_check = 0;
+    Node *reserve_aux = NULL, *temp = NULL, *deleted = NULL;
+    int i, code_size, code_check = 0;
     int passengersNumb;
 
     scanf("%s", code);
 
+    /* Após ler o código existe estas condições para verificar se se trata
+    de um código com 10 ou mais caracteres (código de reserva) ou com menos
+    que se trata de um código de vôo. */
     code_size = strlen(code);
-
     if (code_size < 10)
     {
+        /* Se não existir nenhum voo automaticamente não pode ser eliminado
+        nenhum vôo */
         if (flight_counter == 0)
         {
             printf("not found\n");
@@ -1173,32 +1312,59 @@ void delete ()
 
         for (i = 0; i < flight_counter; i++)
         {
+
+            /* Se o código de vôo corresponder a algum presente na lista de
+        vôos temos também que eliminar as correspondentes reservas */
             if (strcmp(code, flightList[i].code) == 0)
             {
                 code_check = 1;
-                reserve_aux = head;
+                while (head != NULL)
+                {
+                    if (strcmp(code, head->code) == 0)
+                    {
+                        deleted = head;
+                        head = head->next;
+                        free(deleted->reserve_code);
+                        free(deleted);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                if (head == NULL)
+                {
+                    delete_flights(i);
+                    i--;
+                    continue;
+                }
+
+                temp = head;
+                reserve_aux = head->next;
 
                 while (reserve_aux != NULL)
                 {
 
-                    if (strcmp(reserve_aux->code, reserve_aux->reserve_code) == 0)
+                    if (strcmp(code, reserve_aux->code) == 0)
                     {
-                        free(reserve_aux->reserve_code);
-                        free(reserve_aux);
-                        code_check = 1;
+                        deleted = reserve_aux;
+                        temp->next = reserve_aux->next;
+                        reserve_aux = temp->next;
+                        free(deleted->reserve_code);
+                        free(deleted);
                     }
-                    reserve_aux = reserve_aux->next;
-                }
 
-                for (j = i; j < flight_counter; j++)
-                {
-                    flightList[j] = flightList[j + 1];
+                    else
+                    {
+                        temp = reserve_aux;
+                        reserve_aux = reserve_aux->next;
+                    }
                 }
-                flight_counter--;
+                delete_flights(i);
                 i--;
             }
         }
-
         if (code_check == 0)
         {
             printf("not found\n");
@@ -1213,6 +1379,11 @@ void delete ()
             return;
         }
 
+        /* Antes de eliminar a reserva pretendida temos que devolver os lugares
+        dos passageiros à capacidade do vôo */
+
+        /* Aqui verificamos se o código corresponde logo ao primeiro armazenado
+        na cabeça */
         if (strcmp(code, head->reserve_code) == 0)
         {
             reserve_aux = head;
@@ -1221,46 +1392,58 @@ void delete ()
 
             for (i = 0; i < flight_counter; i++)
             {
-                if (strcmp(code, flightList[i].code) == 0)
+                if (strcmp(reserve_aux->code, flightList[i].code) == 0)
                 {
-                    flightList[i].capacity += passengersNumb;
+                    flightList[i].ocupation -= passengersNumb;
                 }
             }
-
             free(reserve_aux->reserve_code);
             free(reserve_aux);
+
             return;
         }
 
-        reserve_aux = head;
+        /* Aqui verificamos todos os restantes */
+        temp = head;
+        reserve_aux = temp->next;
 
         while (reserve_aux != NULL)
         {
-
             if (strcmp(code, reserve_aux->reserve_code) == 0)
             {
+                deleted = reserve_aux;
+
                 passengersNumb = reserve_aux->passengers_numb;
+
+                code_check = 1;
 
                 for (i = 0; i < flight_counter; i++)
                 {
-                    if (strcmp(code, flightList[i].code) == 0)
+                    if (strcmp(reserve_aux->code, flightList[i].code) == 0)
                     {
-                        flightList[i].capacity += passengersNumb;
+                        flightList[i].ocupation -= passengersNumb;
                     }
                 }
 
-                free(reserve_aux->reserve_code);
-                free(reserve_aux);
-                code_check = 1;
-            }
-            reserve_aux = reserve_aux->next;
-        }
+                temp->next = reserve_aux->next;
 
-        if (code_check == 0)
-        {
-            printf("not found\n");
-            return;
+                free(deleted->reserve_code);
+                free(deleted);
+                reserve_aux = temp->next;
+                return;
+            }
+            else
+            {
+                temp = reserve_aux;
+                reserve_aux = reserve_aux->next;
+            }
         }
+    }
+
+    if (code_check == 0)
+    {
+        printf("not found\n");
+        return;
     }
 }
 
@@ -1321,4 +1504,4 @@ int main()
     return 0;
 }
 
-/* gcc -Wall -Wextra -Werror -ansi -pedantic -o p 20.c */
+/* gcc -Wall -Wextra -Werror -ansi -pedantic -o ola 20.c */
