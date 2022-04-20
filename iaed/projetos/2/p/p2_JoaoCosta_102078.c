@@ -1,5 +1,5 @@
 /*
-File: p1_JoaoCosta_102078.c
+File: p2_JoaoCosta_102078.c
 Author: João Luis Saraiva Costa ist1102078  IAED  2022
 Description:
 Este progama pretende a construção de um sistema de gestão de aeroportos com
@@ -1107,6 +1107,9 @@ void reserves()
             return;
         }
 
+        /* É necessário o uso de uma variável auxiliar do mesmo tipo que a
+        variável global head para poder percorrer a linked list já que se
+        percorrer essa mesma lista sem perder os valores armazenados. */
         aux = head;
         while (aux != NULL)
         {
@@ -1266,7 +1269,11 @@ void reserves()
         reserve->passengers_numb = passengersNumber;
         reserve->reserve_code = reserve_code;
 
+        /* Verificar se a próxima posição a seguir à que estamos a avaliar
+        de momento está vazia.*/
         reserve->next = NULL;
+
+        /* Adiciona a reserva à lista de reservas. */
         add_reserve(reserve);
     }
 }
@@ -1276,6 +1283,8 @@ void reserves()
 /* Função encarregue de apagar a reserva com o código tanto de vôo como
 de reserva lido. */
 
+/* Função auxiliar da função abaixo definida delete() que apaga um vôo da lista
+de vôos */
 void delete_flights(int i)
 {
     int j;
@@ -1287,12 +1296,27 @@ void delete_flights(int i)
     flight_counter--;
 }
 
+/* Função encarregue do comando de eliminar o voo e respetivas reservas com o
+código de vôo indicado ou apenas as reservas com o código de reserva
+indicado */
 void delete ()
 {
     char code[MAX_C_INSTRUCTION];
     Node *reserve_aux = NULL, *temp = NULL, *deleted = NULL;
     int i, code_size, code_check = 0;
     int passengersNumb;
+
+    /*
+    temp corresponde à posição anterior à que estamos a analisar.
+    head é a lista original onde são adicionadas as reservas.
+    reserve_aux é a posição posterior a que estamos a analisar.
+    deleted é a lista onde vão ser eliminadas as reservas e vôos.
+
+    Isto tem de acontecer pois vamos percorrer diversas vezes a lista de
+    reservas e temos que analisar continuamente as posições ao redor à que
+    estamos a analisar de momento sendo que não podemos perder a cabeça
+    da variável global head.
+    */
 
     scanf("%s", code);
 
@@ -1320,6 +1344,7 @@ void delete ()
                 code_check = 1;
                 while (head != NULL)
                 {
+                    /* Verifica se a reserva a eliminar está na cabeça */
                     if (strcmp(code, head->code) == 0)
                     {
                         deleted = head;
@@ -1337,12 +1362,16 @@ void delete ()
                 {
                     delete_flights(i);
                     i--;
+                    /* Passa para a próxima iteração ignorando qualquer código
+                    posterior à próxima linha deste ciclo */
                     continue;
                 }
 
                 temp = head;
                 reserve_aux = head->next;
 
+                /* Verifica as restantes das posições da list se alguma
+                corresponde à reserva que pretendemos eliminar. */
                 while (reserve_aux != NULL)
                 {
 
@@ -1392,6 +1421,9 @@ void delete ()
 
             for (i = 0; i < flight_counter; i++)
             {
+                /* Se a cabeça da lista corresponder à reserva que pretendemos
+                eliminar retiramos o número de passageiros adicionado
+                quando adicionamos uma reserva a um vôo. */
                 if (strcmp(reserve_aux->code, flightList[i].code) == 0)
                 {
                     flightList[i].ocupation -= passengersNumb;
@@ -1403,7 +1435,6 @@ void delete ()
             return;
         }
 
-        /* Aqui verificamos todos os restantes */
         temp = head;
         reserve_aux = temp->next;
 
@@ -1503,5 +1534,3 @@ int main()
     }
     return 0;
 }
-
-/* gcc -Wall -Wextra -Werror -ansi -pedantic -o ola 20.c */
