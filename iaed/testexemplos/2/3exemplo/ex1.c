@@ -9,6 +9,24 @@
 #define CODE_CART 50
 #define MAX_CALLS 1000
 
+typedef struct date
+{
+    int dia;
+    int mes;
+    int ano;
+} Date;
+
 typedef struct cliente
 {
+    char id[NUMERO];
+    char nome[NOME];
+    char morada[MORADA];
+    Date data;
+
+} cliente;
+
+typedef struct chamada
+{
+    Data chamada;
+    int duracao;
 };
