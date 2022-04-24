@@ -1,0 +1,17 @@
+extrai_ilhas_linha 1
+ilhas 1
+vizinhas 2
+estado 1
+posicoes_entre 1
+cria_ponte 0.5
+caminho_livre 1
+actualiza_vizinhas_entrada 1
+ 
+actualiza_vizinhas_apos_pontes 0.5
+ilhas_terminadas 1
+tira_ilhas_terminadas_entrada 1
+tira_ilhas_terminadas 1
+marca_ilhas_terminadas_entrada 1
+marca_ilhas_terminadas 1
+trata_ilhas_terminadas 1
+junta_pontes 1
