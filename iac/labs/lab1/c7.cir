@@ -1,0 +1,281 @@
+{
+  "comment" : "This is a JSON file describing a digital circuit, which can be loaded into the SEPE (Simulador Especial Para Ensino), a computer architecture simulator.",
+  "savedWithSimulatorVersion" : "2.1.0",
+  "savedWithSimulatorBuildOn" : "2022-05-11  at  20:18:52",
+  "editorLocked" : false,
+  "startAutomatically" : true,
+  "showConnectionColors" : true,
+  "zoomScale" : 100,
+  "gridVisible" : true,
+  "primary screen width" : 1920,
+  "primary screen height" : 1080,
+  "window" : {
+    "X absolute" : 0,
+    "Y absolute" : 27,
+    "X relative" : 0,
+    "Y relative" : 27,
+    "width" : 1180,
+    "height" : 1053,
+    "leftRightDividerLocation" : 290,
+    "topBottomDividerLocation" : 877
+  },
+  "connections" : [ {
+    "className" : "Connection",
+    "elementID" : 14,
+    "name" : "Connection_ID:14",
+    "numberOfBits" : 1,
+    "segments" : [ {
+      "sourcePinID" : 13,
+      "targetPinID" : 10,
+      "points" : [ {
+        "X" : 229,
+        "Y" : 47
+      }, {
+        "X" : 293,
+        "Y" : 247
+      } ]
+    } ]
+  }, {
+    "className" : "Connection",
+    "elementID" : 15,
+    "name" : "Connection_ID:15",
+    "numberOfBits" : 4,
+    "segments" : [ {
+      "sourcePinID" : 3,
+      "targetPinID" : 7,
+      "points" : [ {
+        "X" : 164,
+        "Y" : 191
+      }, {
+        "X" : 293,
+        "Y" : 267
+      } ]
+    } ]
+  }, {
+    "className" : "Connection",
+    "elementID" : 16,
+    "name" : "Connection_ID:16",
+    "numberOfBits" : 4,
+    "segments" : [ {
+      "sourcePinID" : 5,
+      "targetPinID" : 8,
+      "points" : [ {
+        "X" : 148,
+        "Y" : 359
+      }, {
+        "X" : 293,
+        "Y" : 287
+      } ]
+    } ]
+  }, {
+    "className" : "Connection",
+    "elementID" : 19,
+    "name" : "Connection_ID:19",
+    "numberOfBits" : 1,
+    "segments" : [ {
+      "sourcePinID" : 11,
+      "targetPinID" : 18,
+      "points" : [ {
+        "X" : 445,
+        "Y" : 247
+      }, {
+        "X" : 687,
+        "Y" : 241
+      } ]
+    } ]
+  }, {
+    "className" : "Connection",
+    "elementID" : 22,
+    "name" : "Connection_ID:22",
+    "numberOfBits" : 4,
+    "segments" : [ {
+      "sourcePinID" : 21,
+      "targetPinID" : 9,
+      "points" : [ {
+        "X" : 643,
+        "Y" : 439
+      }, {
+        "X" : 445,
+        "Y" : 267
+      } ]
+    } ]
+  } ],
+  "modules" : [ {
+    "className" : "ModuleHexaInput",
+    "elementID" : 2,
+    "name" : "Operando A",
+    "numberOfBits" : 4,
+    "moduleDelay" : 5,
+    "positionX" : 72,
+    "positionY" : 176,
+    "simGuiVisibleInSimulation" : false,
+    "nHexaDigits" : 1,
+    "outPin" : {
+      "className" : "TristateOutPin",
+      "elementID" : 3,
+      "name" : "OUT",
+      "numberOfBits" : 4,
+      "pinStartBit" : 0,
+      "connStartBit" : 0,
+      "pinSide" : "RIGHT",
+      "pinShape" : "RECT",
+      "pinConnectionID" : 15
+    }
+  }, {
+    "className" : "ModuleHexaInput",
+    "elementID" : 4,
+    "name" : "Operando B",
+    "numberOfBits" : 4,
+    "moduleDelay" : 5,
+    "positionX" : 56,
+    "positionY" : 344,
+    "simGuiVisibleInSimulation" : false,
+    "nHexaDigits" : 1,
+    "outPin" : {
+      "className" : "TristateOutPin",
+      "elementID" : 5,
+      "name" : "OUT",
+      "numberOfBits" : 4,
+      "pinStartBit" : 0,
+      "connStartBit" : 0,
+      "pinSide" : "RIGHT",
+      "pinShape" : "RECT",
+      "pinConnectionID" : 16
+    }
+  }, {
+    "className" : "ModuleAdder",
+    "elementID" : 6,
+    "name" : "Adder",
+    "numberOfBits" : 4,
+    "moduleDelay" : 5,
+    "positionX" : 298,
+    "positionY" : 232,
+    "nInputPinsArray" : [ {
+      "className" : "InPin",
+      "elementID" : 7,
+      "name" : "IN0",
+      "numberOfBits" : 4,
+      "pinStartBit" : 0,
+      "connStartBit" : 0,
+      "pinSide" : "LEFT",
+      "pinShape" : "RECT",
+      "pinConnectionID" : 15,
+      "pinValueFixed" : "-"
+    }, {
+      "className" : "InPin",
+      "elementID" : 8,
+      "name" : "IN1",
+      "numberOfBits" : 4,
+      "pinStartBit" : 0,
+      "connStartBit" : 0,
+      "pinSide" : "LEFT",
+      "pinShape" : "RECT",
+      "pinConnectionID" : 16,
+      "pinValueFixed" : "-"
+    } ],
+    "outPin" : {
+      "className" : "OutPin",
+      "elementID" : 9,
+      "name" : "OUT",
+      "numberOfBits" : 4,
+      "pinStartBit" : 0,
+      "connStartBit" : 0,
+      "pinSide" : "RIGHT",
+      "pinShape" : "RECT",
+      "pinConnectionID" : 22
+    },
+    "carryInPin" : {
+      "className" : "InPin",
+      "elementID" : 10,
+      "name" : "CARRY_IN",
+      "numberOfBits" : 1,
+      "pinStartBit" : 0,
+      "connStartBit" : 0,
+      "pinSide" : "LEFT",
+      "pinShape" : "RECT",
+      "pinConnectionID" : 14,
+      "pinValueFixed" : "-"
+    },
+    "carryOutPin" : {
+      "className" : "OutPin",
+      "elementID" : 11,
+      "name" : "CARRY_OUT",
+      "numberOfBits" : 1,
+      "pinStartBit" : 0,
+      "connStartBit" : 0,
+      "pinSide" : "RIGHT",
+      "pinShape" : "RECT",
+      "pinConnectionID" : 19
+    }
+  }, {
+    "className" : "ModuleToggleButtons",
+    "elementID" : 12,
+    "name" : "Carry In",
+    "numberOfBits" : 1,
+    "moduleDelay" : 5,
+    "positionX" : 160,
+    "positionY" : 32,
+    "simGuiVisibleInSimulation" : false,
+    "highColor" : "Red",
+    "lowColor" : "Black",
+    "outPin" : {
+      "className" : "OutPin",
+      "elementID" : 13,
+      "name" : "OUT",
+      "numberOfBits" : 1,
+      "pinStartBit" : 0,
+      "connStartBit" : 0,
+      "pinSide" : "RIGHT",
+      "pinShape" : "RECT",
+      "pinConnectionID" : 14
+    }
+  }, {
+    "className" : "ModuleLeds",
+    "elementID" : 17,
+    "name" : "Leds",
+    "numberOfBits" : 1,
+    "moduleDelay" : 5,
+    "positionX" : 692,
+    "positionY" : 226,
+    "simGuiVisibleInSimulation" : false,
+    "highColor" : "Red",
+    "lowColor" : "Black",
+    "zColor" : "Black_White",
+    "inPin" : {
+      "className" : "InPin",
+      "elementID" : 18,
+      "name" : "IN",
+      "numberOfBits" : 1,
+      "pinStartBit" : 0,
+      "connStartBit" : 0,
+      "pinSide" : "LEFT",
+      "pinShape" : "RECT",
+      "pinConnectionID" : 19,
+      "pinValueFixed" : "-"
+    }
+  }, {
+    "className" : "ModuleHexaDisplays",
+    "elementID" : 20,
+    "name" : "Hexadecimal displays",
+    "numberOfBits" : 4,
+    "moduleDelay" : 5,
+    "positionX" : 648,
+    "positionY" : 424,
+    "simGuiVisibleInSimulation" : false,
+    "nHexaDigits" : 1,
+    "onColor" : "Red",
+    "zColor" : "Black_White",
+    "inPin" : {
+      "className" : "InPin",
+      "elementID" : 21,
+      "name" : "IN",
+      "numberOfBits" : 4,
+      "pinStartBit" : 0,
+      "connStartBit" : 0,
+      "pinSide" : "LEFT",
+      "pinShape" : "RECT",
+      "pinConnectionID" : 22,
+      "pinValueFixed" : "-"
+    }
+  } ]
+}

@@ -1,0 +1,86 @@
+{
+  "comment" : "This is a JSON file describing a digital circuit, which can be loaded into the SEPE (Simulador Especial Para Ensino), a computer architecture simulator.",
+  "savedWithSimulatorVersion" : "2.1.0",
+  "savedWithSimulatorBuildOn" : "2022-05-11  at  20:18:52",
+  "editorLocked" : false,
+  "startAutomatically" : true,
+  "showConnectionColors" : true,
+  "zoomScale" : 100,
+  "gridVisible" : true,
+  "primary screen width" : 1920,
+  "primary screen height" : 1080,
+  "window" : {
+    "X absolute" : 0,
+    "Y absolute" : 27,
+    "X relative" : 0,
+    "Y relative" : 27,
+    "width" : 960,
+    "height" : 1053,
+    "leftRightDividerLocation" : 183,
+    "topBottomDividerLocation" : 822
+  },
+  "connections" : [ {
+    "className" : "Connection",
+    "elementID" : 8,
+    "name" : "Connection_ID:8",
+    "numberOfBits" : 4,
+    "segments" : [ {
+      "sourcePinID" : 1,
+      "targetPinID" : 5,
+      "points" : [ {
+        "X" : 260,
+        "Y" : 192
+      }, {
+        "X" : 653,
+        "Y" : 199
+      } ]
+    } ]
+  } ],
+  "modules" : [ {
+    "className" : "ModuleToggleButtons",
+    "elementID" : 0,
+    "name" : "Interruptor",
+    "numberOfBits" : 4,
+    "moduleDelay" : 5,
+    "positionX" : 174,
+    "positionY" : 177,
+    "simGuiVisibleInSimulation" : false,
+    "highColor" : "Red",
+    "lowColor" : "Black",
+    "outPin" : {
+      "className" : "OutPin",
+      "elementID" : 1,
+      "name" : "OUT",
+      "numberOfBits" : 4,
+      "pinStartBit" : 0,
+      "connStartBit" : 0,
+      "pinSide" : "RIGHT",
+      "pinShape" : "RECT",
+      "pinConnectionID" : 8
+    }
+  }, {
+    "className" : "ModuleLeds",
+    "elementID" : 4,
+    "name" : "Leds",
+    "numberOfBits" : 4,
+    "moduleDelay" : 5,
+    "positionX" : 658,
+    "positionY" : 184,
+    "simGuiVisibleInSimulation" : false,
+    "highColor" : "Red",
+    "lowColor" : "Black",
+    "zColor" : "Black_White",
+    "inPin" : {
+      "className" : "InPin",
+      "elementID" : 5,
+      "name" : "IN",
+      "numberOfBits" : 4,
+      "pinStartBit" : 0,
+      "connStartBit" : 0,
+      "pinSide" : "LEFT",
+      "pinShape" : "RECT",
+      "pinConnectionID" : 8,
+      "pinValueFixed" : "-"
+    }
+  } ]
+}
