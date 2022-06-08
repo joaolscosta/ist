@@ -1,0 +1,5 @@
+Uma imagem para terminar. (Nova parecida ou uma cena a dizer terminar)
+Imagem quando o rover explode.
+Som para iniciar, som para terminar, quando em pausa música ambiente.
+Página 5 do projeto todos os efeitos sonoros do projeto.
+Ver prints das mensagens no ecrã da cena do powerpoint.
