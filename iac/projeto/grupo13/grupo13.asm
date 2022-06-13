@@ -1,9 +1,10 @@
 ; *********************************************************************************
-; * Identificação: Daniel Nunes ist1103095
+; * Identificação: GRUPO 13
+; *				   Daniel Nunes ist1103095
 ; *                João Costa   ist1102078
 ; *                Luana Ferraz ist1102908
 ; * IST-UL
-; * Modulo:    projeto_int.asm
+; * Modulo:    grupo13.asm
 ; * Descrição: Este programa consiste em realizar um jogo de simulação de um rover 
 ; * a defender um planeta. O rover obtém energia de meteoros bons e destroi os maus.
 ; * A interface é constítuida por um ecrã, um teclado e displays.
@@ -29,12 +30,14 @@ TECLA_METEORO 			EQU 8			; tecla na quarta coluna do teclado (tecla 3)
 
 TECLA_INICIO			EQU 1			; tecla na primeira coluna do teclado (tecla C)
 TECLA_SUSPENDE			EQU 2			; tecla na segunda coluna do teclado (tecla D)
+TECLA_RETOMA			EQU 2			; tecla na segunda coluna do teclado (tecla D)
 TECLA_TERMINA			EQU 4			; tecla na terceira coluna do teclado (tecla E)
 
 DEFINE_LINHA    		EQU 600AH      	; endereço do comando para definir a linha
 DEFINE_COLUNA   		EQU 600CH      	; endereço do comando para definir a coluna
 DEFINE_PIXEL    		EQU 6012H      	; endereço do comando para escrever um pixel
 
+APAGA_TUDO 				EQU 6002H
 APAGA_AVISO     		EQU 6040H      	; endereço do comando para apagar o aviso de nenhum cenário selecionado
 APAGA_ECRA	 		    EQU 6002H      	; endereço do comando para apagar todos os pixels já desenhados
 SELECIONA_CENARIO_FUNDO EQU 6042H      	; endereço do comando para selecionar uma imagem de fundo
@@ -48,16 +51,22 @@ COLUNA_MEIO_MET			EQU  17			; coluna correspondente ao meio do meteoro
 MIN_COLUNA				EQU  0			; número da coluna mais à esquerda que o objeto pode ocupar
 MAX_COLUNA				EQU  63        	; número da coluna mais à direita que o objeto pode ocupar
 ATRASO					EQU	 400H		; atraso para limitar a velocidade de movimento do rover
-ULTIMA_LINHA			EQU	 36			; ultima linha que o meteoro atinge (fora dos limites do ecrã)
+ULTIMA_LINHA			EQU	 32			; ultima linha que o meteoro atinge (fora dos limites do ecrã)
 
 LARGURA_ROVER			EQU	5			; largura do rover
 ALTURA_ROVER			EQU	4			; altura do rover
-LARGURA_MET_MAX 		EQU 5			; largura do meteoro
+ALTURA_MET_MIN			EQU 1
+ALTURA_MET_2			EQU 2
+ALTURA_MET_3			EQU 3
+ALTURA_MET_4			EQU 4
+LARGURA_MET		 		EQU 5			; largura do meteoro
 ALTURA_MET_MAX 			EQU 5			; altura do meteoro
 COR_PIXEL_ROVER1	  	EQU	0D58FH		; cor 1 do pixel do rover : azul claro em ARGB 
 COR_PIXEL_ROVER2		EQU	0D0EFH		; cor 2 do pixel do rover: ciano em ARGB 
 COR_PIXEL_ROVER3		EQU	0D08FH		; cor 3 do pixel do rover: azul escuro em ARGB 
 COR_METEORO				EQU 0A0B4H  	; cor do pixel do meteoro: verde em ARGB
+DEZ						EQU 10
+FATOR                   EQU 1000		
 
 
 
@@ -70,7 +79,15 @@ pilha:
 	STACK 100H			; espaço reservado para a pilha 
 SP_inicial:				; este é o endereço com que o SP deve ser 
 						; inicializado.
-							
+
+energia: 			WORD 64H	; variavel que guarda o valor da energia do rover
+
+energia_inicial: 	WORD 64H
+
+;fator:				WORD 1000
+
+
+
 DEF_ROVER:				; tabela que define o rover (cor, largura, pixels)
 	WORD		LARGURA_ROVER
 	WORD		ALTURA_ROVER
@@ -79,8 +96,36 @@ DEF_ROVER:				; tabela que define o rover (cor, largura, pixels)
 	WORD		COR_PIXEL_ROVER1, COR_PIXEL_ROVER1, COR_PIXEL_ROVER1, COR_PIXEL_ROVER1, COR_PIXEL_ROVER1
 	WORD        COR_PIXEL_ROVER1, 0, 0, 0, COR_PIXEL_ROVER1	
 
+DEF_METEORO_MIN:		; tabela que define o meteoro (cor, largura, pixels)
+	WORD		LARGURA_MET
+	WORD		ALTURA_MET_MIN
+	WORD		0, 0, COR_METEORO, 0, 0
+
+DEF_METEORO_2:		; tabela que define o meteoro (cor, largura, pixels)
+	WORD		LARGURA_MET
+	WORD		ALTURA_MET_2
+	WORD		0, COR_METEORO, COR_METEORO, 0, 0
+	WORD		0, COR_METEORO, COR_METEORO, 0, 0
+
+DEF_METEORO_3:		; tabela que define o meteoro (cor, largura, pixels)
+	WORD		LARGURA_MET
+	WORD		ALTURA_MET_3
+	WORD		0, 0, COR_METEORO, 0, 0
+	WORD 		0, COR_METEORO, COR_METEORO, COR_METEORO, 0
+	WORD		0, 0, COR_METEORO, 0, 0
+
+DEF_METEORO_4:		; tabela que define o meteoro (cor, largura, pixels)
+	WORD		LARGURA_MET
+	WORD		ALTURA_MET_4
+	WORD		0, COR_METEORO, COR_METEORO, 0, 0
+	WORD 		COR_METEORO, COR_METEORO, COR_METEORO, COR_METEORO, 0
+	WORD 		COR_METEORO, COR_METEORO, COR_METEORO, COR_METEORO, 0
+	WORD		0, COR_METEORO, COR_METEORO, 0, 0
+
+
+
 DEF_METEORO_MAX:		; tabela que define o meteoro (cor, largura, pixels)
-	WORD		LARGURA_MET_MAX
+	WORD		LARGURA_MET
 	WORD		ALTURA_MET_MAX
 	WORD		0, 0, COR_METEORO, 0, 0
 	WORD 		0, COR_METEORO, COR_METEORO, COR_METEORO, 0
@@ -101,11 +146,24 @@ inicio:
     MOV  [APAGA_ECRA], R1				; apaga todos os pixels já desenhados 
 	MOV	 R1, 0							; cenário de fundo número 0
     MOV  [SELECIONA_CENARIO_FUNDO], R1	; seleciona o cenário de fundo
-	MOV	 R7, 1							; valor a somar à coluna do objeto, para o movimentar
-	MOV  R9, 0 
- 	MOV  R11, DISPLAYS  				; endereço do periférico dos displays
-    MOV  [R11], R9      				; escreve linha e coluna a zero nos displays
 
+
+espera_tecla_inicio:					; neste ciclo espera-se até a tecla de iniciar o jogo ser premida
+	MOV  R6, LINHA_TECLADO4				; linha a testar no teclado
+	CALL teclado						; leitura às teclas
+	CMP	 R0, TECLA_INICIO
+	JNZ espera_tecla_inicio				; repete o ciclo se não for a tecla C
+	
+
+comeca_jogo:							; foi premida a tecla de inicio e o jogo começa
+	MOV	 R1, 1							; cenário de fundo número 1
+    MOV  [SELECIONA_CENARIO_FUNDO], R1	; seleciona o cenário de fundo
+	MOV	 R7, 1							; valor a somar à coluna do objeto, para o movimentar
+	MOV  R9, [energia_inicial] 
+	MOV  [energia], R9					; iniciar a energia a 100
+ 	MOV  R11, DISPLAYS  				; endereço do periférico dos displays
+    CALL converte_numero
+	MOV  [R11], R9      				; escreve linha e coluna a zero nos displays
 
 posicao_rover:
     MOV  R2, COLUNA_ROVER				; coluna do rover
@@ -113,14 +171,14 @@ posicao_rover:
 
 mostra_rover:
 	CALL desenha_rover					; desenha o rover a partir da tabela
-	CMP R1, 0							; verificar se estamos no início do programa para desenhar o resto
+	CMP R1, 1							; verificar se estamos no início do programa para desenhar o resto
 	JNZ ainda_ha_tecla
 
 posicao_meteoro:						; definir a posição inicial do meteoro
 	PUSH R2								; valor que será modificado e utilizado no desenho do meteoro
 	PUSH R4								; valor para ler a tabela do meteoro
     MOV  R1, LINHA_METEORO				; linha do meteoro
-	MOV	 R4, DEF_METEORO_MAX			; endereço da tabela que define o meteoro
+	MOV	 R4, DEF_METEORO_MIN			; endereço da tabela que define o meteoro
 
 mostra_meteoro:
 	CALL desenha_meteoro             	; desenha o meteoro a partir da tabela
@@ -193,34 +251,35 @@ coluna_seguinte:
 	POP R1
 
 move_meteoro:
-	PUSH R9
-	MOV	 R9, 0							; som com número 0
-	MOV  [TOCA_SOM], R9					; comando para tocar o som
-	POP  R9
-	POP  R0
-	PUSH R2
-	PUSH R4
-	PUSH R9
-	MOV  R9, ULTIMA_LINHA				; registo que guarda o valor da última linha
-	CMP  R1, R9							; compara a linha atual e a última linha
-	JNZ  move_normal					; se não for a última linha executa o movimento normal
-	POP  R9						
-	CALL apaga_ultima_linha				; o meteoro está na última linha, apagando-o
-	MOV  R1, 0							; voltar a colocá-lo na posição inicial do ecrã
-	MOV	 R4, DEF_METEORO_MAX			; guardar o formato do meteoro
-	JMP  mostra_meteoro					
+    PUSH R9
+    MOV     R9, 0                            ; som com número 0
+    MOV  [TOCA_SOM], R9                    ; comando para tocar o som
+    POP  R9
+    POP  R0
+    PUSH R2
+    PUSH R4
+    SUB  R1, 5                            ; repor o valor da linha para desenhar o meteoro
+    MOV  R2, COLUNA_METEORO                ; coluna do meteoro
+    MOV     R4, DEF_METEORO_MAX            ; endereço da tabela que define o meteoro
+    CALL apaga_meteoro                    ; antes de mover temos que apagar o meteoro
 
-
-move_normal:							; movimento normal do meteoro com exceção da última linha 
-	POP  R9
-	SUB  R1, 5							; repor o valor da linha para desenhar o meteoro
-	MOV  R2, COLUNA_METEORO		    	; coluna do meteoro
-	MOV	 R4, DEF_METEORO_MAX			; endereço da tabela que define o meteoro
-	CALL apaga_meteoro					; antes de mover temos que apagar o meteoro
+chegou_a_ultima_linha:                    ; verifica se o limite inferior do meteoro está na ultima linha do ecrã
+    PUSH R9
+    MOV  R9, ULTIMA_LINHA                ; registo que guarda o valor da última linha
+    ADD  R1, 5                            ; adicionamos o tamanho do meteoro que tinhamos tirado
+    CMP  R1, R9                            ; compara a linha atual do limite inferior do meteoro com a última linha
+    JZ   volta_primeira_linha            ; chegou à ultima linha
+    POP R9
+    SUB  R1, 5                            ; repomos a linha do meteoro do limite superior
 
 linha_seguinte:
-	ADD R1, 1							; vamos escrever o meteoro uma linha abaixo
-	JMP mostra_meteoro
+    ADD R1, 1                            ; vamos escrever o meteoro uma linha abaixo
+    JMP mostra_meteoro
+
+volta_primeira_linha:
+    POP R9
+    MOV R1, 0                            ; vamos escrever o meteoro na primeira linha
+    JMP mostra_meteoro
 
 
 ;;;;;;;;;;;;;;;;;;;;	LINHA 2		;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -239,13 +298,40 @@ muda_valor_display:
 	JMP espera_nao_tecla2				; caso em que não é nenhuma das teclas
 
 decrementa:								; decrementa valor do display
-	DEC R9
+	PUSH R9							    
+	MOV R9, [energia]					; guarda o valor atual da energia num registo
+	SUB R9, 5								
+	MOV [energia], R9					; altera o valor da energia depois da decrementação
+	CALL converte_numero
 	MOV [R11], R9						; escreve o valor no display
+	CMP R9,0
+	JZ perde_jogo
+	POP R9								
 	JMP espera_nao_tecla2
 
-incrementa:								; incrementa valor do display
-	INC R9
+perde_jogo:
+	POP R9
+	PUSH R7
+	MOV	 R9, 1							; som com número 0
+	MOV  [TOCA_SOM], R7					; comando para tocar o som
+	POP R7
+	JMP apaga_tudo
+
+incrementa:
+	PUSH R3								; incrementa valor do display
+	PUSH R9	
+	MOV R3, [energia_inicial]						
+	MOV R9, [energia]					; guarda o valor atual da energia num registo
+	ADD R9, 5
+	ADD R9, 5
+	CMP R9, R3
+	JGT incrementa_2
+	MOV [energia], R9					; altera o valor da energia depois da incrementação
+	CALL converte_numero
 	MOV [R11], R9						; escreve o valor no display
+incrementa_2:
+	POP R9
+	POP R3
 	JMP espera_nao_tecla2
 
 ;;;;;;;;;;;;;;;;;;;;	LINHA 3		;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -264,19 +350,40 @@ espera_tecla4:							; neste ciclo espera-se até uma tecla ser premida
 	CMP	 R0, 0
 	JZ   espera_tecla1					; espera, enquanto não houver tecla
 
-inicia_jogo:							; verifica se a tecla premida é a de iniciar o jogo (tecla C)						
-	CMP R0, TECLA_INICIO
-	JZ	espera_tecla1					; vai para espera_tecla1 pois não é suposto realizar esta funcionalidade
-
 suspende_jogo:							; verifica se a tecla premida é a de suspender o jogo (tecla D)
 	CMP R0, TECLA_SUSPENDE
-	JZ	espera_tecla1					; vai para espera_tecla1 pois não é suposto realizar esta funcionalidade
+	JZ	espera_nao_tecla4				; pára o jogo
 
 termina_jogo:							; verifica se a tecla premida é a de terminar o jogo (tecla E)
 	CMP R0, TECLA_TERMINA
-	JZ	espera_tecla1					; vai para espera_tecla1 pois não é suposto realizar esta funcionalidade
+	JZ	apaga_tudo						; vai para espera_tecla1 pois não é suposto realizar esta funcionalidade
+	JMP espera_tecla1
 
+jogo_suspenso:							; espera até tecla premida é a de continua o jogo (tecla D)
+	CALL teclado						; leitura às teclas
+	CMP R0, TECLA_RETOMA				; verifica se a tecla premida é a tecla de retomar om jogo
+	JZ	espera_nao_tecla_suspensa		; foi premida a tecla para retomar o jogo
+	JMP jogo_suspenso
 
+espera_nao_tecla4:						; neste ciclo espera-se até não estar premida alguma tecla da linha 4
+	CALL teclado
+	CMP R0, 0
+	JZ jogo_suspenso					; como não há nenhuma tecla, suspende-se o jogo
+	JMP espera_nao_tecla4
+
+espera_nao_tecla_suspensa:				; neste ciclo espera-se até não estar premida a tecla de retomar o jogo
+	CALL teclado
+	CMP R0, 0
+	JZ espera_tecla1					; como a tecla não está premida, retoma-se o jogo
+	JMP espera_nao_tecla_suspensa
+
+apaga_tudo:
+	MOV  [APAGA_TUDO], R1				; apaga o aviso de nenhum cenário selecionado
+	MOV	 R1, 2							; cenário de fundo número 0
+    MOV  [SELECIONA_CENARIO_FUNDO], R1	; seleciona o cenário de fundo
+
+fim:
+	JMP fim
 
 ; **********************************************************************
 ; DESENHA_ROVER - Desenha o Rover no centro do ecra com a forma e cor 
@@ -434,6 +541,7 @@ apaga_meteoro:
 	ADD	 R4, 2			      ; endereço da cor do 1º pixel (2 porque a largura é uma word)
     MOV  R8, R2				  ; guardar o valor da linha atual
 
+
 apaga_pixels_meteoro:         ; desenha os pixels do meteoro a partir da tabela
 	MOV	 R3, 0				  ; cor para apagar o próximo pixel do meteoro
 	CALL escreve_pixel		  ; escreve cada pixel do meteoro
@@ -454,6 +562,7 @@ apaga_pixels_meteoro:         ; desenha os pixels do meteoro a partir da tabela
 	POP	 R2
 	POP  R1
 	RET
+
 
 apaga_ultima_linha:				; apagar a última linha do ecrã (zona correspondente ao meteoro)
 	MOV  R2, COLUNA_MEIO_MET	; valor da coluna do centro do meteoro
@@ -549,4 +658,32 @@ teclado:
 	POP	 R5
 	POP	 R3
 	POP	 R2
+	RET
+
+converte_numero:
+	PUSH R3				; R3-FATOR, R9 NUMERO, R4-DIGITO
+	PUSH R4
+	PUSH R5
+	PUSH R7
+	MOV R7, DEZ				; vou buscar o valor 10
+	MOV R3, FATOR			; fator inicializado a 1000
+	MOV R5, 0				; resultado começa a 0
+
+ciclo_converte:
+	MOD R9, R3				; numero que quero converter MOD fator
+	DIV R3, R7				; fator DIV por 10
+	MOV R4, R9				; guardo o numero no registo do digito para o poder alterar
+	DIV R4, R3				; numero/digito DIV fator
+	SHL R5, 4				; desloca para dar espaço ao novo digito
+	OR  R5, R4				; compoe o resultado
+	CMP R3, R7
+	JLT converte_numero_ret
+	JMP ciclo_converte
+
+converte_numero_ret:
+	MOV R9, R5
+	POP R7
+	POP R5
+	POP R4
+	POP R3
 	RET
