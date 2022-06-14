@@ -66,7 +66,7 @@ ALTURA_MET_3			EQU 3			; altura do meteoro ao aumentar de tamnho duas vezes
 ALTURA_MET_4			EQU 4			; altura do meteoro ao aumentar de tamnho três vezes
 ALTURA_MET_MAX 			EQU 5			; altura do meteoro no seu tamanho máximo
 ALTURA_NAVE_3			EQU 3
-ALTURA_NAVE_4			EQU 3
+ALTURA_NAVE_4			EQU 4
 ALTURA_NAVE_MAX			EQU 5
 COR_PIXEL_ROVER1	  	EQU	0D58FH		; cor 1 do pixel do rover : azul claro em ARGB 
 COR_PIXEL_ROVER2		EQU	0D0EFH		; cor 2 do pixel do rover: ciano em ARGB 
@@ -123,10 +123,10 @@ linha_atual_meteoro:	WORD 0
 linha_final_meteoro: 	WORD 1
 linha_final_meteoro1:   WORD 1
 linha_final_meteoro2:   WORD 1
-linha_final_meteoro3:   WORD 0
-linha_final_meteoro4:   WORD 0
+linha_final_meteoro3:   WORD 1
+linha_final_meteoro4:   WORD 1
 
-coluna_atual_meteoro: WORD 0
+coluna_atual_meteoro:  WORD 0
 coluna_atual_meteoro1: WORD 0
 coluna_atual_meteoro2: WORD 0
 coluna_atual_meteoro3: WORD 0
@@ -142,20 +142,20 @@ linha_missil_explosao: WORD 0
 
 coluna_missil_explosao: WORD 0
 
-fase_meteoro: 			WORD 0
-
 largura_met:			WORD 0
 
 altura_met:				WORD 0
 
 sub_met:				WORD 0
 
+fase_meteoro: 			WORD 0
+fase_meteoro1: 			WORD 0
+fase_meteoro2: 			WORD 0
+fase_meteoro3: 			WORD 0
+fase_meteoro4: 			WORD 0
 fase_meteoro_atual:     WORD 0
 
-
-
-
-
+vai_colidir:			WORD 0
 
 
 ; tabela das rotinas de interrupção
@@ -227,6 +227,7 @@ DEF_NAVE_4:
 	WORD		COR_NAVE, 0, COR_NAVE, 0, COR_NAVE
 	WORD 		0, COR_NAVE, COR_NAVE, COR_NAVE, 0
 	WORD		0, COR_NAVE, 0, COR_NAVE, 0
+	WORD        0,0,0,0,0
 
 DEF_NAVE_MAX:
 	WORD		LARGURA_MET
@@ -301,9 +302,10 @@ posicao_meteoro:						; definir a posição inicial do meteoro
 	CALL desenha_meteoro_inicial
 	MOV R7, [coluna_atual_meteoro]
 	MOV [coluna_atual_meteoro2], R7
-	;CALL desenha_meteoro_inicial
-	;MOV R7, [coluna_atual_meteoro]
-	;MOV [coluna_atual_meteoro3], R7
+	MOV R1, 0
+	CALL desenha_meteoro_inicial
+	MOV R7, [coluna_atual_meteoro]
+	MOV [coluna_atual_meteoro3], R7
 	;CALL desenha_meteoro_inicial
 	;MOV R7, [coluna_atual_meteoro]
 	;MOV [coluna_atual_meteoro4], R7
@@ -565,11 +567,30 @@ desenha_meteoro_inicial:
 	MOV [fase_meteoro], R7
 	POP R7
 	MOV R4, DEF_METEORO_MIN
-
+	JMP gera_aleatoriamente
+gera_aleatoriamente_pop:
+	MOV R7, 0
+	MOV [vai_colidir], R7
+	POP R7
 gera_aleatoriamente:
 	MOV R9, [PIN]
 	SHR R9, 5
 	CALL subtrair_64
+	PUSH R7
+	PUSH R6
+	PUSH R9
+	MOV R6, 0
+	CALL obtem_cor_direita
+	POP R9
+	PUSH R9
+	MOV R6, 7
+	CALL obtem_cor_esquerda
+	POP R9
+	POP R6
+	MOV R7, [vai_colidir]
+	CMP R7, 1
+	JZ gera_aleatoriamente_pop
+	POP R7
 	MOV  R5, [R4]                ; obtém a largura do meteoro
 	ADD  R4, 2                    ; muda de linha da tabela pra obter a altura 
 	MOV  R10, [R4]              ; obtém a altura do meteoro
@@ -607,36 +628,41 @@ desenha_meteoro:
 	POP  R9
 	JMP  continua_desenha_max
 continua_desenha_min:
+	SUB R1, 1
 	MOV  R7, 1
 	MOV  [sub_met], R7
 	POP  R7
 	MOV  R4, DEF_METEORO_MIN
 	JMP  continua_desenha					; guardar o valor da coluna atual
 continua_desenha2:
+	SUB R1, 2
 	MOV  R7, 2
 	MOV  [sub_met], R7
 	POP  R7
 	MOV  R4, DEF_METEORO_2
 	JMP  continua_desenha					; guardar o valor da coluna atual
 continua_desenha3:
+	SUB R1, 3
 	POP  R9
 	MOV  R7, 3
 	MOV  [sub_met], R7
 	POP  R7
-	MOV  R4, DEF_METEORO_3
+	MOV  R4, DEF_NAVE_3
 	JMP  continua_desenha					; guardar o valor da coluna atual
 continua_desenha4:
+	SUB R1, 4
 	POP  R9
 	MOV  R7, 4
 	MOV  [sub_met], R7
 	POP  R7
-	MOV  R4, DEF_METEORO_4
+	MOV  R4, DEF_NAVE_4
 	JMP  continua_desenha					; guardar o valor da coluna atual		
 continua_desenha_max:
+	SUB R1, 5
 	MOV  R7, 5
 	MOV  [sub_met], R7
 	POP  R7
-	MOV  R4, DEF_METEORO_MAX
+	MOV  R4, DEF_NAVE_MAX
 continua_desenha:
 	MOV	 R5, [R4]		        ; obtém a largura do meteoro
 	ADD  R4, 2				    ; muda de linha da tabela pra obter a altura 
@@ -685,7 +711,7 @@ apaga_meteoro:
 	PUSH R10
 	PUSH R7
 	MOV  R7, [fase_meteoro]
-	MOV  [fase_meteoro_atual], R7
+	;MOV  [fase_meteoro_atual], R7
 	INC  R7
 	CMP  R7, 3
 	JLT  continua_apaga_min
@@ -701,6 +727,7 @@ apaga_meteoro:
 	POP  R9
 	JMP  continua_apaga_max
 continua_apaga_min:
+	SUB R1, 1
 	MOV  [fase_meteoro], R7
 	MOV  R7, 1
 	MOV  [sub_met], R7
@@ -708,6 +735,7 @@ continua_apaga_min:
 	POP  R7
 	JMP  continua_apaga
 continua_apaga2:
+	SUB R1, 2
 	MOV  [fase_meteoro], R7
 	MOV  R7, 2
 	MOV  [sub_met], R7
@@ -715,26 +743,29 @@ continua_apaga2:
 	POP  R7
 	JMP  continua_apaga
 continua_apaga3:
+	SUB R1, 3
 	POP  R9
 	MOV  [fase_meteoro], R7
 	MOV  R7, 3
 	MOV  [sub_met], R7
-	MOV  R4, DEF_METEORO_3
+	MOV  R4, DEF_NAVE_3
 	POP  R7
 	JMP  continua_apaga
 continua_apaga4:
+	SUB R1, 4
 	POP  R9
 	MOV  [fase_meteoro], R7
 	MOV  R7, 4
 	MOV  [sub_met], R7
-	MOV  R4, DEF_METEORO_4
+	MOV  R4, DEF_NAVE_4
 	POP  R7
 	JMP  continua_apaga
 continua_apaga_max:
+	SUB R1, 5
 	MOV  [fase_meteoro], R7
 	MOV  R7, 5
 	MOV  [sub_met], R7
-	MOV  R4, DEF_METEORO_MAX
+	MOV  R4, DEF_NAVE_MAX
 	POP  R7
 continua_apaga:
 	MOV	 R5, [R4]		      ; obtém a largura do meteoro
@@ -1023,22 +1054,54 @@ loop_meteoro:
 	PUSH R7
 	MOV R7, [coluna_atual_meteoro1]
 	MOV [coluna_atual_meteoro], R7
+	MOV R7, [fase_meteoro1]
+	MOV [fase_meteoro], R7
+	
 	POP R7
 	;MOV R1, [linha_atual_meteoro]
 	CALL move_meteoro
 	MOV  [linha_final_meteoro1], R1
 	
 	MOV  R1, [linha_final_meteoro2]
-
 	PUSH R7
+	MOV R7, [coluna_atual_meteoro]
+	MOV [coluna_atual_meteoro1], R7
+	MOV R7, [fase_meteoro]
+	MOV [fase_meteoro1], R7
+
+
 	MOV R7, [coluna_atual_meteoro2]
 	MOV [coluna_atual_meteoro], R7
-	MOV R7, [fase_meteoro_atual]
+	MOV R7, [fase_meteoro2]
 	MOV [fase_meteoro], R7
 	POP R7
 	;MOV R1, [linha_atual_meteoro]
 	CALL move_meteoro
 	MOV  [linha_final_meteoro2], R1
+	PUSH R7
+	MOV R7, [coluna_atual_meteoro]
+	MOV [coluna_atual_meteoro2], R7
+	MOV R7, [fase_meteoro]
+	MOV [fase_meteoro2], R7
+
+
+	MOV  R1, [linha_final_meteoro3]
+	MOV R7, [coluna_atual_meteoro3]
+	MOV [coluna_atual_meteoro], R7
+	MOV R7, [fase_meteoro3]
+	MOV [fase_meteoro], R7
+	POP R7
+	;MOV R1, [linha_atual_meteoro]
+	CALL move_meteoro
+	MOV  [linha_final_meteoro3], R1
+	PUSH R7
+	MOV R7, [coluna_atual_meteoro]
+	MOV [coluna_atual_meteoro3], R7
+	MOV R7, [fase_meteoro]
+	MOV [fase_meteoro3], R7
+	POP R7
+
+
 	
 	JMP loop_meteoro
 
@@ -1046,42 +1109,53 @@ move_meteoro:
     CALL toca_som0
     ;POP  R0
     PUSH R2
-    PUSH R4
-	PUSH R7
-	MOV R7, [sub_met]
-    SUB  R1, R7
-	POP R7                            ; repor o valor da linha para desenhar o meteoro
+    PUSH R4                            ; repor o valor da linha para desenhar o meteoro
     MOV  R2, [coluna_atual_meteoro]                ; coluna do meteoro
     MOV  R4, DEF_METEORO_MAX            ; endereço da tabela que define o meteoro
     CALL apaga_meteoro                    ; antes de mover temos que apagar o meteoro
+	;PUSH R7
+	;MOV R7, [sub_met]
+    ;SUB  R1, R7
+	;POP R7
 
 chegou_a_ultima_linha:                    ; verifica se o limite inferior do meteoro está na ultima linha do ecrã
     PUSH R9
     MOV  R9, ULTIMA_LINHA                ; registo que guarda o valor da última linha
-    ;ADD  R1, 5                            ; adicionamos o tamanho do meteoro que tinhamos tirado
+	                            ; adicionamos o tamanho do meteoro que tinhamos tirado
+	PUSH R1
+	;MOV R1, [linha_atual_meteoro]
+	;SUB  R1, 5
+	INC  R1
     CMP  R1, R9                            ; compara a linha atual do limite inferior do meteoro com a última linha
     JZ   volta_primeira_linha            ; chegou à ultima linha
     MOV R9, [colidiu]
 	CMP R9, 1
 	JZ volta_primeira_linha
+	POP R1
 	POP  R9
     ;SUB  R1, 5                            ; repomos a linha do meteoro do limite superior
 
 linha_seguinte:
     ADD R1, 2                            ; vamos escrever o meteoro uma linha abaixo
     CALL desenha_meteoro
+
 	POP R4
 	POP R2
 	RET
 
 volta_primeira_linha:
+	POP R1
     POP R9
 	PUSH R9
 	MOV R9, 0
 	MOV [colidiu], R9
     POP R9
+	;PUSH R1
 	MOV R1, 0                            ; vamos escrever o meteoro na primeira linha
+	MOV [fase_meteoro], R1
 	CALL desenha_meteoro_inicial             	; desenha o meteoro a partir da tabela
+	MOV  R2, [coluna_atual_meteoro]                ; coluna do meteoro
+	;POP R1
 	POP R4
 	POP R2
 	RET
@@ -1364,3 +1438,43 @@ subtrair:
 	JGT subtrair
 	POP R6
 	RET
+
+obtem_cor_direita:
+	INC R6
+	CMP R6, 7
+	JGT obtem_cor_ret
+	INC R9
+	PUSH R1
+	MOV R1, 0
+	MOV  [DEFINE_LINHA], R1		; seleciona a linha
+	MOV  [DEFINE_COLUNA], R9	; seleciona a coluna
+	POP R1
+	MOV R7, [COR_ATUAL]
+
+	CMP R7, 0
+	JZ  obtem_cor_direita
+	MOV R7, 1
+	MOV [vai_colidir], R7
+
+obtem_cor_ret:
+	RET
+
+obtem_cor_esquerda:
+	DEC R6
+	CMP R6, 0
+	JZ obtem_cor_ret
+	DEC R9
+	PUSH R1
+	MOV R1, 0
+	MOV  [DEFINE_LINHA], R1		; seleciona a linha
+	MOV  [DEFINE_COLUNA], R9	; seleciona a coluna
+	POP R1
+	MOV R7, [COR_ATUAL]
+	CMP R7, 0
+	JZ  obtem_cor_esquerda
+	MOV R7, 1
+	MOV [vai_colidir], R7
+	JMP obtem_cor_ret
+
+
+	
