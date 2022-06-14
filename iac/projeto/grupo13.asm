@@ -82,9 +82,6 @@ DEZ						EQU 10
 DOZE 					EQU 12
 FATOR                   EQU 1000		; fator utilizado para converter numeros hexadecimais e decimais
 
-NUMERO_ECRA 			EQU 6004H
-NUMERO_CENARIO			EQU 6046H
-
 
 
 
@@ -122,7 +119,18 @@ coluna_missil_aux:	WORD 32		; variavel auxiliar que guarda o valor da coluna ond
 
 linha_missil:		WORD 27		; variavel que guarda o valor da linha onde o missil está
 
+linha_atual_meteoro:	WORD 0
+linha_final_meteoro: 	WORD 1
+linha_final_meteoro1:   WORD 1
+linha_final_meteoro2:   WORD 1
+linha_final_meteoro3:   WORD 0
+linha_final_meteoro4:   WORD 0
+
 coluna_atual_meteoro: WORD 0
+coluna_atual_meteoro1: WORD 0
+coluna_atual_meteoro2: WORD 0
+coluna_atual_meteoro3: WORD 0
+coluna_atual_meteoro4: WORD 0
 
 coluna_atual_rover: WORD 0
 
@@ -142,7 +150,9 @@ altura_met:				WORD 0
 
 sub_met:				WORD 0
 
-numero_ecra:			WORD 1
+fase_meteoro_atual:     WORD 0
+
+
 
 
 
@@ -265,7 +275,7 @@ espera_tecla_inicio:					; neste ciclo espera-se até a tecla de iniciar o jogo 
 	
 comeca_jogo:							; foi premida a tecla de inicio e o jogo começa
 	CALL toca_som2						; toca o som de inicio de jogo
-	CALL seleciona_cenario0				; seleciona o cenário do jogo
+	CALL seleciona_cenario1			; seleciona o cenário do jogo
 	MOV	 R7, 1							; valor a somar à coluna do objeto, para o movimentar
 	MOV  R9, [energia_inicial] 			; guarda o valor da energia inicial
 	MOV  [energia], R9					; iniciar a energia a 100
@@ -282,21 +292,22 @@ posicao_rover:
 
 posicao_meteoro:						; definir a posição inicial do meteoro
     MOV  R1, LINHA_METEORO				; linha do meteoro
-	MOV	 R4, DEF_METEORO_MAX			; endereço da tabela que define o meteoro
+	;MOV	 R4, DEF_METEORO_MAX			; endereço da tabela que define o meteoro
+	CALL desenha_meteoro_inicial
 	PUSH R7
-	MOV  R7, 1
-	MOV  [NUMERO_CENARIO], R7
+	MOV R7, [coluna_atual_meteoro]
+	MOV [coluna_atual_meteoro1], R7 
+	MOV R1, 0
 	CALL desenha_meteoro_inicial
-	MOV  R7, 2
-	MOV  [NUMERO_CENARIO], R7
-	CALL desenha_meteoro_inicial
-	MOV  R7, 3
-	MOV  [NUMERO_CENARIO], R7
-	CALL desenha_meteoro_inicial
-	MOV  R7, 4
-	MOV  [NUMERO_CENARIO], R7
-	CALL desenha_meteoro_inicial
-	POP  R7
+	MOV R7, [coluna_atual_meteoro]
+	MOV [coluna_atual_meteoro2], R7
+	;CALL desenha_meteoro_inicial
+	;MOV R7, [coluna_atual_meteoro]
+	;MOV [coluna_atual_meteoro3], R7
+	;CALL desenha_meteoro_inicial
+	;MOV R7, [coluna_atual_meteoro]
+	;MOV [coluna_atual_meteoro4], R7
+	POP R7
 
 inicio_processos: 			; permite as interrupções e inicia os processos
 	EI0						; permite interrupções 0
@@ -548,16 +559,11 @@ desenha_meteoro_inicial:
 	PUSH R8
 	PUSH R10
 	PUSH R9
-	PUSH R1
 	PUSH R7
 	MOV  R7, 1
-	MOV  [NUMERO_CENARIO], R7
-	MOV  R7, 1
 	MOV  [sub_met], R7
-	POP  R7
-	MOV R1, 1
-	MOV [fase_meteoro], R1
-	POP R1
+	MOV [fase_meteoro], R7
+	POP R7
 	MOV R4, DEF_METEORO_MIN
 
 gera_aleatoriamente:
@@ -572,6 +578,9 @@ gera_aleatoriamente:
 	MOV [coluna_atual_meteoro], R9
 	MOV R2, R9
 	POP R9
+	PUSH R1
+	;MOV  [linha_atual_meteoro], R1
+	POP  R1
 	JMP desenha_pixels_meteoro
 
 desenha_meteoro:
@@ -634,6 +643,9 @@ continua_desenha:
 	MOV  R10, [R4]              ; obtém a altura do meteoro
 	ADD	 R4, 2			        ; endereço da cor do 1º pixel (2 porque a largura é uma word)
     ;MOV  R8, R2					; guardar o valor da coluna atual
+	PUSH R1
+	MOV  [linha_atual_meteoro], R1
+	POP  R1
 desenha_pixels_meteoro:         ; desenha os pixels do meteoro a partir da tabela
 	MOV	 R3, [R4]			    ; obtém a cor do próximo pixel do meteoro
 	CALL escreve_pixel_met		; escreve cada pixel do meteoro
@@ -673,6 +685,7 @@ apaga_meteoro:
 	PUSH R10
 	PUSH R7
 	MOV  R7, [fase_meteoro]
+	MOV  [fase_meteoro_atual], R7
 	INC  R7
 	CMP  R7, 3
 	JLT  continua_apaga_min
@@ -1005,7 +1018,28 @@ loop_meteoro:
 	MOV R0, 0
 	MOV [MOV_METEORO], R0
 
+	MOV  R1, [linha_final_meteoro1]
+	
+	PUSH R7
+	MOV R7, [coluna_atual_meteoro1]
+	MOV [coluna_atual_meteoro], R7
+	POP R7
+	;MOV R1, [linha_atual_meteoro]
 	CALL move_meteoro
+	MOV  [linha_final_meteoro1], R1
+	
+	MOV  R1, [linha_final_meteoro2]
+
+	PUSH R7
+	MOV R7, [coluna_atual_meteoro2]
+	MOV [coluna_atual_meteoro], R7
+	MOV R7, [fase_meteoro_atual]
+	MOV [fase_meteoro], R7
+	POP R7
+	;MOV R1, [linha_atual_meteoro]
+	CALL move_meteoro
+	MOV  [linha_final_meteoro2], R1
+	
 	JMP loop_meteoro
 
 move_meteoro:
@@ -1204,7 +1238,7 @@ colide1:
 	PUSH R9
 	MOV R9, COR_METEORO
 	CMP R7, R9 
-	JNZ colide2
+	JZ  colide_ret
 colide2:
 	PUSH R6
 	MOV R6, COR_MISSIL
@@ -1228,8 +1262,6 @@ colide3:
 	PUSH R9
 	MOV R9, 1
 	MOV [colidiu], R9
-	MOV R9, [NUMERO_ECRA]
-	MOV [numero_ecra], R9
 	POP R9
 	PUSH R7
 	MOV R7, 10
