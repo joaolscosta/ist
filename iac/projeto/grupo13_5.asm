@@ -144,10 +144,6 @@ linha_missil_explosao: WORD 0
 
 coluna_missil_explosao: WORD 0
 
-largura_met:			WORD 0
-
-altura_met:				WORD 0
-
 sub_met:				WORD 0
 
 fase_meteoro: 			WORD 0
@@ -160,6 +156,8 @@ fase_meteoro_atual:     WORD 0
 vai_colidir:			WORD 0
 
 seleciona_meteoro:		WORD 0
+
+perdeu:					WORD 0
 
 
 ; tabela das rotinas de interrupção
@@ -278,7 +276,9 @@ espera_tecla_inicio:					; neste ciclo espera-se até a tecla de iniciar o jogo 
 	CMP	 R0, TECLA_INICIO
 	JNZ espera_tecla_inicio				; repete o ciclo se não for a tecla C
 	
-comeca_jogo:							; foi premida a tecla de inicio e o jogo começa
+comeca_jogo:
+
+							; foi premida a tecla de inicio e o jogo começa
 	CALL toca_som2						; toca o som de inicio de jogo
 	CALL seleciona_cenario1			; seleciona o cenário do jogo
 	MOV	 R7, 1							; valor a somar à coluna do objeto, para o movimentar
@@ -336,9 +336,18 @@ inicio_processos: 			; permite as interrupções e inicia os processos
 
 programa_principal:
 	YIELD
+
+	MOV R0, [perdeu]
+	CMP R0, 1
+	JZ  fim
 	
-	espera_tecla2:							; neste ciclo espera-se até uma tecla da linha 2 ser premida
+	espera_tecla2:				; neste ciclo espera-se até uma tecla da linha 2 ser premida
 		YIELD
+		
+		MOV R0, [perdeu]
+		CMP R0, 1
+		JZ  fim
+
 		MOV R6, LINHA_TECLADO2				; linha a testar no teclado
 		CALL teclado						; leitura às teclas
 		CMP	 R0, 0						
@@ -349,6 +358,11 @@ programa_principal:
 
 	espera_tecla3:							; neste ciclo espera-se até uma tecla da linha 3 ser premida
 		YIELD
+
+		MOV R0, [perdeu]
+		CMP R0, 1
+		JZ  fim
+
 		MOV R6, LINHA_TECLADO3				; linha a testar no teclado
 		CALL teclado						; leitura às teclas
 		CMP	 R0, 0							; este registo indica se existe tecla premida
@@ -358,6 +372,11 @@ programa_principal:
 
 	espera_tecla4:							; neste ciclo espera-se até uma tecla ser premida
 		YIELD
+
+		MOV R0, [perdeu]
+		CMP R0, 1
+		JZ  fim
+
 		MOV R6, LINHA_TECLADO4				; linha a testar no teclado
 		CALL teclado						; leitura às teclas
 		CMP	 R0, 0
@@ -385,8 +404,49 @@ programa_principal:
 		MOV  [APAGA_TUDO], R1				; apaga todos os pixeis do ecrã
 		CALL seleciona_cenario2
 
-	fim:									; o jogo terminou
+	fim:	
+		PUSH R9
+		MOV R9, 0
+		MOV [perdeu], R9
+		MOV [linha_atual_meteoro], R9
+		MOV [colidiu], R9
+		MOV [explodiu], R9
+		MOV [linha_missil_explosao], R9
+		MOV [coluna_missil_explosao], R9
+		MOV [sub_met], R9
+		MOV [fase_meteoro], R9
+		MOV [fase_meteoro1], R9
+		MOV [fase_meteoro2], R9
+		MOV [fase_meteoro3], R9
+		MOV [fase_meteoro4], R9
+		MOV [vai_colidir], R9
+		MOV [seleciona_meteoro], R9
+		MOV [coluna_atual_rover], R9
+		INC R9
+		MOV [linha_final_meteoro], R9
+		MOV [linha_final_meteoro1], R9
+		MOV [linha_final_meteoro2], R9
+		MOV [linha_final_meteoro3], R9
+		MOV [linha_final_meteoro4], R9
+		MOV R9, 64H
+		MOV [energia], R9
+		MOV [energia_inicial], R9
+		MOV R9, 69H
+		MOV [energia_inicial_2], R9
+		MOV R9, 32
+		MOV [coluna_missil], R9
+		MOV [coluna_missil_aux], R9
+		MOV R9, 27
+		MOV [linha_missil], R9
+
+		POP R9								; o jogo terminou
 		DI
+		
+		MOV  SP, SP_inicial_prog_princ		; inicializa SP para a palavra a seguir
+						                ; à última da pilha   
+
+		MOV  BTE, BTE_START					; inicializa BTE (registo de Base da Tabela de Exceções)
+		
 		JMP espera_tecla_inicio				; vamos esperar que seja premida a tecla que inicia o jogo
 
 	disable:								; desliga as interrupções
@@ -410,6 +470,279 @@ programa_principal:
 		
 	JMP programa_principal					; volta ao inicio do programa principal
 
+
+PROCESS SP_inicial_rover
+
+rover:							; neste ciclo espera-se até uma tecla ser premida
+	YIELD
+
+	MOV R0, [perdeu]
+	CMP R0, 1
+	JZ  fim
+
+	MOV  R6, LINHA_TECLADO1				; linha a testar no teclado
+	CALL teclado						; leitura às teclas
+	CMP	 R0, 0
+	JZ rover
+
+ha_tecla:								; vê se é para deslocar o rover para a esquerda ou direita
+	;POP  R0
+	CALL atraso							; atraso para limitar a velocidade do rover
+	CMP	 R0, TECLA_ESQUERDA				
+	JNZ	 testa_direita					; se não for a tecla da esquerda vê se é a da direita
+	MOV	 R7, -1							; vai deslocar para a esquerda
+	JMP	 ve_limites						; vai verificar se o objeto está ou não nos limites do ecrã
+
+testa_direita:
+	CMP	 R0, TECLA_DIREITA
+	JNZ	 rover					; caso em que não move o rover
+	MOV	 R7, +1							; vai deslocar para a direita
+	
+ve_limites:								; verifica se o objeto está ou não nos limites do ecrã
+	MOV	 R6, [R4]						; obtém a largura do rover
+	CALL testa_limites					; vê se chegou aos limites do ecrã e se sim força R7 a 0
+	CMP	 R7, 0							
+	JZ	 rover					; se não é para movimentar o objeto, vai ler o teclado de novo
+
+move_rover:								; para deslocar o rover apagamos primeiro
+	PUSH R1
+	MOV  R4, DEF_ROVER
+	CALL apaga_rover					; apaga o rover na sua posição corrente
+	
+coluna_seguinte:						
+	ADD	R2, R7							; para desenhar o rover na coluna seguinte (direita ou esquerda)
+
+	ADD R2, 2
+	MOV [coluna_missil_aux], R2
+	SUB R2, 2
+	JMP	mostra_rover					; vai desenhar o rover de novo
+	POP R1
+
+mostra_rover:
+	MOV	 R4, DEF_ROVER
+	CALL desenha_rover					; desenha o rover a partir da tabela
+	JMP rover
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+PROCESS SP_inicial_meteoro
+
+loop_meteoro:
+	YIELD	
+
+	MOV R0, [perdeu]
+	CMP R0, 1
+	JZ  rover
+
+	MOV R0, [MOV_METEORO]
+	CMP R0, 0
+	JZ loop_meteoro
+
+	MOV R0, 0
+	MOV [MOV_METEORO], R0
+
+	PUSH R7
+	MOV  R1, [linha_final_meteoro1]
+	MOV R7, [coluna_atual_meteoro1]
+	MOV [coluna_atual_meteoro], R7
+	MOV R7, [fase_meteoro1]
+	MOV [fase_meteoro], R7
+	POP R7
+	
+	CALL move_meteoro
+
+	MOV  [linha_final_meteoro1], R1
+	PUSH R7
+	MOV R7, [coluna_atual_meteoro]
+	MOV [coluna_atual_meteoro1], R7
+	MOV R7, [fase_meteoro]
+	MOV [fase_meteoro1], R7
+
+
+	MOV  R1, [linha_final_meteoro2]
+	MOV R7, [coluna_atual_meteoro2]
+	MOV [coluna_atual_meteoro], R7
+	MOV R7, [fase_meteoro2]
+	MOV [fase_meteoro], R7
+	POP R7
+	
+	CALL move_meteoro
+	
+	MOV  [linha_final_meteoro2], R1
+	PUSH R7
+	MOV R7, [coluna_atual_meteoro]
+	MOV [coluna_atual_meteoro2], R7
+	MOV R7, [fase_meteoro]
+	MOV [fase_meteoro2], R7
+
+
+	MOV  R1, [linha_final_meteoro3]
+	MOV R7, [coluna_atual_meteoro3]
+	MOV [coluna_atual_meteoro], R7
+	MOV R7, [fase_meteoro3]
+	MOV [fase_meteoro], R7
+	POP R7
+
+	CALL move_meteoro
+	
+	MOV  [linha_final_meteoro3], R1
+	PUSH R7
+	MOV R7, [coluna_atual_meteoro]
+	MOV [coluna_atual_meteoro3], R7
+	MOV R7, [fase_meteoro]
+	MOV [fase_meteoro3], R7
+	
+	MOV R7, 1
+	MOV [seleciona_meteoro], R7
+	MOV  R1, [linha_final_meteoro4]
+	MOV R7, [coluna_atual_meteoro4]
+	MOV [coluna_atual_meteoro], R7
+	MOV R7, [fase_meteoro4]
+	MOV [fase_meteoro], R7
+	POP R7
+	
+	CALL move_meteoro
+	
+	MOV  [linha_final_meteoro4], R1
+	PUSH R7
+	MOV R7, [coluna_atual_meteoro]
+	MOV [coluna_atual_meteoro4], R7
+	MOV R7, [fase_meteoro]
+	MOV [fase_meteoro4], R7
+
+	MOV R7, 0
+	MOV [seleciona_meteoro], R7
+	POP R7
+
+
+	
+	JMP loop_meteoro
+
+
+PROCESS SP_inicial_disparo
+
+disparo:								; verifica se a tecla premida é a do disparo (tecla 1)
+	YIELD
+
+	MOV R0, [perdeu]
+	CMP R0, 1
+	JZ  loop_meteoro
+
+	MOV R6, LINHA_TECLADO1				; linha a testar no teclado
+	CALL teclado						; leitura às teclas
+	CMP	 R0, 0
+	JZ 	disparo
+
+
+disparo2:
+	CMP R0, TECLA_DISPARO	
+	JNZ disparo_ret
+	CALL decrementa
+	PUSH R7
+	MOV R7, LINHA_MISSIL
+	MOV [linha_missil], R7	
+	MOV R7, [coluna_missil_aux]
+	MOV [coluna_missil], R7
+	POP R7	
+	CALL desenha_missil
+	MOV R9, 0
+	MOV R7, DOZE
+	JMP loop_missil					; vai para rover pois não é suposto realizar esta funcionalidade
+
+disparo_ret:
+	JMP disparo
+
+desenha_missil:
+	PUSH R1
+	PUSH R2
+	PUSH R3
+	MOV R1, [linha_missil]
+	MOV R2, [coluna_missil]
+	MOV R3, COR_MISSIL
+	CALL escreve_pixel_missil
+	POP R3
+	POP R2
+	POP R1
+	RET
+
+move_missil:
+    CALL toca_som0
+    ;POP  R0
+	PUSH R1
+    PUSH R2
+	PUSH R7
+    MOV  R1, [linha_missil]
+	MOV  R2, [coluna_missil]                ; coluna do meteoro
+    ;MOV  R4, DEF_METEORO_MAX            ; endereço da tabela que define o meteoro
+    CALL apaga_missil                    ; antes de mover temos que apagar o meteoro
+	MOV R7, [linha_missil]
+	DEC R7
+	MOV [linha_missil], R7
+	CALL desenha_missil
+	POP R7
+	POP R2
+	POP R1
+	RET
+
+apaga_missil:
+	PUSH R3
+	MOV R3, 0
+	CALL escreve_pixel
+	POP R3
+	RET
+
+loop_missil:
+	YIELD
+
+	MOV R0, [perdeu]
+	CMP R0, 1
+	JZ  disparo
+
+	MOV R0, [DISPARA]
+	CMP R0, 0
+	JZ loop_missil
+
+	MOV R0, 0
+	MOV [DISPARA], R0
+
+	CALL move_missil
+	INC R9
+	CMP R9, R7
+	JNZ loop_missil
+	PUSH R1
+	PUSH R2
+	MOV  R1, [linha_missil]
+	MOV  R2, [coluna_missil]                ; coluna do meteoro
+	CALL apaga_missil
+	POP R2
+	POP R1
+	JMP disparo_ret
+
+
+
+PROCESS SP_inicial_energia
+
+energia_decrementa:
+	YIELD
+
+	MOV R0, [perdeu]
+	CMP R0, 1
+	JZ  loop_missil
+
+	MOV R0, [ENERGIA]
+	CMP R0, 0
+	JZ energia_decrementa
+
+	MOV R0, 0
+	MOV [ENERGIA], R0
+
+
+	CALL decrementa
+	JMP energia_decrementa
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;,
 
 decrementa:								; decrementa valor do display
 	PUSH R9							    
@@ -1047,142 +1380,7 @@ seleciona_cenario3:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-PROCESS SP_inicial_rover
 
-rover:							; neste ciclo espera-se até uma tecla ser premida
-	YIELD
-	MOV  R6, LINHA_TECLADO1				; linha a testar no teclado
-	CALL teclado						; leitura às teclas
-	CMP	 R0, 0
-	JZ rover
-
-ha_tecla:								; vê se é para deslocar o rover para a esquerda ou direita
-	;POP  R0
-	CALL atraso							; atraso para limitar a velocidade do rover
-	CMP	 R0, TECLA_ESQUERDA				
-	JNZ	 testa_direita					; se não for a tecla da esquerda vê se é a da direita
-	MOV	 R7, -1							; vai deslocar para a esquerda
-	JMP	 ve_limites						; vai verificar se o objeto está ou não nos limites do ecrã
-
-testa_direita:
-	CMP	 R0, TECLA_DIREITA
-	JNZ	 rover					; caso em que não move o rover
-	MOV	 R7, +1							; vai deslocar para a direita
-	
-ve_limites:								; verifica se o objeto está ou não nos limites do ecrã
-	MOV	 R6, [R4]						; obtém a largura do rover
-	CALL testa_limites					; vê se chegou aos limites do ecrã e se sim força R7 a 0
-	CMP	 R7, 0							
-	JZ	 rover					; se não é para movimentar o objeto, vai ler o teclado de novo
-
-move_rover:								; para deslocar o rover apagamos primeiro
-	PUSH R1
-	CALL apaga_rover					; apaga o rover na sua posição corrente
-	
-coluna_seguinte:						
-	ADD	R2, R7							; para desenhar o rover na coluna seguinte (direita ou esquerda)
-
-	ADD R2, 2
-	MOV [coluna_missil_aux], R2
-	SUB R2, 2
-	JMP	mostra_rover					; vai desenhar o rover de novo
-	POP R1
-
-mostra_rover:
-	MOV	 R4, DEF_ROVER
-	CALL desenha_rover					; desenha o rover a partir da tabela
-	JMP rover
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-PROCESS SP_inicial_meteoro
-
-loop_meteoro:
-	YIELD	
-
-	MOV R0, [MOV_METEORO]
-	CMP R0, 0
-	JZ loop_meteoro
-
-	MOV R0, 0
-	MOV [MOV_METEORO], R0
-
-	PUSH R7
-	MOV  R1, [linha_final_meteoro1]
-	MOV R7, [coluna_atual_meteoro1]
-	MOV [coluna_atual_meteoro], R7
-	MOV R7, [fase_meteoro1]
-	MOV [fase_meteoro], R7
-	POP R7
-	
-	CALL move_meteoro
-
-	MOV  [linha_final_meteoro1], R1
-	PUSH R7
-	MOV R7, [coluna_atual_meteoro]
-	MOV [coluna_atual_meteoro1], R7
-	MOV R7, [fase_meteoro]
-	MOV [fase_meteoro1], R7
-
-
-	MOV  R1, [linha_final_meteoro2]
-	MOV R7, [coluna_atual_meteoro2]
-	MOV [coluna_atual_meteoro], R7
-	MOV R7, [fase_meteoro2]
-	MOV [fase_meteoro], R7
-	POP R7
-	
-	CALL move_meteoro
-	
-	MOV  [linha_final_meteoro2], R1
-	PUSH R7
-	MOV R7, [coluna_atual_meteoro]
-	MOV [coluna_atual_meteoro2], R7
-	MOV R7, [fase_meteoro]
-	MOV [fase_meteoro2], R7
-
-
-	MOV  R1, [linha_final_meteoro3]
-	MOV R7, [coluna_atual_meteoro3]
-	MOV [coluna_atual_meteoro], R7
-	MOV R7, [fase_meteoro3]
-	MOV [fase_meteoro], R7
-	POP R7
-
-	CALL move_meteoro
-	
-	MOV  [linha_final_meteoro3], R1
-	PUSH R7
-	MOV R7, [coluna_atual_meteoro]
-	MOV [coluna_atual_meteoro3], R7
-	MOV R7, [fase_meteoro]
-	MOV [fase_meteoro3], R7
-	
-	MOV R7, 1
-	MOV [seleciona_meteoro], R7
-	MOV  R1, [linha_final_meteoro4]
-	MOV R7, [coluna_atual_meteoro4]
-	MOV [coluna_atual_meteoro], R7
-	MOV R7, [fase_meteoro4]
-	MOV [fase_meteoro], R7
-	POP R7
-	
-	CALL move_meteoro
-	
-	MOV  [linha_final_meteoro4], R1
-	PUSH R7
-	MOV R7, [coluna_atual_meteoro]
-	MOV [coluna_atual_meteoro4], R7
-	MOV R7, [fase_meteoro]
-	MOV [fase_meteoro4], R7
-
-	MOV R7, 0
-	MOV [seleciona_meteoro], R7
-	POP R7
-
-
-	
-	JMP loop_meteoro
 
 move_meteoro:
     CALL toca_som0
@@ -1207,14 +1405,16 @@ chegou_a_ultima_linha:                    ; verifica se o limite inferior do met
 	INC  R1
     CMP  R1, R9                            ; compara a linha atual do limite inferior do meteoro com a última linha
     JZ   volta_primeira_linha            ; chegou à ultima linha
+	MOV R9, [seleciona_meteoro]
+	CMP R9, 1
+	JNZ linha_seguinte 
     MOV R9, [colidiu]
 	CMP R9, 1
-	JZ volta_primeira_linha
-	POP R1
-	POP  R9
-    ;SUB  R1, 5                            ; repomos a linha do meteoro do limite superior
+	JZ volta_primeira_linha                            ; repomos a linha do meteoro do limite superior
 
 linha_seguinte:
+	POP R1
+	POP  R9
     ADD R1, 2                            ; vamos escrever o meteoro uma linha abaixo
     CALL desenha_meteoro
 
@@ -1241,113 +1441,6 @@ volta_primeira_linha:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-PROCESS SP_inicial_disparo
-
-disparo:								; verifica se a tecla premida é a do disparo (tecla 1)
-	YIELD
-
-	MOV R6, LINHA_TECLADO1				; linha a testar no teclado
-	CALL teclado						; leitura às teclas
-	CMP	 R0, 0
-	JZ 	disparo
-
-
-disparo2:
-	CMP R0, TECLA_DISPARO	
-	JNZ disparo_ret
-	CALL decrementa
-	PUSH R7
-	MOV R7, LINHA_MISSIL
-	MOV [linha_missil], R7	
-	MOV R7, [coluna_missil_aux]
-	MOV [coluna_missil], R7
-	POP R7	
-	CALL desenha_missil
-	MOV R9, 0
-	MOV R7, DOZE
-	JMP loop_missil					; vai para rover pois não é suposto realizar esta funcionalidade
-
-disparo_ret:
-	JMP disparo
-
-desenha_missil:
-	PUSH R1
-	PUSH R2
-	PUSH R3
-	MOV R1, [linha_missil]
-	MOV R2, [coluna_missil]
-	MOV R3, COR_MISSIL
-	CALL escreve_pixel_missil
-	POP R3
-	POP R2
-	POP R1
-	RET
-
-move_missil:
-    CALL toca_som0
-    ;POP  R0
-	PUSH R1
-    PUSH R2
-	PUSH R7
-    MOV  R1, [linha_missil]
-	MOV  R2, [coluna_missil]                ; coluna do meteoro
-    ;MOV  R4, DEF_METEORO_MAX            ; endereço da tabela que define o meteoro
-    CALL apaga_missil                    ; antes de mover temos que apagar o meteoro
-	MOV R7, [linha_missil]
-	DEC R7
-	MOV [linha_missil], R7
-	CALL desenha_missil
-	POP R7
-	POP R2
-	POP R1
-	RET
-
-apaga_missil:
-	PUSH R3
-	MOV R3, 0
-	CALL escreve_pixel
-	POP R3
-	RET
-
-loop_missil:
-	YIELD
-	MOV R0, [DISPARA]
-	CMP R0, 0
-	JZ loop_missil
-
-	MOV R0, 0
-	MOV [DISPARA], R0
-
-	CALL move_missil
-	INC R9
-	CMP R9, R7
-	JNZ loop_missil
-	PUSH R1
-	PUSH R2
-	MOV  R1, [linha_missil]
-	MOV  R2, [coluna_missil]                ; coluna do meteoro
-	CALL apaga_missil
-	POP R2
-	POP R1
-	JMP disparo_ret
-
-
-
-PROCESS SP_inicial_energia
-
-energia_decrementa:
-	YIELD
-
-	MOV R0, [ENERGIA]
-	CMP R0, 0
-	JZ energia_decrementa
-
-	MOV R0, 0
-	MOV [ENERGIA], R0
-
-
-	CALL decrementa
-	JMP energia_decrementa
 
 ;;;;;;;;;;;;;;;;;; interrupts ;;;;;;;;;;;;;;;;;;;;;
 
@@ -1413,21 +1506,43 @@ colide3:
 	POP R3
 	POP R2
 	PUSH R9
+	PUSH R7
 	MOV R9, 1
 	MOV [colidiu], R9
+	MOV R9, [seleciona_meteoro]
+	CMP R9, 1
+	JNZ vai_terminar_jogo
 	POP R9
-	PUSH R7
 	MOV R7, 10
 	CALL incrementa
 	POP R7
 	SUB R1, 4
 	MOV  R2, [coluna_atual_meteoro]                ; coluna do meteoro
+	MOV  R1, [linha_atual_meteoro]
     MOV  R4, DEF_METEORO_MAX            ; endereço da tabela que define o meteoro
+	ADD  R1, 5
 	CALL apaga_meteoro
+	SUB  R1, 5
 	MOV  R2, [coluna_atual_rover]                ; coluna do meteoro
     MOV  R4, DEF_ROVER
 	CALL desenha_rover
+	PUSH R7
+	MOV R7, 0
+	MOV [seleciona_meteoro], R7
+	POP R7
 	JMP loop_meteoro
+
+vai_terminar_jogo:
+	MOV R9, 1
+	MOV [perdeu], R9
+	POP R9
+	MOV  [APAGA_TUDO], R1				; apaga todos os pixeis do ecrã
+	CALL seleciona_cenario2
+	JMP loop_meteoro	
+	
+
+
+
 
 verifica_colisao_missil:
 	PUSH R7
@@ -1438,9 +1553,11 @@ verifica_colisao_missil:
 	RET
 
 colide_missil:
-	MOV  R2, [coluna_atual_meteoro]                ; coluna do meteoro
-    MOV  R4, DEF_METEORO_MAX            ; endereço da tabela que define o meteoro
-	CALL apaga_meteoro
+	;MOV  R2, [coluna_atual_meteoro]                ; coluna do meteoro
+    ;MOV  R4, DEF_METEORO_MAX            ; endereço da tabela que define o meteoro
+	;CALL apaga_meteoro
+	MOV R1, 0
+	CALL desenha_meteoro_inicial
 	MOV R1, [linha_missil]
 	MOV R2, [coluna_missil]
 	SUB  R1, 3
@@ -1448,11 +1565,10 @@ colide_missil:
 	MOV [linha_missil_explosao], R1
 	MOV [coluna_missil_explosao], R2
     MOV  R4, DEF_EXPLOSAO
-
 	PUSH R5
 	PUSH R6
-	MOV R6, 6
-	MOV R5, 6
+	MOV R6, 5
+	MOV R5, 5
 
 desenha_explosao:
 	MOV	 R3, [R4]
@@ -1473,7 +1589,8 @@ desenha_explosao:
 	MOV R7, 1
 	MOV [explodiu], R7
 	POP R7
-	JMP loop_missil
+	JMP loop_meteoro
+	 
 
 ;apaga_explosao:
 ;	MOV R1, [linha_missil_explosao]
