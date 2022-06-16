@@ -159,6 +159,7 @@ seleciona_meteoro:		WORD 0
 
 perdeu:					WORD 0
 
+colidiu_met: 			WORD 0
 
 ; tabela das rotinas de interrupção
 BTE_START:
@@ -404,7 +405,7 @@ programa_principal:
 		MOV  [APAGA_TUDO], R1				; apaga todos os pixeis do ecrã
 		CALL seleciona_cenario2
 
-	fim:
+	fim:	
 		PUSH R9
 		MOV R9, 0
 		MOV [perdeu], R9
@@ -439,9 +440,9 @@ programa_principal:
 		MOV R9, 27
 		MOV [linha_missil], R9
 
-		POP R9							
+		POP R9								; o jogo terminou
 		DI
-
+		
 		MOV  SP, SP_inicial_prog_princ		; inicializa SP para a palavra a seguir
 						                ; à última da pilha   
 
@@ -528,6 +529,16 @@ mostra_rover:
 PROCESS SP_inicial_meteoro
 
 loop_meteoro:
+	PUSH R7
+	MOV R7, [explodiu]
+	CMP R7, 1
+	JNZ loop_meteoro2
+	MOV R7, 0
+	MOV [explodiu], R7
+	CALL atraso
+	CALL apaga_explosao
+loop_meteoro2:
+	POP R7
 	YIELD	
 
 	MOV R0, [perdeu]
@@ -627,6 +638,7 @@ disparo:								; verifica se a tecla premida é a do disparo (tecla 1)
 	MOV R0, [perdeu]
 	CMP R0, 1
 	JZ  loop_meteoro
+
 	MOV R6, LINHA_TECLADO1				; linha a testar no teclado
 	CALL teclado						; leitura às teclas
 	CMP	 R0, 0
@@ -768,6 +780,9 @@ perde_jogo:
 incrementa:
 	PUSH R3								; incrementa valor do display
 	PUSH R9
+	MOV R3, [explodiu]
+	CMP R3, 1
+	JZ nao_incrementa
 	MOV R3, [energia_inicial]			; guarda o valor inicial que é o maximo da energia			
 	MOV R9, [energia]					; guarda o valor atual da energia num registo
 	ADD R9, R7
@@ -782,6 +797,8 @@ incrementa:
 	MOV [R11], R9						; escreve o valor no display
 
 nao_incrementa:							; nao incrementa a energia, se incrementasse ultrapassaria a energia máxima
+	MOV R3, 0
+	MOV [explodiu], R3
 	POP R9
 	POP R3
 	RET
@@ -896,7 +913,6 @@ desenha_meteoro_inicial:
 ;	POP R7
 ;	CALL apaga_explosao
 ;desenha_meteoro_inicial2:
-	;POP R7
 	PUSH R2
 	;MOV  R2, COLUNA_METEORO     ; o valor anteior de R2 é a coluna do Rover
 	PUSH R3
@@ -1406,10 +1422,15 @@ chegou_a_ultima_linha:                    ; verifica se o limite inferior do met
     JZ   volta_primeira_linha            ; chegou à ultima linha
 	MOV R9, [seleciona_meteoro]
 	CMP R9, 1
-	JNZ linha_seguinte 
-    MOV R9, [colidiu]
+	JNZ ver_nave 
+    MOV R9, [colidiu_met]
 	CMP R9, 1
-	JZ volta_primeira_linha                            ; repomos a linha do meteoro do limite superior
+	JZ colidiu_meteoro                            ; repomos a linha do meteoro do limite superior
+	JMP linha_seguinte
+ver_nave:
+	MOV R9, [colidiu]
+	CMP R9, 1
+	JZ volta_primeira_linha
 
 linha_seguinte:
 	POP R1
@@ -1420,11 +1441,12 @@ linha_seguinte:
 	POP R4
 	POP R2
 	RET
-
+colidiu_meteoro:
+	MOV R9, 0
+	MOV [colidiu_met], R9
+    
 volta_primeira_linha:
 	POP R1
-    POP R9
-	PUSH R9
 	MOV R9, 0
 	MOV [colidiu], R9
     POP R9
@@ -1547,16 +1569,33 @@ verifica_colisao_missil:
 	PUSH R7
 	MOV R7, [COR_ATUAL]
 	CMP R7, 0 
-	JNZ colide_missil
+	JNZ colide_nave
 	POP R7
 	RET
 
-colide_missil:
-	;MOV  R2, [coluna_atual_meteoro]                ; coluna do meteoro
-    ;MOV  R4, DEF_METEORO_MAX            ; endereço da tabela que define o meteoro
-	;CALL apaga_meteoro
-	MOV R1, 0
-	CALL desenha_meteoro_inicial
+colide_nave:
+	PUSH R6
+	MOV R6, COR_NAVE
+	CMP R7, R6
+	JNZ colide_meteoro
+	MOV R7, 5
+	CALL incrementa
+	JMP continua_colide
+
+colide_meteoro:
+	PUSH R6
+	MOV R6, COR_METEORO
+	CMP R7, R6
+	JNZ continua_colide
+	MOV R6, 1
+	MOV [colidiu_met], R6
+
+continua_colide:
+	POP R6
+	POP R7
+	MOV  R2, [coluna_atual_meteoro]                ; coluna do meteoro
+    MOV  R4, DEF_METEORO_MAX            ; endereço da tabela que define o meteoro
+	CALL apaga_meteoro
 	MOV R1, [linha_missil]
 	MOV R2, [coluna_missil]
 	SUB  R1, 3
@@ -1564,10 +1603,11 @@ colide_missil:
 	MOV [linha_missil_explosao], R1
 	MOV [coluna_missil_explosao], R2
     MOV  R4, DEF_EXPLOSAO
+
 	PUSH R5
 	PUSH R6
-	MOV R6, 5
-	MOV R5, 5
+	MOV R6, 6
+	MOV R5, 6
 
 desenha_explosao:
 	MOV	 R3, [R4]
@@ -1587,33 +1627,33 @@ desenha_explosao:
 	POP R5
 	MOV R7, 1
 	MOV [explodiu], R7
+	;MOV [colidiu], R7
 	POP R7
-	JMP loop_meteoro
-	 
+	JMP disparo_ret
 
-;apaga_explosao:
-;	MOV R1, [linha_missil_explosao]
-;	MOV R2, [coluna_missil_explosao]
-;	PUSH R5
-;	PUSH R6
-;	MOV R6, 6
-;	MOV R5, 6
-;apaga_explosao2:
-;	MOV	 R3, 0
-;	CALL escreve_pixel
-;	DEC R5
-;	INC R2               ; colunaaaaaaaaa
-;	CMP R5, 0
-;	JNZ apaga_explosao2
-;	DEC R6
-;	MOV R5, 6
-;	SUB R2, 6
-;	INC R1
-;	CMP R6, 0
-;	JNZ apaga_explosao2
-;	POP R6
-;	POP R5
-;	RET
+apaga_explosao:
+	MOV R1, [linha_missil_explosao]
+	MOV R2, [coluna_missil_explosao]
+	PUSH R5
+	PUSH R6
+	MOV R6, 6
+	MOV R5, 6
+apaga_explosao2:
+	MOV	 R3, 0
+	CALL escreve_pixel
+	DEC R5
+	INC R2               ; colunaaaaaaaaa
+	CMP R5, 0
+	JNZ apaga_explosao2
+	DEC R6
+	MOV R5, 6
+	SUB R2, 6
+	INC R1
+	CMP R6, 0
+	JNZ apaga_explosao2
+	POP R6
+	POP R5
+	RET
 
 
 
