@@ -21,5 +21,3 @@ int getCatPurrLevel(Cat cat);
 double getCatFluffiness(Cat cat);
 
 void printCat(Cat cat);
-
-#endif
