@@ -19,4 +19,7 @@ interface Prompt {
 		return "Número do terminal: ";
 	}
 
+	static String typeKey(){
+		return "Tipo de cliente: ";
+	}
 }

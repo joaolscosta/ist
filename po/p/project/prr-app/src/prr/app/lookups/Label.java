@@ -29,4 +29,9 @@ interface Label {
 	/** List terminals with positive balance. */
 	String SHOW_TERMINALS_WITH_POSITIVE_BALANCE = "Mostrar terminais com saldo positivo";
 
+	String SHOW_LOWEST_CLIENT_PAYMENT = "Mostrar o client com pagamentos mais baixos";
+
+	String SHOW_MAX_TERMINAL_PAYMENT = "Mostrar o terminal com pagamentos mais altos";
+
+	String SHOW_CLIENTS_OF_TYPE = "Mostrar clientes com um tipo";
 }

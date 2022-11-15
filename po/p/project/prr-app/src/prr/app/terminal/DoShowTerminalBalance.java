@@ -3,7 +3,6 @@ package prr.app.terminal;
 import prr.Network;
 import prr.terminals.Terminal;
 import pt.tecnico.uilib.menus.CommandException;
-//FIXME add more imports if needed
 
 /**
  * Show balance.
@@ -16,6 +15,7 @@ class DoShowTerminalBalance extends TerminalCommand {
 
 	@Override
 	protected final void execute() throws CommandException {
-                //FIXME implement command
+		String id = _network.getTerminalId(_receiver);
+		_display.popup(Message.terminalPaymentsAndDebts(id, _network.getTerminalPayments(id), _network.getTerminalDebts(id)));
 	}
 }

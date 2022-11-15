@@ -17,6 +17,9 @@ class DoEndInteractiveCommunication extends TerminalCommand {
 
 	@Override
 	protected final void execute() throws CommandException {
-                //FIXME implement command
+		Form request = new Form();
+		request.addRealField("duration", Prompt.duration());
+		request.parse();
+		_display.popup(Message.communicationCost(_network.endInteractiveCommunication(_receiver, request.realField("duration"))));
 	}
 }
