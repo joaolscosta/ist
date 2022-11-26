@@ -15,7 +15,7 @@
 
 ## Árvore Binária Completa
 
-- Cada nó tem exatamente 0 ou 2 filhos.
+- Cada nó tem **exatamente** 0 ou 2 filhos.
 - Cada folha tem a mesma profundidade.
 
 ## Essencialmente Completa
@@ -83,7 +83,9 @@
 > - **Heap-Increase-Key(S, x, k)** - incrementa o valor de $x$ com o valor de $k$.
 
 
-> [!Sucess] 
-> Para implementarmos estas operações de forma mais eficiente usamos um ==Amontoado (Heap)==.
+> [!Sucess]  Dica
+> Para implementarmos estas operações de forma mais eficiente usamos um **Amontoado (Heap)**.
 
+> [!example] Heap-Increase
+> ![[Pasted image 20221126232639.png]]
 
