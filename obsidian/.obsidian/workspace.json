@@ -4,23 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "d9d33995d3baf5c1",
+        "id": "25bf22054ac76dfd",
         "type": "tabs",
         "children": [
           {
-            "id": "87d5086ba02db7ff",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "TextEditor.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "4489622e70bd843d",
+            "id": "42bfd319f2d292f6",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -30,9 +18,33 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "a93f0cc60f6375b2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "ASA/Amontoados - HeapSort.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "3f1b0600a4aeaf01",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "ASA/Amontoados - HeapSort.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -51,7 +63,7 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "byModifiedTimeReverse"
               }
             }
           },
@@ -82,7 +94,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "right": {
     "id": "348bdff7c6995463",
@@ -98,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ASA/Teorema Mestre.md",
+                "file": "ASA/Amontoados - HeapSort.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "ASA/Teorema Mestre.md",
+                "file": "ASA/Amontoados - HeapSort.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ASA/Teorema Mestre.md"
+                "file": "ASA/Amontoados - HeapSort.md"
               }
             }
           }
@@ -149,12 +161,15 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "4489622e70bd843d",
+  "active": "3f1b0600a4aeaf01",
   "lastOpenFiles": [
-    "Pasted image 20221126180412.png.md",
     "ASA/Teorema Mestre.md",
+    "ASA/Amontoados - HeapSort.md",
+    "prints.md",
+    "Pasted image 20221126180438.png.md",
+    "Pasted image 20221126180412.png.md",
+    "TextEditor.md",
     "Pasted image 20221126180438.png",
-    "Pasted image 20221126180412.png",
-    "TextEditor.md"
+    "Pasted image 20221126180412.png"
   ]
 }
