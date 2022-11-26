@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "TextEditor.md",
+                "file": "ASA/Teorema Mestre.md",
                 "mode": "source",
                 "source": false
               }
@@ -98,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TextEditor.md",
+                "file": "ASA/Teorema Mestre.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "TextEditor.md",
+                "file": "ASA/Teorema Mestre.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TextEditor.md"
+                "file": "ASA/Teorema Mestre.md"
               }
             }
           }
@@ -151,7 +151,10 @@
   },
   "active": "4489622e70bd843d",
   "lastOpenFiles": [
-    "ASA/Heap.md",
+    "Pasted image 20221126180412.png.md",
+    "ASA/Teorema Mestre.md",
+    "Pasted image 20221126180438.png",
+    "Pasted image 20221126180412.png",
     "TextEditor.md"
   ]
 }
