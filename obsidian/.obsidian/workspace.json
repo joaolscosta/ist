@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ASA/Teorema Mestre.md",
+                "file": "ASA/C++.md",
                 "mode": "source",
                 "source": false
               }
@@ -110,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ASA/Teorema Mestre.md",
+                "file": "ASA/C++.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "ASA/Teorema Mestre.md",
+                "file": "ASA/C++.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ASA/Teorema Mestre.md"
+                "file": "ASA/C++.md"
               }
             }
           }
@@ -164,8 +164,8 @@
   "active": "3a67b40401fe5294",
   "lastOpenFiles": [
     "ASA/Amontoados - HeapSort.md",
-    "TextEditor.md",
     "ASA/Teorema Mestre.md",
+    "TextEditor.md",
     "ASA/C++.md",
     "project.md",
     "prints.md",
