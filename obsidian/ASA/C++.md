@@ -1,4 +1,4 @@
-
+	1
 > [!INFO] vector
 > 
 ```cpp
@@ -74,4 +74,15 @@ for(auto pair: colors) {
 for(auto[name, hex]: colors){
 	std::cout << "name: " << name << ", hex: " << hex << "\n";
 }
+
+```
+
+
+> [!TIP] Keywords
+>  - class por omissão é privada e struct público
+
+```cpp
+COMPILAR
+g++ -std=c++20 -Wall -Wextra -pedantic -c <ficheiro>
+```
 
