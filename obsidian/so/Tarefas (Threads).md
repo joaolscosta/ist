@@ -6,6 +6,7 @@
 | - | -| - | - | - |
 | Posix | pthread_create | pthread_join | pthread_yield | sleep | pthread_exit|
 
+
 ## Criar Tarefa
 
 ```c
@@ -18,6 +19,7 @@ int  pthread_create(pthread_t *thread, attr *attr, void *(*start), void *arg)
 - (void * arg) - ponteiro para um parâmetro da função
 
 A tarefa começa com a sua execução chamando a função `start` com o argumento `arg`
+
 
 ## Terminar Tarefa
 
