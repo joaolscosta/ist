@@ -32,6 +32,18 @@
             }
           },
           {
+            "id": "f05c066c28b0fc2e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "so/Tarefas (Threads).md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "47973c06d76e1306",
             "type": "leaf",
             "state": {
@@ -56,7 +68,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -122,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "so/project.md",
+                "file": "so/Tarefas (Threads).md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "so/project.md",
+                "file": "so/Tarefas (Threads).md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -162,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "so/project.md"
+                "file": "so/Tarefas (Threads).md"
               }
             }
           }
@@ -173,8 +185,10 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "9ae15642205e60d1",
+  "active": "f05c066c28b0fc2e",
   "lastOpenFiles": [
+    "so/project.md",
+    "so/Tarefas (Threads).md",
     "ASA/project.md",
     "ASA/Amontoados - HeapSort.md",
     "ASA/C++.md",
@@ -182,8 +196,6 @@
     "ASA/Teorema Mestre.md",
     "prints.md",
     "Pasted image 20221126180438.png.md",
-    "Pasted image 20221126180412.png.md",
-    "Pasted image 20221126180438.png",
-    "Pasted image 20221126180412.png"
+    "Pasted image 20221126180412.png.md"
   ]
 }
