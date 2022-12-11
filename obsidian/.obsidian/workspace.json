@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "4191554384ef39bd",
+        "id": "249b43fe86d22698",
         "type": "tabs",
         "children": [
           {
-            "id": "815ace500b3a2173",
+            "id": "c2409b97cd71e425",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "so/Programação com Ficheiros.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -69,8 +65,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "348bdff7c6995463",
@@ -86,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "so/Programação com Ficheiros.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "so/Programação com Ficheiros.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "so/Programação com Ficheiros.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -137,7 +128,7 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "815ace500b3a2173",
+  "active": "c2409b97cd71e425",
   "lastOpenFiles": [
     "ASA/C++.md",
     "so/Sistemas de Ficheiros.md",

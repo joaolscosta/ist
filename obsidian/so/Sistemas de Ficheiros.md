@@ -83,4 +83,3 @@ Para além do tipo, um ficheiro tem:
 
 
 
-
