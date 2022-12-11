@@ -153,6 +153,146 @@ int lseek(int fd, off_t offset, int origin)
 ![[Pasted image 20221211032712.png]]
 
 
-## Comando do Shell `strace` 
+### Comando do Shell `strace` 
 
 - usar o comando `strace` para ver as chamadas sistema que os programas estão a executar
+
+
+## Diretórios e Nomes de Ficheiros
+
+Um ficheiro pode ter vários nomes e chamos a isto de __links__.
+
+## Links: _Hard Link_
+
+- Entradas em diversos diretórios apontam para o mesmo ficheiro ( mesmo _inode_ ) e indistinguíveis.
+
+- É uma cópia do ficheiro sem cópia real dos dados.
+
+- Se apagarmos um ficheiro com vários _hard links_ o ficheiro continua a existir. Só é removido quando o __último__ for removido.
+
+- A chamada `unlink()` usada para apagar ficheiros o que faz é eliminar um link e não apagar o ficheiro.
+
+
+## Links: _Symbolic Link_
+
+- O _symbolic_ é um ficheiro que contém o caminho para o ficheiro original. (de tipo diferente)
+
+- Se o ficheiro original for apagado o link fica quebrado.
+
+- Mais genérico para utilização, podendo ser usado para diretórios ou entre partições enquanto os _hard_ estão limitados a uma partição.
+
+`lrwxrwxrwx ... .... ... exemplo2 -> exemplo1 ` : indica um ficheiro do tipo _symbolic_.
+
+
+### Funções de Gestão de Ficheiros
+
+- Copiar (Origem, Destino)
+```c
+int symlink(const char *oldpath, const char *newpath)
+int link(const char *oldpath, const char *newpath)
+```
+
+- Mover (Origem, Destino)
+```c
+int rename(const char *oldpath, const char *newpath)
+```
+
+- Apagar (Nome)
+```c
+int unlink(const char *path)
+```
+
+- ListaDir (Nome, Buffer)
+```c
+int readdir(int fd, struct dirent *buffer, int count)
+```
+
+- MudaDir (Nome)
+```c
+int chdir(const char *path)
+```
+
+- CriaDir (Nome, Proteção)
+```c
+int mkdir(const char *path, mode_t mode)
+```
+
+- RemoveDir (Nome)
+```c
+int rmdir(const char *path)
+```
+
+### Descritores Individuais de Ficheiros (_i-nodes_)
+
+- Um ficheiro é identificado dentro de cada partição pelo seu _i-node_.
+- Os diretórios só fazem a ligação entre um nome do file e o seu descritor.
+
+## Programação com Diretórios
+
+- são lidos sequencialmente de uma entrada para a seguinte
+- para abrir usamos `opendir()` que retorna uma estrutura de dados
+
+```c
+#include <dirent.h>
+DIR *opendir(const char *dirpath);
+```
+
+### Leitura de Diretórios
+
+`struct dirent *readdir(DIR *dirp`
+
+- Cada chamada a `readdir()` lê a próxima entrada do diretório referenciado por `dirp` e devolve um ponteiro para uma estrutura de tipo `dirent` que contém:
+
+```c
+struct dirent {
+ino_t d_ino; // File i-node number
+char d_name[]; // Null-terminated name of file
+};
+```
+
+- No __fim__ do diretório ou erro, `readdir()` retorna _NULL_, neste último caso `errno` infica o erro.
+
+## Ler e Modificar Atributos
+
+- `stat` -> permite ver a informação de um ficheiro.
+
+### Estado do Ficheiro: _System Calls_
+
+- O estado de um ficheiro pode ser obtido através de um conjunto de _system calls_ que preenchem um _buffer_ passado como parâmetro da função.
+- Para executar é necessário ter acesso à diretoria. (não énecessário ao ficheiro)
+
+```c
+int stat(const char *restrict pathname, struct stat *restrict statbuf);
+
+int fstat(int fd, struct stat *statbuf);
+
+int lstat(const char *restrict pathname, struct stat *restrict statbuf);
+```
+
+### Mudança de Permissões
+
+- `chmod` -> muda as permissões de um ficheiro.
+```c
+#include <sys/stat.h>
+int chmod(const char *pathname, mode_t mode)
+```
+
+# Operações Globais sobre o Sistema de Ficheiros
+
+## Comando Mount
+
+- periféricos têm um diretório especial `/dev`.
+- Para aceder aos sistemas de ficheiros dos dispositivos é preciso montá-los no sistema de ficheiros primário. Consiste em ligar a raiz do novo sistema de ficheiro a um diretório do sistema de ficheiros raiz.
+- Tanto o dispositivo de base operação de montagem quer o que é montado possuem uma __árvore de diretórios com uma raiz única__.
+
+##### Organizar Múltiplos Sistemas de Ficheiros
+```
+mount -t <filesystem> /dev/hd1 /b
+```
+
+![[Pasted image 20221211233140.png]]
+- Depois de montar o diretório b do dispositivo `/dev/hd0` e a raiz do dispositivo `dev/hd1` passam a ser o mesmo diretório.
+- Os ficheiros no dispositivo `/dev/hd1` ficam posteriormente acessíveis através dessa raiz.
+
+## `mount`
+
