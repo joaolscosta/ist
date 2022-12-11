@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "so/Programação com Ficheiros.md",
+                "file": "so/Sistemas de Ficheiros.md",
                 "mode": "source",
                 "source": false
               }
@@ -86,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "so/Programação com Ficheiros.md",
+                "file": "so/Sistemas de Ficheiros.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "so/Programação com Ficheiros.md",
+                "file": "so/Sistemas de Ficheiros.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "so/Programação com Ficheiros.md"
+                "file": "so/Sistemas de Ficheiros.md"
               }
             }
           }
@@ -137,8 +137,9 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "c2409b97cd71e425",
+  "active": "d9cbf376f190e4d9",
   "lastOpenFiles": [
+    "so/Programação com Ficheiros.md",
     "ASA/C++.md",
     "so/Sistemas de Ficheiros.md",
     "so/Tarefas (Threads).md",
@@ -147,7 +148,6 @@
     "ASA/Amontoados - HeapSort.md",
     "TextEditor.md",
     "ASA/Teorema Mestre.md",
-    "prints.md",
-    "Pasted image 20221126180438.png.md"
+    "prints.md"
   ]
 }
