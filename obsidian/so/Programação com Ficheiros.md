@@ -53,6 +53,7 @@ Contras:
 
 ## Abertura, Criação e Fecho de Ficheiros
 
+Operações __SIMPLES__
 ```c
 int open(const char *path, int *flags, mode_t mode)
 
@@ -105,6 +106,31 @@ Simplificação das ACL do Unix consideram-se em três grupos:
 #### Controlo dos Direitos de Acesso
 
 1. Processo pede para executar operação sobre o objeto gerido pelo núcleo.
-2. Núcleo valida de na ACL do ficheiro UID/GID correspondente ao processo tem direitors para executar aquela operação sobre aquele objeto
-3. 
+2. Núcleo valida de na ACL do ficheiro UID/GID correspondente ao processo tem direitors para executar aquela operação sobre aquele objeto.
+3. Se sim o núcleo executa operação se não retorna erro.
 
+#### Operações sobre Ficheiros Abertos
+
+```c
+int read(int fd, void *buffer, size_t count)
+
+int lseek(int fd, off_t offset, int origin)
+```
+
+- o `count` especifica o número de bytes a ler.
+- o `buffer` indica o endereço de memória no qual os dados devem ser colocados. Deve ter a dimensão de `count`. As chamadas do sistema não alocam memória para os dados que retornam.
+- Uma chamada bem sucessida retorna o número de _bytes_ realmente lidos, ou 0 se o fim do ficheiro for encontrado. Em caso de erro o retorno é -1.
+- Uma chamada `read()` pode ler menos bytes que o pretendido. No caso de um ficheiro regular, provavelmente estamos perto do fim do ficheiro.
+
+
+```c
+int write(int fd, void *buffer, size_t count)
+```
+
+- `buffer` é o endereço de dados a serem escritos
+- `count` é o número de bytes a escrever
+- `fd` é um _filedescriptor_ que referencia o ficheiro para o qual os dados devem ser gravados
+
+- Se tiver sucesso, write() retorna o número de bytes realmente escritos, pode ser menos do que `count`
+
+- Um retorno bem sucessido de `write()` não garante que os dados foram transferidos para o disco.
