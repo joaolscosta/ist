@@ -75,5 +75,36 @@ Fechar um ficheiro:
 > [!TIP] Definição de Processo
 > Instância de um programa em execução.
 
-## Privilégios de Acesso a Ficheiros
+## Autenticação de Processos
+
+- Cada processo corre em nome de um utilizador _UID_ / _GID_.
+- Atribuídos ao primeiro processo criado quando o utilizador dá login. Obtidos em `etc/passwd` no momento do login.
+- Processos filho herdam _UID_ / _GID_.
+
+#### Controlo dos Direitos de Acesso
+
+O modelo mais frequente de autorização baseia-se numa __Matriz de Direitos de Acesso__.
+- Colunas designam-se __Listas de Direitos de Acesso (ACL).
+- Linhas designam-se por __Capacidades__.
+
+### ACL em Unix
+
+Simplificação das ACL do Unix consideram-se em três grupos:
+
+- Dono
+- Grupo
+- Restantes utilizadores
+
+`-rw-r--r-- 1 joao 21314  0 nov 15  2017  containder.dat`
+
+- (-) regular file
+- (rw) owner
+- (r) group
+- (--) others
+
+#### Controlo dos Direitos de Acesso
+
+1. Processo pede para executar operação sobre o objeto gerido pelo núcleo.
+2. Núcleo valida de na ACL do ficheiro UID/GID correspondente ao processo tem direitors para executar aquela operação sobre aquele objeto
+3. 
 
