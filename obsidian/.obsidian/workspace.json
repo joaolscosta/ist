@@ -4,28 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "25bf22054ac76dfd",
+        "id": "249b43fe86d22698",
         "type": "tabs",
         "children": [
           {
-            "id": "3f1b0600a4aeaf01",
+            "id": "c2409b97cd71e425",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "project.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "47973c06d76e1306",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "ASA/C++.md",
+                "file": "so/Programação com Ficheiros.md",
                 "mode": "source",
                 "source": false
               }
@@ -81,7 +69,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "348bdff7c6995463",
@@ -97,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "project.md",
+                "file": "so/Programação com Ficheiros.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "project.md",
+                "file": "so/Programação com Ficheiros.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -137,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "project.md"
+                "file": "so/Programação com Ficheiros.md"
               }
             }
           }
@@ -148,17 +137,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "3f1b0600a4aeaf01",
+  "active": "c2409b97cd71e425",
   "lastOpenFiles": [
     "ASA/C++.md",
-    "project.md",
+    "so/Sistemas de Ficheiros.md",
+    "so/Tarefas (Threads).md",
+    "so/project.md",
+    "ASA/project.md",
     "ASA/Amontoados - HeapSort.md",
     "TextEditor.md",
     "ASA/Teorema Mestre.md",
     "prints.md",
-    "Pasted image 20221126180438.png.md",
-    "Pasted image 20221126180412.png.md",
-    "Pasted image 20221126180438.png",
-    "Pasted image 20221126180412.png"
+    "Pasted image 20221126180438.png.md"
   ]
 }
