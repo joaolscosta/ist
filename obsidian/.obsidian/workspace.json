@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "so/Sistemas de Ficheiros.md",
+                "file": "so/Programação com Ficheiros.md",
                 "mode": "source",
                 "source": false
               }
@@ -69,8 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "348bdff7c6995463",
@@ -86,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "so/Sistemas de Ficheiros.md",
+                "file": "so/Programação com Ficheiros.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "so/Sistemas de Ficheiros.md",
+                "file": "so/Programação com Ficheiros.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "so/Sistemas de Ficheiros.md"
+                "file": "so/Programação com Ficheiros.md"
               }
             }
           }
@@ -137,11 +136,11 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "d9cbf376f190e4d9",
+  "active": "c2409b97cd71e425",
   "lastOpenFiles": [
+    "so/Sistemas de Ficheiros.md",
     "so/Programação com Ficheiros.md",
     "ASA/C++.md",
-    "so/Sistemas de Ficheiros.md",
     "so/Tarefas (Threads).md",
     "so/project.md",
     "ASA/project.md",
