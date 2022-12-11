@@ -113,8 +113,6 @@ Simplificação das ACL do Unix consideram-se em três grupos:
 
 ```c
 int read(int fd, void *buffer, size_t count)
-
-int lseek(int fd, off_t offset, int origin)
 ```
 
 - o `count` especifica o número de bytes a ler.
@@ -134,3 +132,27 @@ int write(int fd, void *buffer, size_t count)
 - Se tiver sucesso, write() retorna o número de bytes realmente escritos, pode ser menos do que `count`
 
 - Um retorno bem sucessido de `write()` não garante que os dados foram transferidos para o disco.
+
+
+### O Cursor
+
+- Para qualquer ficheiro aberto, o núcleo mantém um cursor
+- Este índice indica a posição no ficheiro onde a próxima operação `read()` ou `write()` se executará
+- o cursor é expresso como o deslocamento em bytes a partir do início ( o 1º byte do ficheiro tem deslocamento 0 )
+- Avança automaticamente com cada byte lido ou escrito
+
+
+```c
+int lseek(int fd, off_t offset, int origin)
+```
+
+- o cursor pode ser alterado pelo programa
+- o `offset` especifica um valor em _bytes_
+- o argumento `whence` indica o ponto base a partir do qual o deslocamento deve ser interpretado
+
+![[Pasted image 20221211032712.png]]
+
+
+## Comando do Shell `strace` 
+
+- usar o comando `strace` para ver as chamadas sistema que os programas estão a executar
