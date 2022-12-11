@@ -82,3 +82,5 @@ Para além do tipo, um ficheiro tem:
 	- stderr - saída para assinalar erros (fd - 2)
 
 
+
+
