@@ -296,3 +296,40 @@ mount -t <filesystem> /dev/hd1 /b
 
 ## `mount`
 
+- o mount existe para que em vez de ter um número de sistemas de ficheiros separados, este unifica todos numa árvore tornando uniforme e conveniente.
+- para ver o que está montado no sistema e em que pontos basta executar `mount`.
+
+
+## Resumo muito resumido
+
+- A relação entre os ficheiros e os nomes dos diretórios é estabelecida através de __links__.
+- Os diretórios são ficheiros com uma estrututra própria, podem ser lidos ou pesquisados.
+- O estado dos ficheiros pode ser consultado e alterado (ACL).
+- Existem operações globais como o mount que permite montar uma hierarquia única em diferentes sistemas de ficheiros.
+
+
+
+# Organização dos Ficheiros no disco
+
+- A gestão do disco é feita em blocos de tamanho fixo com o objetivo de otimizar o acesso ao disco.
+- Um bloco é a unidade mínima que pode ser indexada diretamente pelo so.
+
+#### Tamanho dos blocos:
+- Quando maior for o bloco maior é a taxa de transferência bruta pois os tempos de latência de setores consecutivos são quase nulos, mas a taxa de transferência efetiva depende do número de bytes dentro do bloco com informação útil.
+- Se um bloco estiver apenas meio cheio a sua transferência efetiva é metade da transferência bruta, o que significa que quantos maiores forem os blocos maiores serão as diferenças entre as transferências entre a bruta e a efetiva.
+
+## Visão de um Dispositivo do Tipo Disco
+
+![[Pasted image 20221212001322.png]]
+
+- Uma __partição__ é uma subdivisão de um dispositivo físico dividida em blocos de tamanho físico.
+- Uma partição é vista pelo SO como um vetor de blocos ordenado a partir do número zero.
+- Cada partição não tem nada a haver com as outras.
+- Não existem ficheiros repartidos por partições diferentes.
+
+- O _Master Boot Record_ e o bloco de boot são identidades para localizar e executar um sistema operativo.
+- O MBR possui código independente do SO que localiza a partição que contém o sistema operativo a executar e transfere a execução para o código existente no primeiro bloco dessa partição - o bloco de _boot_.
+
+## Boot
+
+- O bloco de boot possui
