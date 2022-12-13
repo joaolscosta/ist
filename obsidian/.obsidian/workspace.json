@@ -1,14 +1,14 @@
 {
   "main": {
-    "id": "0576907b2633023c",
+    "id": "ba905fff6df1642f",
     "type": "split",
     "children": [
       {
-        "id": "249b43fe86d22698",
+        "id": "b4b861881a466335",
         "type": "tabs",
         "children": [
           {
-            "id": "c2409b97cd71e425",
+            "id": "04fa91c0026e3532",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -25,15 +25,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "12632fe715521d65",
+    "id": "830f13753d87e37a",
     "type": "split",
     "children": [
       {
-        "id": "c43e0486571eafea",
+        "id": "cbc8d1529681e756",
         "type": "tabs",
         "children": [
           {
-            "id": "d9cbf376f190e4d9",
+            "id": "c3b6fa417b021bf9",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -43,7 +43,7 @@
             }
           },
           {
-            "id": "33a9f80281d5f783",
+            "id": "4c98ea4d532ee44b",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -58,7 +58,7 @@
             }
           },
           {
-            "id": "0f9918a601c46714",
+            "id": "28f2fbf4352d2839",
             "type": "leaf",
             "state": {
               "type": "starred",
@@ -69,18 +69,18 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 300
   },
   "right": {
-    "id": "348bdff7c6995463",
+    "id": "8c52ee4b09199e1d",
     "type": "split",
     "children": [
       {
-        "id": "90974cafc24ecf85",
+        "id": "c9192e794881acca",
         "type": "tabs",
         "children": [
           {
-            "id": "54cd4fd7ff96809b",
+            "id": "9197e3f24c0a4517",
             "type": "leaf",
             "state": {
               "type": "backlink",
@@ -97,7 +97,7 @@
             }
           },
           {
-            "id": "d8c56499abbcd55a",
+            "id": "e19c562f4320f34d",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
@@ -109,7 +109,7 @@
             }
           },
           {
-            "id": "25260a542b1cf884",
+            "id": "0c12b5a4bfb00415",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -120,7 +120,7 @@
             }
           },
           {
-            "id": "78e824ffee99c943",
+            "id": "80ddbcc45a6ebdba",
             "type": "leaf",
             "state": {
               "type": "outline",
@@ -136,25 +136,6 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "c2409b97cd71e425",
-  "lastOpenFiles": [
-    "so/Sistemas de Ficheiros.md",
-    "so/Programação com Ficheiros.md",
-<<<<<<< Updated upstream
-=======
-    "prints/Pasted image 20221211032712.png",
->>>>>>> Stashed changes
-    "ASA/C++.md",
-    "so/Tarefas (Threads).md",
-    "so/project.md",
-    "ASA/project.md",
-    "ASA/Amontoados - HeapSort.md",
-    "TextEditor.md",
-<<<<<<< Updated upstream
-    "ASA/Teorema Mestre.md",
-    "prints.md"
-=======
-    "ASA/Teorema Mestre.md"
->>>>>>> Stashed changes
-  ]
+  "active": "04fa91c0026e3532",
+  "lastOpenFiles": []
 }
