@@ -258,8 +258,9 @@ char d_name[]; // Null-terminated name of file
 
 ### Estado do Ficheiro: _System Calls_
 
-- O estado de um ficheiro pode ser obtido através de um conjunto de _system calls_ que preenchem um _buffer_ passado como parâmetro da função.
-- Para executar é necessário ter acesso à diretoria. (não énecessário ao ficheiro)
+O estado de um ficheiro pode ser obtido através de um conjunto de _system calls_ que preenchem um _buffer_ passado como parâmetro da função.
+
+Para executar é necessário ter acesso à diretoria. (não énecessário ao ficheiro)
 
 ```c
 int stat(const char *restrict pathname, struct stat *restrict statbuf);
@@ -277,7 +278,9 @@ int lstat(const char *restrict pathname, struct stat *restrict statbuf);
 int chmod(const char *pathname, mode_t mode)
 ```
 
+
 # Operações Globais sobre o Sistema de Ficheiros
+
 
 ## Comando Mount
 
