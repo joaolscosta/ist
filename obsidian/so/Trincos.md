@@ -136,6 +136,21 @@ Com uso de trincos os resultados podem ser inconsistentes.
 Para uma função que só leia algo não é necesário usar mutex.
 
 
+## Trinco Global
+
+Normalmente é a solução mais simples mas __limita__ o paralelismo.
+
+- Quanto mais paralelo for o programa maior é a limitação.
+
+## Trincos finos: programação com objetos partilhados
+
+Objeto cujos métodos podem ser chamados em concorrência por diferentes tarafas podem ter:
+- Interface dos métodos públicos
+- Código de cada método
+- Variáveis de estado
+- Váriáveis de sincronização - um trinco garante que métodos críticos se executam em exclusão mútua
+
+Pode é trazer mais _bugs_ este método.
 
 
 
