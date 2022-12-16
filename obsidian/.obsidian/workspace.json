@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "2194a9940b4b4555",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Leitores e Escritores de uma Estrutura de Dados Partilhada.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "so/Trincos.md",
+                "file": "Leitores e Escritores de uma Estrutura de Dados Partilhada.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "so/Trincos.md",
+                "file": "Leitores e Escritores de uma Estrutura de Dados Partilhada.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "so/Trincos.md"
+                "file": "Leitores e Escritores de uma Estrutura de Dados Partilhada.md"
               }
             }
           },
@@ -138,14 +151,16 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200,
+    "collapsed": true
   },
-  "active": "c2409b97cd71e425",
+  "active": "2194a9940b4b4555",
   "lastOpenFiles": [
+    "so/Trincos.md",
     "so/Programação com Ficheiros.md",
     "so/Sistemas de Ficheiros.md",
     "ASA/C++.md",
@@ -154,7 +169,6 @@
     "ASA/project.md",
     "ASA/Amontoados - HeapSort.md",
     "TextEditor.md",
-    "ASA/Teorema Mestre.md",
-    "prints.md"
+    "ASA/Teorema Mestre.md"
   ]
 }
