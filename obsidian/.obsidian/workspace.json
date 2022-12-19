@@ -1,78 +1,67 @@
 {
   "main": {
-    "id": "0576907b2633023c",
+    "id": "cecff6841e886e0f",
     "type": "split",
     "children": [
       {
-        "id": "249b43fe86d22698",
+        "id": "21255c240760932b",
         "type": "tabs",
         "children": [
           {
-            "id": "c2409b97cd71e425",
+            "id": "a47cb3b1ec0a2730",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
                 "file": "so/Trincos.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "2194a9940b4b4555",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-<<<<<<< HEAD
-                "file": "so/Programação com Ficheiros.md",
-=======
-                "file": "so/Trincos.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "4e51c9047b748eaa",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Cooperação entre Atividades ( Programação Concorrente ).md",
->>>>>>> 7c252ebc2cee14c13245557faad41c201f40df3b
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 2
+        ]
+      },
+      {
+        "id": "e53c5e3289e9cb4d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "48e7345c44b3e8ec",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "so/Trincos - 2.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
       }
     ],
     "direction": "vertical"
   },
   "left": {
-    "id": "12632fe715521d65",
+    "id": "771fbc5853e7c120",
     "type": "split",
     "children": [
       {
-        "id": "c43e0486571eafea",
+        "id": "95c22225c4c69692",
         "type": "tabs",
         "children": [
           {
-            "id": "d9cbf376f190e4d9",
+            "id": "4a448ed4b1ccda7c",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "byCreatedTimeReverse"
               }
             }
           },
           {
-            "id": "33a9f80281d5f783",
+            "id": "276060296af65aa2",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -87,7 +76,7 @@
             }
           },
           {
-            "id": "0f9918a601c46714",
+            "id": "0ee034100696a23e",
             "type": "leaf",
             "state": {
               "type": "starred",
@@ -98,27 +87,23 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 300
   },
   "right": {
-    "id": "348bdff7c6995463",
+    "id": "0c49ab1ab307c595",
     "type": "split",
     "children": [
       {
-        "id": "90974cafc24ecf85",
+        "id": "a7b77ebacaff9902",
         "type": "tabs",
         "children": [
           {
-            "id": "54cd4fd7ff96809b",
+            "id": "b7d7d40ff70c5fa2",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-<<<<<<< HEAD
-                "file": "so/Programação com Ficheiros.md",
-=======
-                "file": "Cooperação entre Atividades ( Programação Concorrente ).md",
->>>>>>> 7c252ebc2cee14c13245557faad41c201f40df3b
+                "file": "so/Trincos.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -130,23 +115,19 @@
             }
           },
           {
-            "id": "d8c56499abbcd55a",
+            "id": "f30e86f3f5995693",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-<<<<<<< HEAD
-                "file": "so/Programação com Ficheiros.md",
-=======
-                "file": "Cooperação entre Atividades ( Programação Concorrente ).md",
->>>>>>> 7c252ebc2cee14c13245557faad41c201f40df3b
+                "file": "so/Trincos.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
             }
           },
           {
-            "id": "25260a542b1cf884",
+            "id": "4d4e51bdfcfe21e2",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -157,47 +138,32 @@
             }
           },
           {
-            "id": "78e824ffee99c943",
+            "id": "679a614014c3d681",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-<<<<<<< HEAD
-                "file": "so/Programação com Ficheiros.md"
-=======
-                "file": "Cooperação entre Atividades ( Programação Concorrente ).md"
->>>>>>> 7c252ebc2cee14c13245557faad41c201f40df3b
+                "file": "so/Trincos.md"
               }
             }
-          },
-          {
-            "id": "7f2367ecd1663cf5",
-            "type": "leaf",
-            "state": {
-              "type": "advanced-tables-toolbar",
-              "state": {}
-            }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 200,
+    "width": 300,
     "collapsed": true
   },
-  "active": "4e51c9047b748eaa",
+  "active": "a47cb3b1ec0a2730",
   "lastOpenFiles": [
-    "so/Sistemas de Ficheiros.md",
-    "Leitores e Escritores de uma Estrutura de Dados Partilhada.md",
+    "so/Trincos - 2.md",
     "so/Trincos.md",
+    "Cooperação entre Atividades ( Programação Concorrente ).md",
+    "Trinco - Solução Algorítmica.md",
     "so/Leitores e Escritores de uma Estrutura de Dados Partilhada.md",
     "so/Programação com Ficheiros.md",
-    "ASA/C++.md",
-    "so/Tarefas (Threads).md",
+    "so/Sistemas de Ficheiros.md",
     "so/project.md",
-    "ASA/project.md",
-    "ASA/Amontoados - HeapSort.md",
-    "TextEditor.md"
+    "so/Tarefas (Threads).md"
   ]
 }
