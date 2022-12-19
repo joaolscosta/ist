@@ -25,14 +25,30 @@
             "state": {
               "type": "markdown",
               "state": {
+<<<<<<< HEAD
                 "file": "so/Programação com Ficheiros.md",
+=======
+                "file": "so/Trincos.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "4e51c9047b748eaa",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Cooperação entre Atividades ( Programação Concorrente ).md",
+>>>>>>> 7c252ebc2cee14c13245557faad41c201f40df3b
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -98,7 +114,11 @@
             "state": {
               "type": "backlink",
               "state": {
+<<<<<<< HEAD
                 "file": "so/Programação com Ficheiros.md",
+=======
+                "file": "Cooperação entre Atividades ( Programação Concorrente ).md",
+>>>>>>> 7c252ebc2cee14c13245557faad41c201f40df3b
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +135,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+<<<<<<< HEAD
                 "file": "so/Programação com Ficheiros.md",
+=======
+                "file": "Cooperação entre Atividades ( Programação Concorrente ).md",
+>>>>>>> 7c252ebc2cee14c13245557faad41c201f40df3b
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +162,11 @@
             "state": {
               "type": "outline",
               "state": {
+<<<<<<< HEAD
                 "file": "so/Programação com Ficheiros.md"
+=======
+                "file": "Cooperação entre Atividades ( Programação Concorrente ).md"
+>>>>>>> 7c252ebc2cee14c13245557faad41c201f40df3b
               }
             }
           },
@@ -158,11 +186,12 @@
     "width": 200,
     "collapsed": true
   },
-  "active": "2194a9940b4b4555",
+  "active": "4e51c9047b748eaa",
   "lastOpenFiles": [
     "so/Sistemas de Ficheiros.md",
     "Leitores e Escritores de uma Estrutura de Dados Partilhada.md",
     "so/Trincos.md",
+    "so/Leitores e Escritores de uma Estrutura de Dados Partilhada.md",
     "so/Programação com Ficheiros.md",
     "ASA/C++.md",
     "so/Tarefas (Threads).md",
