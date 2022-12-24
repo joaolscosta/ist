@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Cooperação entre Atividades ( Programação Concorrente ).md",
+                "file": "so/Trincos.md",
                 "mode": "source",
                 "source": false
               }
@@ -110,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Cooperação entre Atividades ( Programação Concorrente ).md",
+                "file": "so/Trincos.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Cooperação entre Atividades ( Programação Concorrente ).md",
+                "file": "so/Trincos.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Cooperação entre Atividades ( Programação Concorrente ).md"
+                "file": "so/Trincos.md"
               }
             }
           },
@@ -172,15 +172,15 @@
   },
   "active": "4e51c9047b748eaa",
   "lastOpenFiles": [
+    "so/Tarefas (Threads).md",
+    "Cooperação entre Atividades ( Programação Concorrente ).md",
     "so/Trincos.md",
     "so/Leitores e Escritores de uma Estrutura de Dados Partilhada.md",
     "so/Programação com Ficheiros.md",
     "so/Sistemas de Ficheiros.md",
     "ASA/C++.md",
-    "so/Tarefas (Threads).md",
     "so/project.md",
     "ASA/project.md",
-    "ASA/Amontoados - HeapSort.md",
-    "TextEditor.md"
+    "ASA/Amontoados - HeapSort.md"
   ]
 }
