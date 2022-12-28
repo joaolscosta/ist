@@ -1,5 +1,5 @@
 
-Uma estrutura de dados ée partilhada por múltiplas tarefas.
+Uma estrutura de dados é partilhada por múltiplas tarefas.
 Algumas tarefas vão atualizar a estrutura de dados. ( ler e escrever algum processamento ).
 Como é uma estrutura de dados partilhada precisa de sincronização.
 

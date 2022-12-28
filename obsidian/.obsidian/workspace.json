@@ -4,34 +4,28 @@
     "type": "split",
     "children": [
       {
-        "id": "21255c240760932b",
+        "id": "33f19c9291ce7464",
         "type": "tabs",
         "children": [
           {
-            "id": "a47cb3b1ec0a2730",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "so/Trincos.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          }
-        ]
-      },
-      {
-        "id": "e53c5e3289e9cb4d",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "48e7345c44b3e8ec",
+            "id": "51e6c6516ed1ba32",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
                 "file": "so/Trincos - 2.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "bfd8a1a8aac37cc5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "so/Trincos.md",
                 "mode": "source",
                 "source": false
               }
@@ -103,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "so/Trincos.md",
+                "file": "so/Trincos - 2.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "so/Trincos.md",
+                "file": "so/Trincos - 2.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -143,27 +137,37 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "so/Trincos.md"
+                "file": "so/Trincos - 2.md"
               }
             }
+          },
+          {
+            "id": "f12552b08236d53d",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {}
+            }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
-    "width": 300,
+    "width": 200,
     "collapsed": true
   },
-  "active": "a47cb3b1ec0a2730",
+  "active": "51e6c6516ed1ba32",
   "lastOpenFiles": [
-    "so/Trincos - 2.md",
+    "so/Leitores e Escritores de uma Estrutura de Dados Partilhada.md",
+    "so/Tarefas e Trincos.md",
     "so/Trincos.md",
+    "prints/TextEditor.md",
+    "so/Programação com Ficheiros.md",
+    "so/Trincos - 2.md",
+    "so/Sistemas de Ficheiros.md",
     "Cooperação entre Atividades ( Programação Concorrente ).md",
     "Trinco - Solução Algorítmica.md",
-    "so/Leitores e Escritores de uma Estrutura de Dados Partilhada.md",
-    "so/Programação com Ficheiros.md",
-    "so/Sistemas de Ficheiros.md",
-    "so/project.md",
-    "so/Tarefas (Threads).md"
+    "so/project.md"
   ]
 }
