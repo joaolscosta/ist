@@ -1,0 +1,362 @@
+
+# Conceito de Tarefa
+
+Os processos permitem executar em paralelo programas.
+
+É difícil acontecerem algoritmos paralelos que não partilhem informação.
+
+
+> [!TIP] Conceito de Tarefa
+> Fluxos independentes de execução mas que partilham contexto como variáveis, estruturas, heap e ficheiros abertos.
+> Dentro de cada processo podemos ter várias tarefas.
+
+
+> [!NOTE] Definição de Tarefa
+> É um fluxo de atividade que executa no âmbito de um processo, uma função do respetivo programa e partilha o mesmo espaço de endereçamento e os mesmos recursos do processo.
+
+
+O que ==É partilhado== entre as tarefas:
+
+-  Código
+-  Variáveis Globais
+-  Variáveis dinamicamente alocadas - _Heaps_
+-  Atributo do processo
+
+O que ==Não é partilhado== entre as tarefas:
+
+-  Pilha
+-  Estados dos resgistos do utilizador (incluindo o _intruction pointer_)
+- Atributos específicos de uma tarefa (Thread id "tid" )
+
+	Tarefas podem-se executar em cpu's diferentes.
+
+
+## Interface POSIX
+
+Tem como objetivo reduzir todas as interfaces existentes a uma só interface. Conseguir ter programas transportáveis em ambientes diferentes.
+
+## Especificação Posix de tarefas
+
+	Deu-se já que no Unix original não existia um modelo multi tarefa.
+
+| Tarefas | Criar | Sincronizar com a terminação | Transferir | Terminar |
+| - | -| - | - | - |
+| Posix | pthread_create | pthread_join | pthread_yield | sleep | pthread_exit|
+
+
+## Criar Tarefa
+
+```c
+int  pthread_create(pthread_t *thread, attr *attr, void *(*start), void *arg)
+```
+
+- (pthread_t * thread) -  identificador da tarefa
+- (attr * attr) - define atraibutos da tarefa (apontador para estrututra)
+- (void * (* start)) - função a executar
+- (void * arg) - ponteiro para um parâmetro da função
+
+A tarefa começa com a sua execução chamando a função `start` com o argumento `arg`.
+
+Devolve 0 se correu tudo bem e um número positivo se houve algum erro.
+
+## Terminar Tarefa
+
+```c
+int  int pthread_exit(void *value_ptr)
+```
+
+- Termina Tarefa
+- Retorna ponteiro para resultados
+
+```C
+int pthread_join(pthread_t thread, void **value_ptr)
+```
+
+- Tarefa espera até tarefa indicada ter terminado
+- Ponteiro retornado colocado no segundo parâmetro
+
+## Exemplos de utilização de _threads_
+
+> [!EXAMPLE] Exemplo de uso de _threads_
+> Num exemplo em que queiramos somar as linhas todas de uma matriz podemos usar programação sequencial em que usamos dois ciclos e percorremos todos os espaços somando o seu valor.
+> 
+> Com threads:
+> 
+> Em vez de termos um ciclo dentro de um ciclo criamos uma thread para cada linha, ou seja `pthread_create(...)`. No final do ciclo temos $x$ _threads_ com cada soma de cada linha e fazemos `pthread_join(...)` para o algoritmo perceber que o algoritmo terminou e todas as _threads_ que precisavam de atuar já realizaram a sua função.
+> 
+> A ==vantagem== de usarmos _threads_ é que com ciclos temos que esperar que cada ciclo termine e assim todas as _threads_ são executadas ao mesmo tempo.
+
+Portanto, cpus com mais _cores_ correm mais rápido os programas com _threads_.
+
+O problema de usarmos várias threads ao mesmo tempo é o problema do _time slice_ em que podem perder-se e quando existe muita memória necessária pode correr mal.
+
+O problema pode acontecer num programa em que existem duas tarefas e apenas queremos incrementar uma variável global.
+Quando uma tarefa incrementa e de seguida a segunda tarefa incrementa também essa variável a primeira tarefa vai incrementar o valor guardado na primeira tarefa então o valor final não vai ser o esperado.
+
+Um exemplo mais real:
+
+> [!EXAMPLE] Exemplo Bancário 
+> Várias threads a levantar saldo da mesma conta.
+> Quando a tarefa 2 vai levantar dinheiro, o saldo da conta ainda é 1000€.
+> 
+> ![[Pasted image 20221228173706.png]]
+> 
+
+
+Para corrigir isto usamos ==SECÇÕES CRÍTICAS==, ou mais conhecidos por __==TRINCOS==__.
+
+# Introdução aos _Mutexes_
+## Propriedade de Exclusão Mútua 
+
+Trincos ou podemos chamar também de _mutexes_ podem ser fechados ou abertos.
+Quando fechado outra tarefa que tente fechar, espera até ser aberto.
+
+Como corrigir o exemplo anterior:
+![[Pasted image 20221228175118.png]]
+
+- Quando um mutex é fechado não pode entrar mais do que uma tarefa até esta ser libertada.
+
+## Propriedades num _Mutex_
+
+- Propriedade de correção (_safety_): no máximo a tarefa detém o trinco.
+
+- Propriedade de progresso: 
+(Ausência de Interblocagem): Se existem $x$ tarefas a tentar aceder ao _mutex_ então alguma delas conseguirá aceder, dentro de um tempo finito.
+(Ausência de míngua): Todas as tarefas que pretendam entrar vão ter a sua oportunidade de o fazer.
+
+- Efificência.
+
+## Inibir Interrupções
+
+As interrupções só podem ser executadas em __modo núcleo__ do processador.
+Não funcionam em multiprocessadores já que violava a regra da Exclusão Mútua.
+Com isto percebemos que as interrupções também não são a solução ao nosso problema.
+
+
+Voltando à situação dos trincos, se usarmos dois trincos em vez de um para impedir os erros de _time slice_ vai-se suceder exatamente o mesmo erro.
+
+Se tivermos a ideia de fechar logo um trinco em vez de verificar primeiro se está fechado para não acontecer comutação temos o problema da __Interblocagem__.
+
+
+# Algoritmo de Lamport
+### Mais conhecido como Algoritmo da Padaria
+
+O algoritmo que cumpre com todas as propriedades dos _mutexes_.
+
+-   Cada cliente tem:
+    -   Senha com inteiro
+        -   Com número positivo caso esteja à espera da sua vez (ou a ser atendido)
+        -   Com zero caso contrário
+    -   Caneta
+        -   Sem tampa (caso o cliente esteja a escrever na sua senha)
+        -   Com tampa (caso o cliente não esteja a escrever na sua senha)
+-   Qualquer cliente pode observar os elementos acima dos outros clientes, mas só observa um de cada vez
+
+**Passos**
+
+-   Quando um cliente quer ser atendido:
+    -   Fase 1 (obtenho número para a minha senha)
+        -   Tiro tampa da minha caneta
+        -   Olho para as outras senhas, 1 por 1, para determinar máximo
+        -   Escrevo na minha senha: máximo+1
+        -   Coloco tampa na minha caneta
+    -   Fase 2 (espero até ser sua vez de ser servido)
+        -   Olho para a senha de cada cliente, 1 por 1
+        -   Para cada outro cliente com senha positiva, espero enquanto:
+        -   Outro cliente tem tampa fora da caneta
+        -   Senha do outro tem número inferior à minha
+        -   Em caso de empate, caso o id do outro cliente seja inferior ao meu
+    -   Fase 3 (posso ser atendido em exclusão mútua!)
+    -   Fase 4: coloca senha a 0 (já foi atendido)
+
+**Código**
+
+`senha` contém o número da senha atribuído à tarefa  
+`escolha` indica se a tarefa está a pretender aceder à secção crítica
+
+```c
+int senha[N]; // Inicializado a 0
+int escolha[N]; // Inicializado a FALSE
+
+Fechar(int i) {
+  int j;
+  escolha[i] = TRUE;
+  senha [i] = 1 + maxn(senha); // Pi indica que está a escolher a senha
+                               // Escolhe uma senha maior que todas as outras
+                               // Anuncia que escolheu já a senha
+  escolha[i] = FALSE;
+  for (j = 0; j < N; j++) { // Pi verifica se tem a menor senha de todos os Pj
+    if (j == i) continue;
+    while (escolha[j]); // Se Pj estiver a escolher uma senha, espera que termine
+
+    while (senha [j] && (senha [j] < senha [i]) ||
+      (senha [i] == senha [j] && j < i)); // Se a senha de Pi for menor, Pi entra
+                                           // Se as senhas forem iguais,
+                                           // entra o que tiver o menor identificador
+  }
+}
+
+Abrir(int i) {senha [i] = 0;}
+```
+
+**Se não usássemos escolha** 2 tarefas podiam entrar na mesma secção crítica ao mesmo tempo
+
+**Conclusão**
+
+As soluções algorítmicas são:
+
+-   Complexas \implies⟹ Latência
+-   Só são corretas se não houver reordenação de acessos a memória
+-   Implica perder otimizações de desempenho que são possíveis por compiladores modernos e caches
+    -   Só contemplam espera ativa
+
+
+## Recapitulação das soluções anteriores
+
+- Inibir Interrupções - não é possível em modo utilizador.
+- Soluções Algorítmicas - complexas e elevada latência.
+- Mecanismo de Espera - espera ativa.
+
+
+### Eliminar a Espera Ativa com suporte do SO
+
+- Retirar a tarefa da fila de despacho sempre que não pode prosseguir a sua execução.
+- Corresponde a mudar o estado da tarefa para __bloqueado__.
+
+### Mutex com suporte do Núcleo
+
+- O _mutex_ tem um estado ABERTO ou FECHADO.
+- Caso a tarefa tente adquirir um _mutex_ FECHADO, o núcleo retira-a de execução, bloqueando-a numa lista de tarefas bloqueadas associadas ao _mutex_.
+
+
+## Objeto _Mutex_
+
+###### Propriedades:
+
+- Identificador
+- Estado
+- Lista de tarefas bloqueadas
+
+###### Operações:
+
+- CriarMutex
+- Fechar (lock)
+- Abrir (unlock)
+- EliminarMutex
+
+Quando existe a operação de _unlock_, um trinco é libertado e das tarefas bloqueadas uma vai poder continuar.
+
+
+### Interface POSIX para mutexes
+
+```c
+int pthread_mutex_lock(pthread_mutex_t *mutex)
+
+int pthread_mutex_unlock(pthread_mutex_t *mutex)
+```
+
+Existem 2 formas de inicializar:
+
+- Declarar mutex como variável estática.
+```c
+pthread_mutex_t trincoA = PTHREAD_MUTEX_INIT
+```
+
+- Declaração dinâmica durante a execução.
+```c
+int pthread_mutex_init(pthread_mutex_t *trincoA, pthread_mutexattr_t *attr)
+```
+
+*trincoA -> identificador do mutex
+*attr -> atributos previamente definidos (podem ser NULL)
+
+No exemplo que vimos anteriormente da incrementação de variáveis globais, agora com _locks_ resolvemos o problema de _time slicer_ que com números extremamente grandes os _mutexes_ já não se perdem mais:
+![[Pasted image 20221228190031.png]]
+
+
+## Quando é que precisamos de usar _mutexes_?
+
+Com uso de trincos os resultados podem ser inconsistentes.
+Para uma função que só leia algo não é necesário usar mutex.
+
+## Problema
+
+O uso de _locks e unlocks_ acaba por suceder o mesmo problema do paralelismo.
+Para corrigir isto ==SÓ COM HARDWARE É QUE CHEGAMOS LÁ==.
+
+É por isso que se usa o ___TEST AND SET___.
+
+## _Spin Locks_
+
+Estes são os _locks_ quando estão em espera ativa.
+
+- O Despacho irá comutá-los algures no tempo e outra atividade deverá libertar o trinco.
+- Estes _spins_ devem ser detidos por períodos muito curtos minimizando a existência de colisões.
+
+### Funciona em multiprocessadores?
+
+- O _Test and Set_ é uma única instrução ao processador mas implica dois ciclos de acesso à memória: ler o trinco e depois escrever.
+- Portanto, voltamos ao mesmo problema de paralelismo real.
+
+## Eficiência
+
+- Queremos avaliar a __sobrecarga__ que estamos a introduzir.
+- Podemos avaliar a sobrecarga de diversas formas porque não existe um indicador de qual a percentagem de impacto no desempenho.
+	- Quando não há contenção (trinco ABERTO)
+	- Quando há contenção
+
+
+
+> [!NOTE] CASO A
+> Quando o trinco está aberto e sem contenção a sobrecarga deveria ser mínima. Na realidade quero só fazer um _test and set_.
+
+> [!NOTE] CASO B
+> Quando o trinco está fechado, quero evitar a espera ativa que é uma perda de eficiência no uso do processador e que para além da perda de tempo de CPU também afeta o tempo de execução da tarefa porque pode estar a inviabilizar que se execute o tarefa que potencialmente o pode desbloquear.
+
+- Chamadas ao sistema são dispendiosas. Uma chamada implica o lançamento da exceção, comutação para o modo núcleo, troca de pilhas, etc.
+- Então faz disto uma sobrecarga significativa no tempo de execução.
+
+- Intruções _test and set_ podem ser instruções utilizadas em modo utilizador.
+
+- Pode-se fazer um _spin lock_ em modo utilizador e isto tinha um ganho considerável no caso A, mas no caso B tem espera ativa.
+
+#### E no caso do trinco estar fechado?
+
+- Posso usar `trylock` que devolve a dizer se está aberto ou fechado.
+
+- Fazer _test and set_ em modo utilizador e se não conseguir adquirir o trinco, bloquear a tarefa no núcleo.
+- É esta a implementação do Linux com recurso a `futexes` (_fast userspace mutex_) que bloqueiam a tarefa no núcleo à espera do _mutex_ ser libertado.
+
+- _futex_ é então o melhor entre dois mundos. Tenta fazer o _lock_ com _test and set_ em modo utilizador e se não conseguir faz spin ou bloqueia a tarefa.
+
+
+
+
+
+
+
+
+
+
+
+## Trinco Global
+
+Normalmente é a solução mais simples mas __limita__ o paralelismo.
+
+- Quanto mais paralelo for o programa maior é a limitação.
+
+## Trincos finos: programação com objetos partilhados
+
+Objeto cujos métodos podem ser chamados em concorrência por diferentes tarafas podem ter:
+- Interface dos métodos públicos
+- Código de cada método
+- Variáveis de estado
+- Váriáveis de sincronização - um trinco garante que métodos críticos se executam em exclusão mútua
+
+Pode é trazer mais _bugs_ este método.
+
+
+
+
+
+
