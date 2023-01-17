@@ -91,8 +91,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -158,7 +157,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "so/5.1 - Eventos Assíncronos.md",
+                "file": "so/4.1 - Modelos de Intercomunicação.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -175,7 +174,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "so/5.1 - Eventos Assíncronos.md",
+                "file": "so/4.1 - Modelos de Intercomunicação.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -198,7 +197,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "so/5.1 - Eventos Assíncronos.md"
+                "file": "so/4.1 - Modelos de Intercomunicação.md"
               }
             }
           },
@@ -229,15 +228,15 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "4a448ed4b1ccda7c",
+  "active": "3f71b6ce220f0fb8",
   "lastOpenFiles": [
+    "so/3.1 - Interblocagem.md",
     "so/4.1 - Modelos de Intercomunicação.md",
     "so/Sistemas de Ficheiros.md",
     "so/2.1 - Cooperação.md",
     "so/2.2 - Produtores e Consumidores.md",
     "so/2.3 - Leitores e Escritores de uma Estrutura de Dados Partilhada.md",
     "so/1.3 - Trincos - 2.md",
-    "so/3.1 - Interblocagem.md",
     "prints/Pasted image 20221228190031.png",
     "so/1.1 - Tarefas e Trincos.md",
     "so/Programação com Ficheiros.md"
