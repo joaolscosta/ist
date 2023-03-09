@@ -1,7 +1,8 @@
 {
   "accentColor": "",
-  "interfaceFontFamily": "Noto Sans CJK JP",
-  "monospaceFontFamily": "Garuda",
-  "textFontFamily": "Noto Sans CJK TC",
-  "baseFontSize": 18
+  "interfaceFontFamily": "Candara",
+  "monospaceFontFamily": "",
+  "textFontFamily": "Gadugi",
+  "baseFontSize": 17,
+  "baseFontSizeAction": true
 }
