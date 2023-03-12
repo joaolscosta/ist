@@ -77,7 +77,7 @@ void newAirport(Airport airportList[])
     */
     char id_aux[MAX_C_ID], country_aux[MAX_C_COUNTRY], city_aux[MAX_C_CITY];
 
-    scanf("%s", id_aux);
+    scanf("%s", id_aux); 
     scanf("%s", country_aux);
     scanf(" %[^\n]", city_aux);
 
