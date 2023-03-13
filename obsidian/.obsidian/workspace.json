@@ -8,24 +8,24 @@
         "type": "tabs",
         "children": [
           {
-            "id": "832948458bc56010",
+            "id": "cfeebccbaeb18778",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "so/3.1 - Interblocagem.md",
-                "mode": "preview",
+                "file": "IPM/Introdução.md",
+                "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "e2d5f90770c759fe",
+            "id": "cbe8dbf0f43b88aa",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "PE/LABS.md",
+                "file": "IPM/Dispositivos Móveis.md",
                 "mode": "source",
                 "source": false
               }
@@ -51,7 +51,7 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "byCreatedTimeReverse"
               }
             }
           },
@@ -98,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "PE/LABS.md",
+                "file": "IPM/Dispositivos Móveis.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "PE/LABS.md",
+                "file": "IPM/Dispositivos Móveis.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "PE/LABS.md"
+                "file": "IPM/Dispositivos Móveis.md"
               }
             }
           },
@@ -170,12 +170,18 @@
       "obsidian-excalidraw-plugin:New Excalidraw drawing": false
     }
   },
-  "active": "4a448ed4b1ccda7c",
+  "active": "cbe8dbf0f43b88aa",
   "lastOpenFiles": [
+    "IPM/Introdução.md",
+    "IPM/Dispositivos Móveis.md",
+    "prints/Pasted image 20230312221523.png",
+    "prints/Pasted image 20230312221127.png",
+    "prints/Pasted image 20230312220333.png",
+    "PE/LABS.md",
+    "so/3.1 - Interblocagem.md",
+    "IPM",
     "prints/Pasted image 20230301125257.png",
     "PE",
-    "so/3.1 - Interblocagem.md",
-    "PE/LABS.md",
     "so/2.3 - Leitores e Escritores.md",
     "so/4.1 - Modelos de Intercomunicação.md",
     "so/3.2 - Evitar Interblocagem.md",
