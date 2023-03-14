@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "IPM/Introdução.md",
+                "file": "IPM/Avaliação com os Utilizadores.md",
                 "mode": "source",
                 "source": false
               }
@@ -30,9 +30,20 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "c9ca549ab4e7eb24",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "IPM/Avaliação com os Utilizadores.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -98,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "IPM/Dispositivos Móveis.md",
+                "file": "IPM/Avaliação com os Utilizadores.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +126,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "IPM/Dispositivos Móveis.md",
+                "file": "IPM/Avaliação com os Utilizadores.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "IPM/Dispositivos Móveis.md"
+                "file": "IPM/Avaliação com os Utilizadores.md"
               }
             }
           },
@@ -170,10 +181,13 @@
       "obsidian-excalidraw-plugin:New Excalidraw drawing": false
     }
   },
-  "active": "cbe8dbf0f43b88aa",
+  "active": "cfeebccbaeb18778",
   "lastOpenFiles": [
-    "IPM/Introdução.md",
     "IPM/Dispositivos Móveis.md",
+    "IPM/Avaliação com os Utilizadores.md",
+    "Pasted image 20230314020512.png",
+    "prints/Pasted image 20230314001407.png",
+    "IPM/Introdução.md",
     "prints/Pasted image 20230312221523.png",
     "prints/Pasted image 20230312221127.png",
     "prints/Pasted image 20230312220333.png",

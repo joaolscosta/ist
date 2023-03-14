@@ -86,41 +86,41 @@ A primeira heurística refere-se a dar a conhecer ao utilizador onde estão, ist
 
 Outro exemplo desta heurística será por exemplo no _**Paint**_ quando o utilizador está a usar o lápis, a aplicação reforça o lápis tanto no rato como no menu para não surgir dúvidas.
 
-### [](https://resumos.leic.pt/ipm/dispositivos-moveis/#h2-correspond%C3%AAncia-com-o-mundo-real)H2: Correspondência com o mundo real
+### H2: Correspondência com o mundo real
 
 A segunda heurística refere-se a “falar a linguagem do utilizador”, isto é utilizar terminologia que seja familiar ao utilizador evitando usar termos orientador ao sistema ou gíria técnica. Dois exemplos mais comuns desta heurística são nos _e-books_ quando o utilizador pode “passar a página” como dedo como se fosse um livro normal ou quando “dobra” o canto da página para marcar em que zona está.
 
-### [](https://resumos.leic.pt/ipm/dispositivos-moveis/#h3-utilizador-controla-e-exerce-livre-arb%C3%ADtrio)H3: Utilizador controla e exerce livre arbítrio
+### H3: Utilizador controla e exerce livre arbítrio
 
 É normal o utilizador querer controlar tudo, ou praticamente tudo, o que ele faça numa aplicação. Deste modo, a terceira heurística refere-se à possibilidade do utilizador sair de situações inesperadas (erros) e não obrigar o utilizador a passar por caminhos inflexíveis. O utilizador tem controlo absoluto sobre o programa.
 
 Esta heurística está presente quando no _G-mail_ o utilizador consegue cancelar o envio do e-mail, no _Netflix_ quando o utilizador tem a possibilidade de avançar para o próximo episódio ou voltar atrás.
 
-### [](https://resumos.leic.pt/ipm/dispositivos-moveis/#h4-consist%C3%AAncia-e-ades%C3%A3o-a-normas)H4: Consistência e adesão a normas
+### H4: Consistência e adesão a normas
 
 A quarta heurística refere-se a minimizar o fator de surpresa ou seja palavras, situações ou ações semelhantes têm significados semelhantes e palavras, situações ou ações diferentes implicam significados diferentes. Vemos a presença desta heurística nos botões de cancelar o enviar sempre do mesmo lado do ecrã, quando estamos perante uma lista se dermos _swipe_ num dos pontos conseguimos aceder a uma série de atalhos.
 
-### [](https://resumos.leic.pt/ipm/dispositivos-moveis/#h5-evitar-erros)H5: Evitar erros
+### H5: Evitar erros
 
 Para um boa aplicação funcionar tem que ser difícil de cometer erros que possam ser prejudiciais, visto que melhor do que uma boa mensagem de erros. Por exemplo, o utilizador deve ser alertado se de facto quer fazer uma encomenda de 5000 livros, ou seja tem um espécie de _feedback_ para que não ocorra erros.
 
-### [](https://resumos.leic.pt/ipm/dispositivos-moveis/#h6-reconhecimento-em-vez-de-lembran%C3%A7a)H6: Reconhecimento em vez de lembrança
+### H6: Reconhecimento em vez de lembrança
 
 Para o utilizador ter uma experiência mais calma e agradável numa qualquer aplicação é necessário auxilia-o a tornar os objetos, ações e indicações visíveis de modo a reduzir a carga cognitiva. O utilizador não é obrigado a lembrar de informação é por isso que as fontes no Word não aparece só o nome mas também como a fonte fica nas letras.
 
-### [](https://resumos.leic.pt/ipm/dispositivos-moveis/#h7-flexibilidade-e-efici%C3%AAncia)H7: Flexibilidade e eficiência
+### H7: Flexibilidade e eficiência
 
 Existem aceleradores que permitem a realização mais eficiente das tarefas e permitem o utilizador realizar as tarefas de vários modos diferentes. Ou seja é requerido que as interfaces de adaptem ao utilizador. Um exemplo é no Instagram quando o utilizador pode fazer _double-click_ na foto ou carregar no coração para dar gosto.
 
-### [](https://resumos.leic.pt/ipm/dispositivos-moveis/#h8-desenho-est%C3%A9tico-e-minimalista)H8: Desenho estético e minimalista
+### H8: Desenho estético e minimalista
 
 Contudo, apesar de haver tanta informação e auxilio que o utilizador necessita é necessário apresentar apenas o que seja necessário àquele momento. É só necessário comunicar e não decorar: na Dropbox basta pôr um ficheiro numa pasta e pronto!
 
-### [](https://resumos.leic.pt/ipm/dispositivos-moveis/#h9-ajudar-a-reconhecer-diagnosticar-e-a-recuperar-de-erros)H9: Ajudar a reconhecer, diagnosticar e a recuperar de erros
+### H9: Ajudar a reconhecer, diagnosticar e a recuperar de erros
 
 É necessário ser preciso (indicar claramente o problema), falar a linguagem do utilizador e evitar códigos e termos técnicos, dar ajuda construtiva quereres-te recuperar e evitar novos erros e ser cortes. Um exemplo claro desta heurística e quando fazemos uma pesquisa no Google em que escrevemos mal uma palavra, apenas nos aparece uma mensagem a perguntar se queríamos escrever outra coisa com uma sugestão por baixo.
 
-### [](https://resumos.leic.pt/ipm/dispositivos-moveis/#h10-dar-ajuda-e-documenta%C3%A7%C3%A3o)H10: dar ajuda e documentação
+### H10: dar ajuda e documentação
 
 A última heurística refere-se a ajuda ser usada apenas quando ha problemas e, tendo isso em consideração, oferecer acesso rápido à informação. Contudo a ajuda não substitui mau desenho da IU e o sistema não deve depender dela para ser utilizado!
 
