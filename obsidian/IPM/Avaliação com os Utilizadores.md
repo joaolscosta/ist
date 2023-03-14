@@ -213,4 +213,69 @@ ___==**Variáveis Independentes:**==___
 -   Características dos participantes (idade, etc.)
 
 
+## Efeitos Secundários
 
+Aqui deparamos com um problemas de Fixação Funcional.
+Dunker colocou à frente do seus participantes uma vela, um caixa de pioneses e fósfororos e pediu que arranjassem uma maneira de que a vela fosse acendida mas não pingasse cera para a mesa. Dividiu em 2 grupos:
+
+- Grupo A tinha pioneses dentro da caixa.
+- Grupo B tinha pioneses fora da caixa.
+
+Como os pioneses estavam fora da caixa era mais evidente para o grupo B que a caixa também podia ser usada como elemento e assim este grupo terminou a experiência mais rápido.
+
+
+Mais tarde Glucksberg testou a mesma experiência mas adicionou a variável de obter o melhor tempo de resolução e recompensas para o top 40% e o mais rápido.
+Aqui os que tinham os pioneses na caixa precisavam de mais criatividade e foi mais lento. Os que tinham os pioneses dentro da caixa foram mais rápidos.
+
+Adicionar uma recompensa aumenta o foco mas diminui a criatividade. É bom para instruções simples para tarefas claras.
+
+
+## Efeito de Hawthorne / Efeito do Observador
+
+
+> [!TIP] DEFINIÇÃO
+> Quanto mais pressão, mais produtividade.
+> 
+> ___Novely Effect___ - quando vemos algo novo ficamos excitados sem razão. Pode até não ser nada de especial mas por ser novo temos curiosidade. Por isso temos que testar o produto mais do que uma vez para testar o quão prático e bom.
+
+
+## Ética com Utilizadores
+
+Quando pensamos em experiências pensamos sempre pelo senso comum que é tudo bem intencionado mas já aconteceu participantes ficarem traumatizados após os testes.
+Um exemplo (Standford Experiment) é um teste em que se dividiu dois grupos: um com polícias e outro com prisioneiros. Ao fim de um tempo o poder subio aos polícias e começaram a maltratar os outros.
+
+Portanto para fazermos qualquer teste temos que ter algumas considerações éticas.
+
+### Considerações Éticas
+
+É da responsabilidade de quem está a realizar o teste de aliviar e relaxar o participante de modo a que o teste não seja desconfortável ou stressante.
+
+Consentimento é de extrema importância já que estamos a trabalhar com voluntários. Evitar presão. Informar os participantes que podem terminar a qualquer momento. Realçar que o sistema é que está a ser testado e nunca os utilizadores. Tornar os dados anónimos e proteger esses dados.
+
+Existem pessoas vulneráveis.
+
+Qualquer teste tem que ter uma aprovação da comissão ética para ser realizado.
+
+### Três princípios de investigações com pessoas
+
+1.  É necessário haver respeito pelas pessoas:
+
+-   Os indivíduos têm autonomia e escolha
+-   Não podem ser usados como meio para atingir um fim
+-   É necessário proteger os mais vulneráveis
+-   É necessário usar consentimento informado
+
+2.  Beneficência _(fazer o bem)_:
+
+-   Obrigação de fazer o bem
+-   Obrigação de não prejudicar
+-   Obrigação de prevenir danos
+-   Minimizar riscos, maximizar benefícios
+-   Bondade além do dever
+-   Avaliação de riscos e benefícios
+
+3.  Justiça:
+
+-   Garantir igualdade
+-   Dividir riscos e benefícios pela amostra
+-   Recrutamento de participantes justo
