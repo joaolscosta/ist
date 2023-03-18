@@ -49,7 +49,7 @@ Não é só gráficos, é saber comunicar com o user.
 ### 2. Marketing conhece os users
 Marketing foca-se em dados não sabendo o comportamento dos humanos.
 
-### 3. Bom designn é censo comum
+### 3. Bom designn é senso comum
 É complexo pelo contrário.
 
 ### 4. Interface é feita no final
