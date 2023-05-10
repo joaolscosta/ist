@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "IPM/Introdução.md",
+                "file": "IPM/Análise Quantitativa.md",
                 "mode": "source",
                 "source": false
               }
@@ -67,8 +67,7 @@
               }
             }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "vertical"
@@ -206,14 +205,14 @@
       "obsidian-excalidraw-plugin:New Excalidraw drawing": false
     }
   },
-  "active": "4a448ed4b1ccda7c",
+  "active": "42c1b3729d8abe77",
   "lastOpenFiles": [
     "IPM/Fatores Humanos.md",
     "IPM/Análise Quantitativa.md",
+    "IPM/Introdução.md",
     "prints/Pasted image 20230408142138.png",
     "prints/Pasted image 20230408141450.png",
     "IPM/NOTAS.md",
-    "IPM/Introdução.md",
     "IPM/Avaliação com os Utilizadores.md",
     "IPM/Dispositivos Móveis.md",
     "1teste.md",
