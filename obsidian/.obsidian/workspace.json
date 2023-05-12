@@ -8,66 +8,27 @@
         "type": "tabs",
         "children": [
           {
-            "id": "42c1b3729d8abe77",
+            "id": "ab7a4bcd8e091f94",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "IPM/Análise Quantitativa.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           },
           {
-            "id": "d41caf07ba5c219f",
+            "id": "5fc18f33e55ce3c8",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "IPM/Dispositivos Móveis.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "0580dd0113b2e052",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "IPM/Avaliação com os Utilizadores.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "dd3ea5ed058a542b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "IPM/Fatores Humanos.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "f84e5ccee0c2e9e4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "IPM/Análise Quantitativa.md",
+                "file": "BD/Conversão E-A Relacional.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -112,6 +73,14 @@
               "type": "starred",
               "state": {}
             }
+          },
+          {
+            "id": "50d7735da3633f80",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
           }
         ]
       }
@@ -133,7 +102,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "IPM/Análise Quantitativa.md",
+                "file": "BD/Conversão E-A Relacional.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -150,7 +119,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "IPM/Análise Quantitativa.md",
+                "file": "BD/Conversão E-A Relacional.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -173,7 +142,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "IPM/Análise Quantitativa.md"
+                "file": "BD/Conversão E-A Relacional.md"
               }
             }
           },
@@ -205,10 +174,30 @@
       "obsidian-excalidraw-plugin:New Excalidraw drawing": false
     }
   },
-  "active": "42c1b3729d8abe77",
+  "active": "5fc18f33e55ce3c8",
   "lastOpenFiles": [
-    "IPM/Fatores Humanos.md",
+    "BD/Conversão E-A Relacional.md",
+    "BD",
+    "Teoria 2023-05-12 11.36.37.excalidraw.md",
+    "IA/Teoria.md",
+    "Excalidraw/Teoria 2023-05-12 12.36.27.excalidraw.md",
+    "Excalidraw/Teoria 2023-05-12 12.36.27.excalidraw.svg",
+    "Excalidraw/Drawing 2023-05-12 12.36.18.excalidraw.md",
+    "Excalidraw/Teoria 2023-05-12 11.36.37.excalidraw.md",
+    "IA/Práticas.md",
+    "Excalidraw/Drawing 2023-05-12 11.27.58.excalidraw.md",
+    "Excalidraw/Drawing 2023-05-12 11.29.23.excalidraw.md",
+    "Excalidraw/Práticas 2023-05-12 11.34.25.excalidraw.md",
+    "Excalidraw/Drawing 2023-05-12 11.29.23.excalidraw.svg",
+    "Excalidraw/Práticas 2023-05-12 11.31.56.excalidraw.md",
+    "Excalidraw/Práticas 2023-05-12 11.31.56.excalidraw.svg",
+    "![[Práticas 2023-05-12 11.31.56.excalidraw.md",
+    "Excalidraw/Drawing 2023-05-12 11.23.55.excalidraw.md",
+    "Excalidraw/Drawing 2023-05-12 11.23.55.excalidraw.svg",
+    "Excalidraw/Drawing 2023-05-12 11.23.55.excalidraw.png",
+    "Excalidraw",
     "IPM/Análise Quantitativa.md",
+    "IPM/Fatores Humanos.md",
     "IPM/Introdução.md",
     "prints/Pasted image 20230408142138.png",
     "prints/Pasted image 20230408141450.png",
@@ -219,21 +208,12 @@
     "prints/Pasted image 20230314020512.png",
     "prints/Pasted image 20230314001407.png",
     "prints/Pasted image 20230312221523.png",
-    "prints/Pasted image 20230312221127.png",
-    "prints/Pasted image 20230312220333.png",
     "PE/LABS.md",
     "so/3.1 - Interblocagem.md",
     "IPM",
-    "prints/Pasted image 20230301125257.png",
     "PE",
     "so/2.3 - Leitores e Escritores.md",
     "so/4.1 - Modelos de Intercomunicação.md",
-    "so/3.2 - Evitar Interblocagem.md",
-    "so/1.3 - Trincos - 2.md",
-    "so/2.1 - Cooperação.md",
-    "so/2.2 - Produtores e Consumidores.md",
-    "so/1.2 - Trincos.md",
-    "so/1.1 - Tarefas e Trincos.md",
-    "prints/Pasted image 20221228190031.png"
+    "so/3.2 - Evitar Interblocagem.md"
   ]
 }
