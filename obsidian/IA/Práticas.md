@@ -24,8 +24,20 @@ OE : - | A | AB | ABCE
 
 
 
+# Capítulo 2
 
-## Exercício 5
+
+> [!NOTE] Tipos de Procuras:
+> - Procura Ganaciosa
+> - A*
+> - IDA*
+> - RBFS
+> 
+> Para cada uma existe uma OG, OP e OE.
+
+### Heurística Admissível - h < h*
 
 
-![[Práticas 2023-05-12 11.34.25.excalidraw]]
+
+
+
