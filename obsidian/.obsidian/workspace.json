@@ -8,7 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "5058286d3262f8b1",
+            "id": "e83332a39671ba6b",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -20,12 +20,12 @@
             }
           },
           {
-            "id": "1b66458391839f3e",
+            "id": "2501e2baf65d6f19",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "BD/Lab7 - Normalização.md",
+                "file": "Untitled.md",
                 "mode": "source",
                 "source": false
               }
@@ -106,7 +106,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "BD/Lab7 - Normalização.md",
+                "file": "Untitled.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -123,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "BD/Lab7 - Normalização.md",
+                "file": "Untitled.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -146,7 +146,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "BD/Lab7 - Normalização.md"
+                "file": "Untitled.md"
               }
             }
           },
@@ -178,34 +178,35 @@
       "obsidian-excalidraw-plugin:New Excalidraw drawing": false
     }
   },
-  "active": "1b66458391839f3e",
+  "active": "2501e2baf65d6f19",
   "lastOpenFiles": [
-    "Normalização.md",
-    "BD/Lab7 - Normalização.md",
     "IA/Práticas.md",
+    "Untitled.md",
+    "BD/Álgebra Relacional.md",
+    "prints/Pasted image 20230520184543.png",
+    "prints/Pasted image 20230520184449.png",
+    "prints/Pasted image 20230520183700.png",
+    "prints/Pasted image 20230520183639.png",
+    "prints/Pasted image 20230520182341.png",
+    "prints/Pasted image 20230520181834.png",
+    "prints/Pasted image 20230520181641.png",
+    "prints/Pasted image 20230520180838.png",
+    "prints/Pasted image 20230520180740.png",
+    "prints/Pasted image 20230520180715.png",
+    "BD/Lab7 - Normalização.md",
+    "Normalização.md",
     "IA/Teoria.md",
     "Teoria 2023-05-12 11.36.37.excalidraw.md",
     "BD/Conversão E-A Relacional.md",
-    "BD/Álgebra Relacional.md",
     "BD/Prática BD.md",
-    "prints/Pasted image 20230513192428.png",
-    "prints/Pasted image 20230513191406.png",
-    "prints/Pasted image 20230513193808.png",
-    "prints/Pasted image 20230513193716.png",
-    "prints/Pasted image 20230513193200.png",
-    "prints/Pasted image 20230513192657.png",
-    "prints/Pasted image 20230513192450.png",
     "BD",
     "Excalidraw/Teoria 2023-05-12 12.36.27.excalidraw.md",
-    "Excalidraw/Teoria 2023-05-12 12.36.27.excalidraw.svg",
     "Excalidraw/Drawing 2023-05-12 12.36.18.excalidraw.md",
     "Excalidraw/Teoria 2023-05-12 11.36.37.excalidraw.md",
     "Excalidraw/Drawing 2023-05-12 11.27.58.excalidraw.md",
     "Excalidraw/Drawing 2023-05-12 11.29.23.excalidraw.md",
     "Excalidraw/Práticas 2023-05-12 11.34.25.excalidraw.md",
-    "Excalidraw/Drawing 2023-05-12 11.29.23.excalidraw.svg",
     "Excalidraw/Práticas 2023-05-12 11.31.56.excalidraw.md",
-    "Excalidraw/Práticas 2023-05-12 11.31.56.excalidraw.svg",
     "![[Práticas 2023-05-12 11.31.56.excalidraw.md",
     "Excalidraw/Drawing 2023-05-12 11.23.55.excalidraw.md",
     "Excalidraw",
@@ -216,8 +217,6 @@
     "IPM/Avaliação com os Utilizadores.md",
     "IPM/Dispositivos Móveis.md",
     "1teste.md",
-    "PE/LABS.md",
-    "so/3.1 - Interblocagem.md",
     "IPM",
     "PE"
   ]
