@@ -150,24 +150,6 @@ Esta conversão permite __preservar relações e minimazir a redundância de dad
 ![[Pasted image 20230520184543.png]]
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Exemplos
 Os slides T10 - Álgebra Relacional têm bons exemplos para compreensão.
 
