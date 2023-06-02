@@ -1,3 +1,9 @@
+
+# ___To-Do___
+
+
+
+
 ### Qualidade do Esquema Relacional
 
 ___Funcionalidade___: O esquema suporta todos os resquisitos funcionais e captura todas as restrições de integridade e relações semânticas entre os dados necessários para o efeito.
