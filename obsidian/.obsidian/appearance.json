@@ -1,8 +1,9 @@
 {
-  "accentColor": "",
+  "accentColor": "#1978b3",
   "interfaceFontFamily": "Candara",
   "monospaceFontFamily": "",
   "textFontFamily": "Gadugi",
   "baseFontSize": 18,
-  "baseFontSizeAction": true
+  "baseFontSizeAction": true,
+  "cssTheme": "Obsidian gruvbox"
 }
