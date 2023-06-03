@@ -94,7 +94,7 @@
               "type": "backlink",
               "state": {
                 "file": "BD/Normalização.md",
-                "collapseAll": false,
+                "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
                 "showSearch": false,
@@ -154,22 +154,22 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
-      "canvas:Create new canvas": false,
-      "daily-notes:Open today's daily note": false,
-      "templates:Insert template": false,
-      "command-palette:Open command palette": false,
+      "switcher:Abrir a troca rápida": false,
+      "graph:Abrir visualização em gráfico": false,
+      "canvas:Criar novo canvas": false,
+      "daily-notes:Abrir a nota de hoje": false,
+      "templates:Inserir modelo": false,
+      "command-palette:Abrir paleta de comandos": false,
       "table-editor-obsidian:Advanced Tables Toolbar": false,
       "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "c021505adebbea13",
+  "active": "b7d7d40ff70c5fa2",
   "lastOpenFiles": [
-    "Pasted image 20230603151919.png",
-    "Pasted image 20230603151216.png",
-    "Pasted image 20230603151206.png",
-    "Pasted image 20230603151153.png",
+    "prints/Pasted image 20230603151919.png",
+    "prints/Pasted image 20230603151216.png",
+    "prints/Pasted image 20230603151206.png",
+    "prints/Pasted image 20230603151153.png",
     "BD/SQL Avançado.md",
     "Excalidraw/Normalização 2023-06-03 14.57.24.excalidraw.md",
     "BD/Normalização.md",
