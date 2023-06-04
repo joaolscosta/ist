@@ -4,23 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "b71232b80b88d05f",
+        "id": "63e4fc27f1420aee",
         "type": "tabs",
         "children": [
           {
-            "id": "c021505adebbea13",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "BD/3. Normalização.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "238a23469def7995",
+            "id": "67576b999ff3e6a1",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -31,8 +19,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -177,13 +164,18 @@
       "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "238a23469def7995",
+  "active": "67576b999ff3e6a1",
   "lastOpenFiles": [
-    "BD/3. Normalização.md",
+    "Excalidraw/Normalização 2023-06-03 14.57.24.excalidraw.md",
+    "BD/4. SQL Avançado.md",
     "BD/3. Normalização - Lab07.md",
+    "BD/3. Normalização.md",
+    "prints/Pasted image 20230604153752.png",
+    "prints/Pasted image 20230604153745.png",
+    "prints/Pasted image 20230604153729.png",
+    "prints/Pasted image 20230604153718.png",
     "BD/1. Conversão E-A Relacional.md",
     "BD/2. Álgebra Relacional.md",
-    "BD/4. SQL Avançado.md",
     "ASA/C++.md",
     "ASA/Teorema Mestre.md",
     "prints/Pasted image 20230604001908.png",
@@ -192,15 +184,10 @@
     "prints/Pasted image 20230603151216.png",
     "prints/Pasted image 20230603151206.png",
     "prints/Pasted image 20230603151153.png",
-    "Excalidraw/Normalização 2023-06-03 14.57.24.excalidraw.md",
     "Excalidraw",
     "Untitled.canvas",
-    "prints/Pasted image 20230603125854.png",
-    "prints/Pasted image 20230603125846.png",
-    "prints/Pasted image 20230525141157.png",
     "BD/Lab7 - Normalização.md",
     "IA/Práticas.md",
-    "prints/Pasted image 20230520184543.png",
     "IA/Teoria.md",
     "Teoria 2023-05-12 11.36.37.excalidraw.md",
     "BD/Prática BD.md",
@@ -217,7 +204,6 @@
     "IPM/Análise Quantitativa.md",
     "IPM/Fatores Humanos.md",
     "IPM/Introdução.md",
-    "IPM/NOTAS.md",
     "IPM",
     "PE"
   ]
