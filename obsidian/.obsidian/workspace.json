@@ -13,13 +13,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "BD/Normalização.md",
+                "file": "BD/3. Normalização.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "238a23469def7995",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "BD/4. SQL Avançado.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -38,7 +51,7 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "byCreatedTimeReverse"
+                "sortOrder": "alphabetical"
               }
             }
           },
@@ -77,7 +90,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 234.51103591918945
   },
   "right": {
     "id": "0c49ab1ab307c595",
@@ -93,7 +106,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "BD/Normalização.md",
+                "file": "BD/4. SQL Avançado.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "BD/Normalização.md",
+                "file": "BD/4. SQL Avançado.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +146,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "BD/Normalização.md"
+                "file": "BD/4. SQL Avançado.md"
               }
             }
           },
@@ -164,10 +177,13 @@
       "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "c021505adebbea13",
+  "active": "238a23469def7995",
   "lastOpenFiles": [
-    "BD/Álgebra Relacional.md",
-    "BD/Normalização.md",
+    "BD/3. Normalização.md",
+    "BD/3. Normalização - Lab07.md",
+    "BD/1. Conversão E-A Relacional.md",
+    "BD/2. Álgebra Relacional.md",
+    "BD/4. SQL Avançado.md",
     "ASA/C++.md",
     "ASA/Teorema Mestre.md",
     "prints/Pasted image 20230604001908.png",
@@ -176,11 +192,9 @@
     "prints/Pasted image 20230603151216.png",
     "prints/Pasted image 20230603151206.png",
     "prints/Pasted image 20230603151153.png",
-    "BD/SQL Avançado.md",
     "Excalidraw/Normalização 2023-06-03 14.57.24.excalidraw.md",
     "Excalidraw",
     "Untitled.canvas",
-    "BD/Conversão E-A Relacional.md",
     "prints/Pasted image 20230603125854.png",
     "prints/Pasted image 20230603125846.png",
     "prints/Pasted image 20230525141157.png",
@@ -204,7 +218,6 @@
     "IPM/Fatores Humanos.md",
     "IPM/Introdução.md",
     "IPM/NOTAS.md",
-    "IPM/Avaliação com os Utilizadores.md",
     "IPM",
     "PE"
   ]
