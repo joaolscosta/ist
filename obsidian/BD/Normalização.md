@@ -158,7 +158,6 @@ Formas de representar a BD, por forma a evitar ao máximo a redundância da mesm
 
 ### 2ª Forma Normal
 
-
 > [!TIP] Definição
 > Está nesta forma se estiver na 1FN.
 > E se cada atributo não-chave dependa de __todos os atributos__ da relação.
@@ -171,6 +170,77 @@ Formas de representar a BD, por forma a evitar ao máximo a redundância da mesm
 >  
 >  Nesta forma podemos ainda não ter corrigido por completo a redundância pelo que pode haver depedências entre atributos não chave 
 
+### 3ª Forma Normal
+
+> [!TIP] Definição
+> Diz-se que está nesta forma quando está na 2FN e todos os atrtributos não-chave são **independentes entre si**.
+> 
+> Se tivermos a relação com as seguintes independências:
+> - maquina(**id**, modelo, voltagem)
+> - id→modelo, modelo→voltagem
+> 
+> Neste caso, a relação já respeita a 2ª FN, pois tanto id→modelo como modelo→voltagem, e portanto, por transitividade, id→modelo→voltagem. Temos, assim, todos os atributos não-chave a depender de atributos chave.
+> 
+> No entanto a voltagem não é independente do modelo (modelo → voltagem), esta relação não respeita a 3FN.
+
+### Forma de Boyce-Codd
 
 
+> [!NOTE] Definição
+> Chegámos finalmente a uma forma que **evita quaisquer tipo de redundâncias**. Diz-se que está nesta forma quando **todos** os atributos são **totalemente dependentes de uma chave candidata**.
+> 
+> Consideremos o exemplo em que cada professor só pode estar associado a uma única disciplina.
+> 
+> - aula(**aluno**, **disciplina**, professor)
+>   
+> As chaves candidatas são:
+> - (aluno, professor)
+> - (aluno, disciplina)
+> 
+> Com as seguintes dependências:
+> - (aluno, professor) -> disciplina
+> - (aluno, disciplina) -> professor
+> - (professor) -> disciplina
+> 
+> Esta relação está na 3FN pois só há **1 atributo não-chave** e esse atributo **dependende de ambos os atributos-chave**.
+> No entanto, não está na FNBC pois disciplina é totalmente depende de professor que não é uma chave candidata.
 
+
+### Resumos das FN
+
+| Forma | Resumo                                                      |
+| ----- | ----------------------------------------------------------- |
+| 1 FN  | Atributos atómicos e unidimensionais -> só ha **uma chave** |
+| 2 FN  | 1FN + atributos não-chave dependem de **toda a chave**      |
+| 3 FN  | 2FN + atributos não-chave dependem de **apenas uma chave**  |
+| FNBC  | 3FN + **atributos-chave** dependem de **toda a chave**                                                            |
+
+#### Alguns casos
+
+- Uma relação que tem apenas uma chave candidata unária está sempre na 2FN.
+- Uma relação na 2FN que tem apenas um atributo-não-chave está sempre na  3FN.
+- Uma relação que tem apenas atributos-chave está sempre na 3FN.
+- Uma relação na 3FN só pode não estar na FNBC se tiver múltiplas chaves  candidatas sobrepostas.
+
+
+> [!EXAMPLE] Alguns exemplos
+> ![[Pasted image 20230604001850.png]]
+> 
+> ![[Pasted image 20230604001908.png]]
+
+
+# Decomposição de Relações
+
+O objetivo numa ou várias relações que estão na FNBC e subdividir noutras relações.
+
+Pode é acontecer que neste porcesso de divisão de relações que haja perda de informação levando ao chamado **lossless**. Acontece isto quando a relação original consegue ser obtida através do ***Natural Join*** das relações resultantes da relação.
+
+> [!TIP] TEOREMA DE HEATH
+> Dada uma relação *r(XYZ)*, a decomposição de *r* em *r1(XY)* e *r2(XZ)* diz-se lossless caso X -> Y ou X -> Z.
+
+No caso de se verificar este teorema e tivermos *r(XYZ)* onde X -> Y que viola FNBC podemos fazer o seguinte:
+
+1. Decompor *r(XYZ)* em *r1(XY)* e *r2(XZ)*;
+2. Verificar se r1 e r2 estão na FNBC, repetindo o processo até todas as sub-relações estarem na FNBC.
+
+É bom vero pp13.\
