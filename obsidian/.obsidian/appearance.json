@@ -3,7 +3,7 @@
   "interfaceFontFamily": "Candara",
   "monospaceFontFamily": "",
   "textFontFamily": "Gadugi",
-  "baseFontSize": 18,
+  "baseFontSize": 16,
   "baseFontSizeAction": true,
   "cssTheme": "Obsidian gruvbox"
 }

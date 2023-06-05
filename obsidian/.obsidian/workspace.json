@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "1d57071736494612",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Introdução ao SQL.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -93,7 +106,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "BD/4. SQL Avançado.md",
+                "file": "Introdução ao SQL.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "BD/4. SQL Avançado.md",
+                "file": "Introdução ao SQL.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +146,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "BD/4. SQL Avançado.md"
+                "file": "Introdução ao SQL.md"
               }
             }
           },
@@ -164,10 +177,11 @@
       "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "67576b999ff3e6a1",
+  "active": "1d57071736494612",
   "lastOpenFiles": [
-    "Excalidraw/Normalização 2023-06-03 14.57.24.excalidraw.md",
     "BD/4. SQL Avançado.md",
+    "Introdução ao SQL.md",
+    "Excalidraw/Normalização 2023-06-03 14.57.24.excalidraw.md",
     "BD/3. Normalização - Lab07.md",
     "BD/3. Normalização.md",
     "prints/Pasted image 20230604153752.png",
