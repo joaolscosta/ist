@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "BD/Normalização.md",
+                "file": "IA/Práticas.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "BD/Normalização.md",
+                "file": "IA/Práticas.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "BD/Normalização.md",
+                "file": "IA/Práticas.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "BD/Normalização.md"
+                "file": "IA/Práticas.md"
               }
             }
           },
@@ -166,8 +166,8 @@
   },
   "active": "c021505adebbea13",
   "lastOpenFiles": [
-    "BD/Álgebra Relacional.md",
     "BD/Normalização.md",
+    "BD/Álgebra Relacional.md",
     "ASA/C++.md",
     "ASA/Teorema Mestre.md",
     "prints/Pasted image 20230604001908.png",

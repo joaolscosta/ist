@@ -35,7 +35,8 @@ OE : - | A | AB | ABCE
 > 
 > Para cada uma existe uma OG, OP e OE.
 
-### Heurística Admissível - h < h*
+
+
 
 
 
