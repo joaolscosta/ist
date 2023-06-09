@@ -4,22 +4,35 @@
     "type": "split",
     "children": [
       {
-        "id": "b71232b80b88d05f",
+        "id": "63e4fc27f1420aee",
         "type": "tabs",
         "children": [
           {
-            "id": "c021505adebbea13",
+            "id": "67576b999ff3e6a1",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "IA/Práticas.md",
+                "file": "BD/4. SQL Avançado.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "1d57071736494612",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Introdução ao SQL.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -38,7 +51,7 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "byCreatedTimeReverse"
+                "sortOrder": "alphabetical"
               }
             }
           },
@@ -77,7 +90,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 234.51103591918945
   },
   "right": {
     "id": "0c49ab1ab307c595",
@@ -93,7 +106,11 @@
             "state": {
               "type": "backlink",
               "state": {
+<<<<<<< HEAD
                 "file": "IA/Práticas.md",
+=======
+                "file": "Introdução ao SQL.md",
+>>>>>>> a5b0965068431a63c386bcfa89e03e20f31060ac
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +127,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+<<<<<<< HEAD
                 "file": "IA/Práticas.md",
+=======
+                "file": "Introdução ao SQL.md",
+>>>>>>> a5b0965068431a63c386bcfa89e03e20f31060ac
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +154,11 @@
             "state": {
               "type": "outline",
               "state": {
+<<<<<<< HEAD
                 "file": "IA/Práticas.md"
+=======
+                "file": "Introdução ao SQL.md"
+>>>>>>> a5b0965068431a63c386bcfa89e03e20f31060ac
               }
             }
           },
@@ -164,10 +189,24 @@
       "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "c021505adebbea13",
+  "active": "1d57071736494612",
   "lastOpenFiles": [
+<<<<<<< HEAD
     "BD/Normalização.md",
     "BD/Álgebra Relacional.md",
+=======
+    "BD/4. SQL Avançado.md",
+    "Introdução ao SQL.md",
+    "Excalidraw/Normalização 2023-06-03 14.57.24.excalidraw.md",
+    "BD/3. Normalização - Lab07.md",
+    "BD/3. Normalização.md",
+    "prints/Pasted image 20230604153752.png",
+    "prints/Pasted image 20230604153745.png",
+    "prints/Pasted image 20230604153729.png",
+    "prints/Pasted image 20230604153718.png",
+    "BD/1. Conversão E-A Relacional.md",
+    "BD/2. Álgebra Relacional.md",
+>>>>>>> a5b0965068431a63c386bcfa89e03e20f31060ac
     "ASA/C++.md",
     "ASA/Teorema Mestre.md",
     "prints/Pasted image 20230604001908.png",
@@ -176,17 +215,10 @@
     "prints/Pasted image 20230603151216.png",
     "prints/Pasted image 20230603151206.png",
     "prints/Pasted image 20230603151153.png",
-    "BD/SQL Avançado.md",
-    "Excalidraw/Normalização 2023-06-03 14.57.24.excalidraw.md",
     "Excalidraw",
     "Untitled.canvas",
-    "BD/Conversão E-A Relacional.md",
-    "prints/Pasted image 20230603125854.png",
-    "prints/Pasted image 20230603125846.png",
-    "prints/Pasted image 20230525141157.png",
     "BD/Lab7 - Normalização.md",
     "IA/Práticas.md",
-    "prints/Pasted image 20230520184543.png",
     "IA/Teoria.md",
     "Teoria 2023-05-12 11.36.37.excalidraw.md",
     "BD/Prática BD.md",
@@ -203,8 +235,6 @@
     "IPM/Análise Quantitativa.md",
     "IPM/Fatores Humanos.md",
     "IPM/Introdução.md",
-    "IPM/NOTAS.md",
-    "IPM/Avaliação com os Utilizadores.md",
     "IPM",
     "PE"
   ]
