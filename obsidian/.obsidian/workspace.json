@@ -4,35 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "4cac961f218fc024",
+        "id": "1eade098a438c2c6",
         "type": "tabs",
         "children": [
           {
-            "id": "41c81f50b9f7cc2e",
+            "id": "c812204cbf8469ca",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "BD/4. SQL Avançado.md",
-                "mode": "preview",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "a98aacced6f735e5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "BD/5. SQL-PSM.md",
+                "file": "SO AGORA VAI/SO - Teórica.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -99,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "BD/5. SQL-PSM.md",
+                "file": "SO AGORA VAI/SO - Teórica.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "BD/5. SQL-PSM.md",
+                "file": "SO AGORA VAI/SO - Teórica.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "BD/5. SQL-PSM.md"
+                "file": "SO AGORA VAI/SO - Teórica.md"
               }
             }
           }
@@ -152,20 +139,25 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "table-editor-obsidian:Advanced Tables Toolbar": false,
-      "obsidian-excalidraw-plugin:Create new drawing": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
-      "command-palette:Open command palette": false
+      "command-palette:Open command palette": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "a98aacced6f735e5",
+  "active": "c812204cbf8469ca",
   "lastOpenFiles": [
-    "BD/Introdução ao SQL.md",
+    "SO AGORA VAI/e1 2122.md",
+    "SO AGORA VAI/SO - Teórica.md",
+    "SO AGORA VAI/Memória.md",
+    "SO.md",
+    "SO AGORA VAI",
     "BD/5. SQL-PSM.md",
+    "BD/Introdução ao SQL.md",
     "BD/4. SQL Avançado.md",
     "BD/3. Normalização.md",
     "BD/2. Álgebra Relacional.md",
