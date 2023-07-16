@@ -30,8 +30,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "f629e541b88289ea",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Quick Concepts.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -81,7 +94,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
+    "width": 200,
     "collapsed": true
   },
   "right": {
@@ -98,7 +111,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "SO AGORA VAI/e2 2122.md",
+                "file": "Quick Concepts.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +128,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "SO AGORA VAI/e2 2122.md",
+                "file": "Quick Concepts.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +151,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "SO AGORA VAI/e2 2122.md"
+                "file": "Quick Concepts.md"
               }
             }
           }
@@ -161,12 +174,13 @@
       "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "b0b8f3d4e6dadb79",
+  "active": "f629e541b88289ea",
   "lastOpenFiles": [
-    "SO AGORA VAI/SO - Teórica.md",
     "SO AGORA VAI/e2 2122.md",
-    "SO AGORA VAI/e1 2122.md",
+    "SO AGORA VAI/SO - Teórica.md",
+    "Quick Concepts.md",
     "SO AGORA VAI/Memória.md",
+    "SO AGORA VAI/e1 2122.md",
     "SO.md",
     "SO AGORA VAI",
     "BD/5. SQL-PSM.md",
