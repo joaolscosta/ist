@@ -10,6 +10,52 @@ __tabela de blocos livres__ - bitmap que vê se bloco está livre
 __FS EXT__ - inumbers aos inodes. inodes limitados pelo tamanho das tabelas
 __Referência Indireta__ - EXT3, indices dos blocos num vetor i_block do inode primeiras 12 posições diretas e 1 para 13, 2 para 14 e 3 para 15.
 
+# 4.
+
+exit() não elimina a task_struct marcando o processo como zombie. Elimina as regiões de memória do processo, fecha files abertos e elimina-os se não houver hardlinks nem outros processos abertos com o mesmo file.
+
+```c
+pid = fork();
+if(pid == 0){
+	exit(0)
+}
+else{
+pid = wait(&estado);
+}
+
+//pai espera que um filho termine. Se algum está no estado Zombie retorna imediatamente o PID e o estado de terminação.
+```
+
+
+
+
+
+
+# 5.
+
+RWlocks permitem mais paralelismo quando os acessos são de leitura pois podem várias threads aceder ao mesmo tempo.
+Em cenários de escrita mutexes têkm mais paralelismo e duram mais.
+
+Trylock em vez de lock evita interblocagem.
+
+Espera Ativa (Spinlock) - thread contunua a veruficar se um estado ou condição continua bloqueado. Não entra em espera.
+
+Interblocagem (Deadlock) - duas ou mais threads estão bloqueadas esperando que os recursos de cada um deles sejam libertados para continuarem com as suas operações. Não podem continuar o seu trabalho sem aqueles recursos. Leva a uma paralisação do sistema e só com interrupções é que saimos dessas situações.
+
+Problema de Míngua (Starvation) - Quando as threads não podem prosseguir com as suas funções por falta de recursos. Não por já estarem a ser utilizados mas por não haverem mesmo. Devido a escalonamento, prioridades mal definidas e deadlocks.
+# 7.
+
+Quando acontece um signal num processo o sighandler mete isso na tabela de signals. Quando o signal é detetado o SO verifica a tabela para encontrar a rotina para aquele signal. Quando muda de núcleo para user o SO verifica se há signals pendentes. Se houver a rotina é executada em modo usuário depois da mudança de núcleo para user.
+
+Uma rotina de tratamento de um signal não é uma rotina do núcleo mas sim uma função do user.
+
+Uma rotina só trata de um signal de cada vez.
+
+Pode haver um tratamento por omissão para um signal mas não para todos como em cima.
+
+O contador de um semáforo vê a quantidade de recursos disponíveis. Se for 0 quer dizer que todos os recursos estão em uso, as threads têm que bloquear até ser maior que zero.
+Quando tem o valor 1 uma thread pode entrar na secção crítica sem esperar. Quando outra thread verifica se o valor do semáforo e seja 1 pode entrar e muda o valor do semáforo para 0 antes de entrar.
+
 # 9.
 
 __kernel__ - entidade do núcleo que executa processos e tarefas e também responsável por interrupções, otimização de processos (escalonamento) e das chamadas de sistema e sincronização.
@@ -36,8 +82,19 @@ __Escalonamento__ - para qual processo trocamos. métricas:
 __Round-Robin__ - cada processo tem um quantum definido e pode executar-se enquanto que se esgote ou bloqueie. Processos prontos a executar-se vão para a fila e o primeiro a chegar é o primeiro a executar. Se o processo já não vai executar mais antes de acabar o seu quantum este é retirado da fila, senão volta para lá para depois terminar.
 __Multi-lista__ - multilista com listas que têm processos com dada prioridade. Processos + prioritários recebem CPU primeiro. Prioridade fixa podem processos menos prioritários nunca receber CPU e dinâmicos os processos que não recebem o CPU há mais tempo + prioritários com quantums diferentes.
 __Preempção__ - retira-se o CPU ao processo assim que houver um + importante.
-pseudo-preempção faz com que haja um tempo mínimo de execução para não estar a haver trocas constantementes. 
-
+	pseudo-preempção faz com que haja um tempo mínimo de execução para não estar a haver trocas constantementes. 
+__Gestor de Processos em UNIX__ - 2 estruturas
+	__Estrutura proc__ - info do proc em RAM mesmo não em execução. Info para escalonamento e signals.
+	__Estrutura u__ - restante info do proc quando em execução.
+__Escalonamento em UNIX__ - Prioridades em:
+	__Processo em user__ - de 0(+ prioritário) a N. dinâmico.
+	__Processo em núcleo__ - quanto mais negativo mais prioritário. fixas. + prioritárias que em user.
+__Prioridades em user__ - CPU atribuído ao p + prioritáraio com quantum de 100ms (5 ticks). Round-Robin. A cada 50 ticks prioridades calculadas.
+__nice(int val)__ - adiciona val ao nice. este p fica cada vez menos prioritário.
+__Gestor de Processos em LINUX__ - divide tempo em épocas. Época acaba quando todos os seus processos esgotam quantum. No início é atribuido um quantum e uma prioridade a cada quantum. Os mais importantes têm valor elevado e são estes escolhidos primeiro.
+__CFS (Completly Fair Schedule)__ - Cada processo tem um vruntime. Este é o tempo de execução em user. Quando o p perde o CPU o seu vruntime é incrementado com o tempo do quantum. Processo + prioritário é com o vruntime mínimo. Novo processo entra com vruntime mínimo entre os ativos. Processos guardados numa red-black tree ordenada por vruntime que encontra o mais prioritário em O(logn).
+__Gestor de Processos de POSIX__
+	__fork()__ - 
 
 # 10.
 
@@ -78,3 +135,19 @@ __Por paginação__ - retira-se a com mais distante. Mede-se com:
 	- __NRU (not recently used)__ - UGM mete R=1 se há leitura e M=1 se há escrita. Paginador corre e mete R=0. R referenciada e M modificada. Liberta-se as páginas com grupos mais baixos.
 	- __LRU (Least recently used)__ - princípio da localidade de referência. Bit R e idade. Paginador aumenta idades das R=0. Sempre que acedida UGM faz R=1 e idade anula. Quando chega a determinada idade passa a lista para poder ser transferida.
 __Vantagens e Desvantagens__
+
+Quando um processo é executado acede a endereços virtuais para acessar a memória. Estes endereços são gerados pelo processo e não correspondem diretamente aos reais em RAM. A conversão é feita pela MMU que utiliza a tabela de páginas para encontrar a correspondência entre os dois endereços.
+
+Dois processos podem ter enderços virtuais iguais. Cada um tem a sua tabela de páginas
+
+Quanto mais bits tiver o número de página mais espaço de endereçamento e maior número de páginas na memória virtual tem.
+
+Para 32 bits de endereçamento virutal com 12 de deslocamento para sabermos o número de hexadecimais pertencentes ao número da página é 2⁵=32 -> 5 primeiror hexa.  
+0x==A0001==FB0
+
+Quando se visita um endereço virtual existe um acesso à página. Pode existir é dois acessos um à pagina e um à tabela de páginas caso o número de página não tenha sido visitado e mete-se na TLB.
+
+BTS realiza uma operação atómica em um bit de um valor em memória. Implementa algoritmos de exclusão mútua (mutexes) e sincronização de processos e threads.
+Processador lê memória e testa bit. Se estiver a 0 passa a 1 e retorna 1. Se estiver a 1 retorna 0 sem mudar o valor. Acontece esta operação sem sem interrompida por outros processos (é atómica)
+
+Espera ativa quando um processo/thread verfica constantemente se um mutex já está livre em vez de entrar em suspensão e ser notificado quando já estiver livre. 

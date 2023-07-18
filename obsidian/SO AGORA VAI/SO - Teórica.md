@@ -90,6 +90,8 @@
 - pthread_join oq faz
 
 
+
+
 ### 5. Programação Multi-Tarefa
 
 - Mutexes
