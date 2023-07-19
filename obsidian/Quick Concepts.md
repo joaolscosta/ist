@@ -1,3 +1,24 @@
+# 2. 
+
+__FS__ - organizado por nomes (hier), tem metadados de cada file na mem sec. Ligação entre nome e ident numérico. -l
+-rwxrwxrwx
+Everything is a File - todos os objetos acedidos por fd.
+__Nome absoluto__ - caminho desde a raiz.
+__Nome Relativo__ - caminho desde o dir atual.
+__Hardlink__ - só quando o ultimo hardlink é apagado é que o arquivo é apagado e libertado o espaço.
+__Mount__ - liga a raiz do novo FS a um dir do FS base. mount -t FS /dev/hd1 /b (liga /dev/hd1 a b)
+__Processo__ - instancia de programa. 1 tabela de files abertos por processo. Para abrir pesquisar dir e ver se file existe. Verificar permissões. Copiar metadados e modo de acesso e devolver o ident.
+__Standart__  - processo criado, canal stdin, stout, sterr. + simples que bibliotecas.
+__Cursor__ - em q posição de file estamos. avança automaticamente com cada byte lido ou escrito.
+```c
+long ftell(FILE *stream) // em q posição estamos
+int fseek(FILE *stream, long offset, int whence) // meter noutra posição
+// offset: se positivo anda para a frente e negativo para trás
+// whence: SEEK_SET -> inicio, SEEK_CUR -> atual, SEEK_END -> final
+int fflush(FILE *stream) // faz com  que tudo seja escrito no disco porque as escritas fazem-se tarde e assim faz logo.
+```
+
+Para cada disco um boot block com instruções em RAM.
 
 # 3.
 
@@ -55,6 +76,8 @@ Pode haver um tratamento por omissão para um signal mas não para todos como em
 
 O contador de um semáforo vê a quantidade de recursos disponíveis. Se for 0 quer dizer que todos os recursos estão em uso, as threads têm que bloquear até ser maior que zero.
 Quando tem o valor 1 uma thread pode entrar na secção crítica sem esperar. Quando outra thread verifica se o valor do semáforo e seja 1 pode entrar e muda o valor do semáforo para 0 antes de entrar.
+
+pause() suspende um programa até receber um signal.
 
 # 9.
 
@@ -143,7 +166,7 @@ Dois processos podem ter enderços virtuais iguais. Cada um tem a sua tabela de 
 Quanto mais bits tiver o número de página mais espaço de endereçamento e maior número de páginas na memória virtual tem.
 
 Para 32 bits de endereçamento virutal com 12 de deslocamento para sabermos o número de hexadecimais pertencentes ao número da página é 2⁵=32 -> 5 primeiror hexa.  
-0x==A0001==FB0
+0x**A0001**FB0
 
 Quando se visita um endereço virtual existe um acesso à página. Pode existir é dois acessos um à pagina e um à tabela de páginas caso o número de página não tenha sido visitado e mete-se na TLB.
 
