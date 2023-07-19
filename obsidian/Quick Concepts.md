@@ -18,18 +18,25 @@ int fseek(FILE *stream, long offset, int whence) // meter noutra posição
 int fflush(FILE *stream) // faz com  que tudo seja escrito no disco porque as escritas fazem-se tarde e assim faz logo.
 ```
 
-Para cada disco um boot block com instruções em RAM.
 
 # 3.
 
+Para cada disco um boot block com instruções em RAM.
 __FS CP/M__ - mapa de blocos por ficheiro com 16 entradas de 1kbyte.
 __FS MS-DOS__ - tabela de blocos global partilhada por todos os files
 __FAT__ - alocação na FAT nos dirs e o resto em blocos de igual dimensão. File identificado no dir pelo nome e na FAT pelo indice. Nas entradas valor 0 indice bloco livre. Cabe em RAM e tem tantas entradas como numero de blocos
-__i-nodes__ - estrutura entre dirs que referenciam files e os seus blocos.
+__i-nodes__ - estrutura entre dirs que referenciam files e os seus blocos. Vantagem de várias entradas apontarem para o mesmo file. Número máximo de files numa partição é o número máximo de inodes.
 __Descritor de Volume__ - info do FS como loc cas tabelas de descritores e a tabela de blocos livres
-__tabela de blocos livres__ - bitmap que vê se bloco está livre
+__tabela de blocos livres__ - bitmap que vê se bloco está livre. cada inode tem os metadados e a loc do file. 
 __FS EXT__ - inumbers aos inodes. inodes limitados pelo tamanho das tabelas
-__Referência Indireta__ - EXT3, indices dos blocos num vetor i_block do inode primeiras 12 posições diretas e 1 para 13, 2 para 14 e 3 para 15.
+__Referência Indireta__ - EXT3, indices dos blocos num vetor i_block do inode primeiras 12 posições diretas e 1 para 13, 2 para 14 e 3 para 15. Dim Máxima fórmula
+
+Todos os FS têm uma struct em memória voltátil para apoiar a info persistente. Cria canais virtuais, > desempenho com caches, tolera falhas, isola apps.
+
+__File table__ - tem cursor de RW e modo como foi aberto.
+__Tabela de files Abertos__: Existem duas para garantir isolamento entre processos.
+	__Por processo__ - tem fd para cada file aberto e espaço protegido só acedido por núcleo.
+	__Global__ - tem info do file aberto e o espaço protegido.
 
 # 4.
 
@@ -47,10 +54,39 @@ pid = wait(&estado);
 //pai espera que um filho termine. Se algum está no estado Zombie retorna imediatamente o PID e o estado de terminação.
 ```
 
+Processo tem:
+	__Espaço de endereçamento virtual__ - tem memória a que pode aceder, código, dados, pilha e dim variável.
+	__Intruções__  - instruções em modo user e função de sistema.
+	__Execução__ - info para retomar.
+
+```c
+int fork() // copia espaço de endereçamento e contexto. Lança novo processo com o mesmo código
+
+void exit(int status) // liberta recursos e fecha files. Notifica pai que acabou.
+
+int wait(int status) // suspende até um filho acaba. Retorna PID do que terminou.
+```
+
+Quando se faz exit mantém-se o necessário para o pai chamar wait. Entre estes dois o filho está em zombie.
+
+```c
+int execl(char file, char arg0, ...,  char argn, NULL ou 0)
+int execv(char file, char argv[]);
+```
+
+__Shell__ - ciclo infinito em que cada iteração imprime msg, lê comando, cria filho q executa programa, shell bloqueia até iteração terminar e prxm iteração.
+
+__Threads__ : No mesmo processo partilham código, amontoado (heap) e atributos do processo.
+Não partilham stack, estados do registos no CPU, atributos da thread TID.
+
+```c
+int pthread_create(&tid, attr, func, arg)
+void pthread_exit(void value_ptr)
+
+int pthread_join(pthread_t thread_2, void value_ptr ou NULL) // tarefa espera até thread_2 ter terminado
 
 
-
-
+```
 
 # 5.
 
@@ -59,11 +95,81 @@ Em cenários de escrita mutexes têkm mais paralelismo e duram mais.
 
 Trylock em vez de lock evita interblocagem.
 
-Espera Ativa (Spinlock) - thread contunua a veruficar se um estado ou condição continua bloqueado. Não entra em espera.
+__Espera Ativa (Spinlock)__ - thread contunua a veruficar se um estado ou condição continua bloqueado. Não entra em espera. Resolve-se com condvars.
 
-Interblocagem (Deadlock) - duas ou mais threads estão bloqueadas esperando que os recursos de cada um deles sejam libertados para continuarem com as suas operações. Não podem continuar o seu trabalho sem aqueles recursos. Leva a uma paralisação do sistema e só com interrupções é que saimos dessas situações.
+__Interblocagem (Deadlock)__ - duas ou mais threads estão bloqueadas esperando que os recursos de cada um deles sejam libertados para continuarem com as suas operações. Não podem continuar o seu trabalho sem aqueles recursos. Leva a uma paralisação do sistema e só com interrupções é que saimos dessas situações.
 
-Problema de Míngua (Starvation) - Quando as threads não podem prosseguir com as suas funções por falta de recursos. Não por já estarem a ser utilizados mas por não haverem mesmo. Devido a escalonamento, prioridades mal definidas e deadlocks.
+__Problema de Míngua (Starvation)__ - Quando as threads não podem prosseguir com as suas funções por falta de recursos. Não por já estarem a ser utilizados mas por não haverem mesmo. Devido a escalonamento, prioridades mal definidas e deadlocks.
+
+__Trinco Fino__ - bloqueia o necessário. Desvantagem: ocupam memória, abrir e fechar é demorado e pode levar a bugs.
+
+```c
+wait(condVar, mutex) // liberta mutex e bloqueia tarefa e coloca-a atomicamente na fila da condVar. Quando libertada a tarefa vai buscar o mutex e só depois a função retorna.
+
+signal(condVar) // se há tarefas na fila desbloqueia uma passando a executável.
+
+broadcast(condVar) // desbloqueia todas.
+```
+
+__Named Pipes / FIFO__ - Counica dois processos que não sejam pai e filho. Comporta-se como file e tem entrada na dir. Pode ser aberto pro processos, tem dono e permissões.
+Named Pipe unidirecional (byte stream)
+
+```c
+
+int mkfifo(const char pathname, mode_t mode) // mode = 0666. Bidirecional em que os dados escritos num lado do FIFO podem ser lidos pro ordem de chegada. Abre com open bloqueando até pelo menos 1 processo abrir a outra extremidade.
+
+int unlink(const char pathname) // Excluir um arquivo. R bloqueia até escrever no pipe. W bloqueia até alguém ler a mensagem.
+```
+
+```c
+int arquivo = fopen("exemplo.txt", "w");
+fprintf(arquivo, "blablabla");
+fread(buffer, 1, , sizeof(buffer), arquivo);
+fwrite(buffer, 1, elementos_lidos, stdout);
+fclose(arquivo);
+// se o ficheiro não existir abre para escrita.
+
+int fd = open("exemplo.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);
+read/write(fd, char mensagem, sizeof(mensagem));
+close(fd);
+// Ele não é criado automaticamente se não existir para escrita. Temos que abrir com create() ou open() 
+```
+
+__Signals__: Notifica o SO. Um processo pode notificar outro. Reage e trata-se de forma assíncrona.
+
+__Rotina Assíncrona__ - Tratadas com interrupções de sistema. (CTL-C ou timeout). Existe uma tabela com todos os eventos. Testa-se cada um para identificar qual é o que estamos a testar.
+Podem terminar o processo, ignorar o sinal, suspender o processo ou continuar o suspenso.
+
+SIG_DFL - omissão
+SIG_IGN - ignora
+
+signal(SIG_IGN, func)
+
+```c	
+int kill(pid_t pid, int sig) // pid é para que processo o signal é enviado. SIGTERM - processo terminar. SIGKILL - termina à força. SIGINT - interrupção.
+
+unsigned_alarm(unsigned int segundos) // SIGALARM enviado para o processo.
+
+int pause() // aguarda sinal.
+
+unsigned_sleep(int segundos) // espera
+
+int raise(int sig) // sig enviado para o proprio processo.
+```
+
+__SystemV__: signal faz uma ativação e omite.
+
+__BSD__: Depois da ativação não é desfeito e a receção de um novo signal é inibida durante a rotina.
+# 6.
+
+Num mutex para o bom funcionamento:
+
+__Propriedade de Correção (Safety)__: Exclusão Mútua - uma tarefa para um mutex.
+
+__Propriedade de Progresso (Liveness)__: Não interblocagem.
+
+__Ausência de Míngua (Starvation)__: não haver deadlock mas + eficiente.
+
 # 7.
 
 Quando acontece um signal num processo o sighandler mete isso na tabela de signals. Quando o signal é detetado o SO verifica a tabela para encontrar a rotina para aquele signal. Quando muda de núcleo para user o SO verifica se há signals pendentes. Se houver a rotina é executada em modo usuário depois da mudança de núcleo para user.
@@ -79,6 +185,20 @@ Quando tem o valor 1 uma thread pode entrar na secção crítica sem esperar. Qu
 
 pause() suspende um programa até receber um signal.
 
+__Memória Partilhada__: threads partilham heap. RW na mm memória partilhada. Sincronização com mutexes, semáforos...
+__Troca de Mensagens__: thread trabalha com dados privados. Tarefas transmitem dados trocando mensagens. Mensagens sincronizam tarefas.
+
+Canal de comunicação no núcleo, dados enviados por syscalls, no user, processos acedem a memória partilhada.
+
+__Pipe__: bloqueado quando escreve num cheio e quando lê um vazio.
+
+```c
+int fd[ 2 ] - 0 para ler e 1 para escrever.
+
+int dup(int oldfd) // o novo fd duplicado é o mais baixo e cria uma nova entrada na tabela que aponta para o fd oldfd.
+```
+
+Redirecionar I/O de programas na Shell. `ls -la | grep xpto | ...` redireciona o output de ls -ls para grep xpto cujo output é redirecionado para os que se seguem.
 # 9.
 
 __kernel__ - entidade do núcleo que executa processos e tarefas e também responsável por interrupções, otimização de processos (escalonamento) e das chamadas de sistema e sincronização.
